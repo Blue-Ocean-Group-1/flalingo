@@ -1,0 +1,30 @@
+{
+  "recommendations": [
+    "tomoki1207.pdf",
+    "aaron-bond.better-comments",
+    "streetsidesoftware.code-spell-checker",
+    "postman.postman-for-vscode",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "hnw.vscode-auto-open-markdown-preview",
+    "naumovs.color-highlight",
+    "dsznajder.es7-react-js-snippets",
+    "github.codespaces",
+    "github.copilot",
+    "github.copilot-chat",
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+    "oderwat.indent-rainbow",
+    "xabikos.javascriptsnippets",
+    "cweijan.vscode-mysql-client2",
+    "ms-vscode.remote-repositories",
+    "meganrogge.template-string-converter",
+    "antfu.vite",
+    "github.remotehub",
+    "christian-kohler.path-intellisense",
+    "moalamri.inline-fold"
+  ]
+}
