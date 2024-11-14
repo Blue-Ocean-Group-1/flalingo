@@ -1,7 +1,23 @@
 import mongoose from 'mongoose';
 
 const deckSchema = new mongoose.Schema({
-  // TODO: Define message schema
+  name: { type: String, required: true },
+  language: { type: String, required: true },
+  theme: { type: String, required: true },
+  skillLevel: { type: String, enum: ['beginner', 'proficient', 'advanced'], required: true },
+  flashcards: [{
+    word: { type: String, required: true },
+    translatedWord: { type: String, required: true },
+    options: [
+      {
+        type: Map,
+        of: String,
+        required: true
+      }
+    ]
+  }]
 });
 
-export const Deck = mongoose.model('Deck', deckSchema);
+const Deck = mongoose.model('Deck', deckSchema);
+
+export { Deck, deckSchema };
