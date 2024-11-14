@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
           }]
     }
   ],
-  dailyGoalProgress: [{ date: {type: Date}, finished: {type: Boolean, default: false}}],
+  dailyGoalProgress: [{ date: {type: Date}, completed: {type: Boolean, default: false}}],
   currentLoginStreak: Number,
   longestLoginStreak: Number,
   loginHistory: [{ type: Date, dailyGoalsCompleted: Boolean }],
