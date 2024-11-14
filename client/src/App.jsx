@@ -1,27 +1,25 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { Dialog } from '@headlessui/react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
-import getHealth from './services/test.api.js';
-import logger from '../config/logger.js';
-import FontAwesomeIcon from './components/common/Icon.jsx';
+import LandingPage from './pages/LandingPage.jsx';
 import ServerTest from './components/common/ServerTest.jsx';
+import { redirectIfNoUser } from './utils/loaders.js';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-          </ul>
-        </nav>
-
         <Routes>
-          <Route path="/" element={<ServerTest />} />
+          <Route path="/" element={<LandingPage />} />
+
+          <Route
+            path="/server_test"
+            element={<ServerTest />}
+            loader={redirectIfNoUser}
+          />
+          <Route path="/server_test" element={<ServerTest />} />
+          <Route path="/flashcards" element={<ServerTest />} />
+
+          {/* <Route path="/conversations_rooms" element={insert your page here} /> */}
         </Routes>
       </div>
     </Router>
@@ -29,3 +27,42 @@ function App() {
 }
 
 export default App;
+// <Router>
+//   <div className="App">
+//     <Routes>
+//       <Route
+//         path="/"
+//         element={
+//           <ProtectedRoute>
+//             <LandingPage />
+//           </ProtectedRoute>
+//         }
+//       />
+//       <Route
+//         path="/flashcards"
+//         element={
+//           <ProtectedRoute>
+//             <FlashcardsPage />
+//           </ProtectedRoute>
+//         }
+//       />
+//       <Route
+//         path="/conversations_rooms"
+//         element={
+//           <ProtectedRoute>
+//             <ServerTest />
+//           </ProtectedRoute>
+//         }
+//       />
+
+//       <Route
+//         path="/server_test"
+//         element={
+//           <ProtectedRoute>
+//             <ServerTest />
+//           </ProtectedRoute>
+//         }
+//       />
+
+//       {/* <Route path="/conversations_rooms" element={insert your page here} /> */}
+//     </Routes>
