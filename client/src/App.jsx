@@ -1,37 +1,76 @@
-import {
-  React,
-  Router,
-  Routes,
-  Route,
-  useAuth0,
-  LoginButton,
-  LogoutButton,
-  ServerTest,
-  useState,
-  LoadingOverlay,
-} from './imports';
+import { React, Router, Routes, Route, ServerTest } from './imports';
+import LandingPage from './pages/LandingPage.jsx';
+import Homepage from './pages/HomePage.jsx';
+import FlashcardsPage from './pages/FlashcardsPage.jsx';
+import ConversationRoomsPage from './pages/ConversationRoomsPage.jsx';
+import CalendarPage from './pages/CalendarPage.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import SettingsPage from './pages/SettingsPage.jsx';
 
 function App() {
-  const { isAuthenticated, isLoading } = useAuth0();
-  const { pageIsLoading, setPageIsLoading } = useState(true);
-
   return (
     <Router>
-      {pageIsLoading && (
-        <LoadingOverlay isLoading={isLoading || pageIsLoading} />
-      )}
-      {!isAuthenticated ? (
-        <div className="min-h-screen flex items-center justify-center">
-          <LoginButton />
-        </div>
-      ) : (
-        <>
-          <LogoutButton />
-          <Routes>
-            <Route path="/" element={<ServerTest />} />
-          </Routes>
-        </>
-      )}
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/server_test"
+            element={
+              <ProtectedRoute>
+                <ServerTest />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/welcome"
+            element={
+              <ProtectedRoute>
+                <Homepage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/flashcards"
+            element={
+              <ProtectedRoute>
+                <FlashcardsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/conversation_rooms"
+            element={
+              <ProtectedRoute>
+                <ConversationRoomsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar"
+            element={
+              <ProtectedRoute>
+                <CalendarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account/your_profile"
+            element={
+              <ProtectedRoute>
+                <ServerTest />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account/settings"
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
     </Router>
   );
 }
