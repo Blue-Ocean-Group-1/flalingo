@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 
 const deckSchema = new mongoose.Schema({
-  // TODO: Define message schema
+  name: { type: String, required: true },
+  category: { type: String, required: true },
+  flashcards: [FlashcardSchema]
 });
 
 export const Deck = mongoose.model('Deck', deckSchema);
