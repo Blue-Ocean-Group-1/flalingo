@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  name: { type: String, required: true },
   demographics: {
     age: Number,
     gender: String,
@@ -18,12 +19,12 @@ const userSchema = new mongoose.Schema({
       skillLevel: String,
       cardsCorrect: [
         { deck: {type:  mongoose.Schema.Types.ObjectId, ref: 'Deck'},
-          cardsCorrect: {type: [mongoose.Schema.Types.ObjectId], ref: 'Flashcard'},
-          timesCompleted:{type: Number}
+          cardsCorrect: {type: Map, of: Number, default: {}},
+          timesCompleted:{type: Number, default: 0}
           }]
     }
   ],
-  dailyGoalProgress: [{ type: String }],
+  dailyGoalProgress: [{ date: {type: Date}, finished: {type: Boolean, default: false}}],
   currentLoginStreak: Number,
   longestLoginStreak: Number,
   loginHistory: [{ type: Date, dailyGoalsCompleted: Boolean }],

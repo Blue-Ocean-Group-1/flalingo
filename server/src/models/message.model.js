@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 const messageSchema = new mongoose.Schema({
-  sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  content: { type: String, required: true },
-  language: { type: String, required: true },  // Specifies the language used in the message
-  chatroomId: { type: mongoose.Schema.Types.ObjectId, ref: 'Chatroom', required: true },  // References the chatroom
-  timestamp: { type: Date, default: Date.now }
+  senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },  // The sender's ObjectId
+  senderName: { type: String, required: true },  // The sender's name
+  content: { type: String, required: true },  // The message content
+  language: { type: String, required: true },  // The language of the message
+  timestamp: { type: Date, default: Date.now }  // The timestamp of the message
 });
 
 export const Message = mongoose.model('Message', messageSchema);

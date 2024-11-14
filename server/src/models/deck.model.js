@@ -1,9 +1,24 @@
 import mongoose from 'mongoose';
+import { flashcardSchema } from './flashcard.model.js';
 
 const deckSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  category: { type: String, required: true },
-  flashcards: [FlashcardSchema]
+  language: { type: String, required: true },
+  theme: { type: String, required: true },
+  skillLevel: { type: String, enum: ['beginner', 'proficient', 'advanced'], required: true },
+  flashcards: [{
+    word: { type: String, required: true },
+    translatedWord: { type: String, required: true },
+    options: [
+      {
+        type: Map,
+        of: String,
+        required: true
+      }
+    ]
+  }]
 });
 
-export const Deck = mongoose.model('Deck', deckSchema);
+const Deck = mongoose.model('Deck', deckSchema);
+
+export { Deck, deckSchema };

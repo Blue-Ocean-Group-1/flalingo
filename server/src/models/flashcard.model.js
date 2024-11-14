@@ -4,9 +4,14 @@ const flashcardSchema = new mongoose.Schema({
   word: { type: String, required: true },
   translatedWord: { type: String, required: true },
   options: [
-    { text: String, correct: Boolean }  // Indicates correct/incorrect answer
-  ],
-  skillLevel: { type: String, enum: ['beginner', 'proficient', 'advanced'], required: true },
+    {
+      type: Map,
+      of: String,
+      required: true
+    }
+  ]
 });
 
-export const Flashcard = mongoose.model('Flashcard', flashcardSchema);
+const Flashcard = mongoose.model('Flashcard', flashcardSchema)
+
+export { flashcardSchema, Flashcard }
