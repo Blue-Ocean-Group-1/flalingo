@@ -1,0 +1,191 @@
+{
+  "task.allowAutomaticTasks": "on",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.fixAll.stylelint": "always",
+    "source.fixAll.prettier": "always"
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "stylelint.validate": ["css", "scss"],
+  "[scss]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "terminal.integrated.profiles.osx": {
+    "server-dev": {
+      "path": "bash",
+      "overrideName": true,
+      "args": ["-c", "cd server && npm run dev"],
+      "icon": "server",
+      "color": "terminal.ansiGreen"
+    },
+    "client-dev": {
+      "path": "bash",
+      "overrideName": true,
+      "args": ["-c", "cd client && npm run dev"],
+      "icon": "browser",
+      "color": "terminal.ansiBlue"
+    },
+    "Git": {
+      "path": "bash",
+      "overrideName": true,
+      "args": ["-c", "git status; exec $SHELL"],
+      "icon": "git-branch",
+      "color": "terminal.ansiMagenta"
+    },
+    "server-lint": {
+      "path": "bash",
+      "overrideName": true,
+      "args": ["-c", "cd server && npm run lint; exec $SHELL"],
+      "icon": "bracket-error",
+      "color": "terminal.ansiRed"
+    },
+    "client-lint": {
+      "path": "bash",
+      "overrideName": true,
+      "args": ["-c", "cd client && npm run lint; exec $SHELL"],
+      "icon": "bracket-error",
+      "color": "terminal.ansiRed"
+    },
+    "bash": {
+      "path": "bash",
+      "overrideName": true,
+      "icon": "terminal-bash",
+      "color": "terminal.ansiYellow",
+      "args": ["-c", "echo 'PolyGlot Development Environment'; exec $SHELL"]
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.profiles.windows": {
+    "server-dev": {
+      "path": "cmd.exe",
+      "overrideName": true,
+      "args": ["/K", "cd server && npm run dev"],
+      "icon": "server",
+      "color": "terminal.ansiGreen"
+    },
+    "client-dev": {
+      "path": "cmd.exe",
+      "overrideName": true,
+      "args": ["/K", "cd client && npm run dev"],
+      "icon": "browser",
+      "color": "terminal.ansiBlue"
+    },
+    "Git": {
+      "path": "cmd.exe",
+      "overrideName": true,
+      "args": ["/K", "git status && cmd /k"],
+      "icon": "git-branch",
+      "color": "terminal.ansiMagenta"
+    },
+    "server-lint": {
+      "path": "cmd.exe",
+      "overrideName": true,
+      "args": ["/K", "cd server && npm run lint && cmd /k"],
+      "icon": "bracket-error",
+      "color": "terminal.ansiRed"
+    },
+    "client-lint": {
+      "path": "cmd.exe",
+      "overrideName": true,
+      "args": ["/K", "cd client && npm run lint && cmd /k"],
+      "icon": "bracket-error",
+      "color": "terminal.ansiRed"
+    },
+    "Command Prompt": {
+      "path": "cmd.exe",
+      "overrideName": true,
+      "icon": "terminal-cmd",
+      "color": "terminal.ansiYellow",
+      "args": ["/K", "echo PolyGlot Development Environment && cmd /k"]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+
+  "better-comments.tags": [
+    {
+      // ! important
+      "tag": "!",
+      "color": "#FDD",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "#E55",
+      "bold": true,
+      "italic": false
+    },
+    {
+      "tag": "?",
+      "color": "#3498DB", // ? question
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "#3498DB20",
+      "bold": false,
+      "italic": true
+    },
+    {
+      // - disabled
+      "tag": "-",
+      "color": "#ffffff12",
+      "strikethrough": true,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      // TODO
+      "tag": "todo",
+      "color": "#FF8C00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "#FF8C0020",
+      "bold": false,
+      "italic": false
+    },
+    {
+      // * highlight
+      "tag": "*",
+      "color": "#ffffff42",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": true,
+      "italic": false
+    },
+    {
+      // # Title
+      "tag": "#",
+      "color": "#ffffff80",
+      "strikethrough": false,
+      "underline": true,
+      "backgroundColor": "transparent",
+      "bold": true,
+      "italic": false
+    },
+    {
+      // #region
+      "tag": "#region",
+      "color": "#ffffff12",
+      "strikethrough": false,
+      "underline": true,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    }
+  ],
+  "cSpell.words": ["Avenir", "polyglot", "lcov", "optimizelegibility", "tailwindcss", "VITE"],
+  "css.customData": [".vscode/css-data.json"],
+  "jest.jestCommandLine": "npx jest",
+  "jest.disabledWorkspaceFolders": ["client", "server"]
+}
