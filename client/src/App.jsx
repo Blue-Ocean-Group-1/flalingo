@@ -5,7 +5,9 @@ import FlashcardsPage from './pages/FlashcardsPage.jsx';
 import ConversationRoomsPage from './pages/ConversationRoomsPage.jsx';
 import CalendarPage from './pages/CalendarPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import SettingsPage from './pages/SettingsPage.jsx';
+import AchievementsPage from './pages/AchievementsPage.jsx';
+import SupportPage from './pages/SupportPage.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 function App() {
   return (
@@ -13,14 +15,6 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/server_test"
-            element={
-              <ProtectedRoute>
-                <ServerTest />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="/welcome"
             element={
@@ -54,18 +48,34 @@ function App() {
             }
           />
           <Route
-            path="/account/your_profile"
+            path="/profile"
             element={
               <ProtectedRoute>
-                <ServerTest />
+                <ProfilePage />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/account/settings"
+            path="/achievements"
             element={
               <ProtectedRoute>
-                <SettingsPage />
+                <AchievementsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <ProtectedRoute>
+                <SupportPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/server_test"
+            element={
+              <ProtectedRoute>
+                <ServerTest />
               </ProtectedRoute>
             }
           />

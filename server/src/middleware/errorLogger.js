@@ -52,6 +52,7 @@ export const errorLogger = (err, req, res, next) => {
         ? 'Internal Server Error'
         : err.message,
   });
+  next();
 };
 
 export const asyncHandler = (fn) => (req, res, next) => {
