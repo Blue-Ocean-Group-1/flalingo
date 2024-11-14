@@ -1,29 +1,37 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { Dialog } from '@headlessui/react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
-import getHealth from './services/test.api.js';
-import logger from '../config/logger.js';
-import FontAwesomeIcon from './components/common/Icon.jsx';
-import ServerTest from './components/common/ServerTest.jsx';
+import {
+  React,
+  Router,
+  Routes,
+  Route,
+  useAuth0,
+  LoginButton,
+  LogoutButton,
+  ServerTest,
+  useState,
+  LoadingOverlay,
+} from './imports';
 
 function App() {
+  const { isAuthenticated, isLoading } = useAuth0();
+  const { pageIsLoading, setPageIsLoading } = useState(true);
+
   return (
     <Router>
-      <div className="App">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <Routes>
-          <Route path="/" element={<ServerTest />} />
-        </Routes>
-      </div>
+      {pageIsLoading && (
+        <LoadingOverlay isLoading={isLoading || pageIsLoading} />
+      )}
+      {!isAuthenticated ? (
+        <div className="min-h-screen flex items-center justify-center">
+          <LoginButton />
+        </div>
+      ) : (
+        <>
+          <LogoutButton />
+          <Routes>
+            <Route path="/" element={<ServerTest />} />
+          </Routes>
+        </>
+      )}
     </Router>
   );
 }

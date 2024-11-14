@@ -1,7 +1,5 @@
-import dotenv from 'dotenv';
+import 'dotenv/config.js';
 import winston from 'winston';
-
-dotenv.config();
 
 const levels = {
   error: 0, // Application errors
@@ -28,7 +26,7 @@ const buildFormat = () => {
 
   formatters.push(winston.format.colorize({ all: true }));
 
-  if (process.env.LOG_TIMESTAMPS) {
+  if (process.env.LOG_TIMESTAMPS === 'true') {
     formatters.push(
       winston.format.timestamp({
         format: 'YYYY-MM-DD HH:mm:ss',
@@ -36,7 +34,7 @@ const buildFormat = () => {
     );
   }
 
-  if (process.env.PRETTY_LOGGING) {
+  if (process.env.PRETTY_LOGGING === 'true') {
     formatters.push(
       winston.format.printf((info) => {
         const base = `${info.level}: ${info.message}`;
@@ -46,7 +44,7 @@ const buildFormat = () => {
           ? `\n${JSON.stringify(data[0], null, 2)}`
           : '';
 
-        return process.env.LOG_TIMESTAMPS
+        return process.env.LOG_TIMESTAMPS === 'true'
           ? `${info.timestamp} ${base}${details}`
           : `${base}${details}`;
       })
@@ -59,9 +57,9 @@ const buildFormat = () => {
 };
 
 const logger = winston.createLogger({
-  level: process.env.DEBUG_MODE ? 'debug' : process.env.LOG_LEVEL,
+  level: process.env.DEBUG_MODE === 'true' ? 'debug' : process.env.LOG_LEVEL,
   levels,
-  silent: process.env.SILENT,
+  silent: process.env.SILENT === 'true',
   format: buildFormat(),
   transports: [
     new winston.transports.Console({
@@ -73,7 +71,7 @@ const logger = winston.createLogger({
   ],
 });
 
-const originalLogger = {
+const originalLogMethods = {
   error: logger.error.bind(logger),
   warn: logger.warn.bind(logger),
   info: logger.info.bind(logger),
@@ -83,23 +81,35 @@ const originalLogger = {
 };
 
 logger.error = (message, data = null) => {
-  if (!process.env.LOG_ERRORS) return;
-  originalLogger.error(message, data);
+  if (process.env.LOG_ERRORS === 'true') {
+    originalLogMethods.error(message, data);
+  }
+};
+
+logger.warn = (message, data = null) => {
+  originalLogMethods.warn(message, data);
+};
+
+logger.info = (message, data = null) => {
+  originalLogMethods.info(message, data);
 };
 
 logger.http = (message, data = null) => {
-  if (!process.env.LOG_REQUESTS) return;
-  originalLogger.http(message, data);
+  if (process.env.LOG_REQUESTS === 'true') {
+    originalLogMethods.http(message, data);
+  }
 };
 
 logger.query = (message, data = null) => {
-  if (!process.env.LOG_QUERIES) return;
-  originalLogger.query(message, data);
+  if (process.env.LOG_QUERIES === 'true') {
+    originalLogMethods.query(message, data);
+  }
 };
 
 logger.debug = (message, data = null) => {
-  if (!process.env.DEBUG_MODE) return;
-  originalLogger.debug(message, data);
+  if (process.env.DEBUG_MODE === 'true') {
+    originalLogMethods.debug(message, data);
+  }
 };
 
 export default logger;

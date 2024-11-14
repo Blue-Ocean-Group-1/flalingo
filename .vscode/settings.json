@@ -184,7 +184,17 @@
       "italic": false
     }
   ],
-  "cSpell.words": ["Avenir", "polyglot", "lcov", "optimizelegibility", "tailwindcss", "VITE"],
+  "cSpell.words": [
+    "Avenir",
+    "dompurify",
+    "headlessui",
+    "lcov",
+    "optimizelegibility",
+    "polyglot",
+    "signup",
+    "tailwindcss",
+    "VITE"
+  ],
   "css.customData": [".vscode/css-data.json"],
   "jest.jestCommandLine": "npx jest",
   "jest.disabledWorkspaceFolders": ["client", "server"]
