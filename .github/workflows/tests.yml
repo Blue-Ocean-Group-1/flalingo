@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Client - Install Dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Client - Run Tests
+        working-directory: ./client
+        run: npm test
+
+      - name: Server - Install Dependencies
+        working-directory: ./server
+        run: npm ci
+
+      - name: Server - Run Tests
+        working-directory: ./server
+        env:
+          MONGODB_URI: mongodb://localhost:27017/test
+          NODE_ENV: test
+        run: npm test

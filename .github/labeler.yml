@@ -1,0 +1,23 @@
+client:
+  - client/**/*
+
+server:
+  - server/**/*
+
+test:
+  - '**/tests/**/*'
+  - '**/*.test.js'
+  - '**/*.spec.js'
+
+documentation:
+  - '**/*.md'
+  - docs/**/*
+
+dependencies:
+  - '**/package.json'
+  - '**/package-lock.json'
+
+configuration:
+  - '**/*.config.js'
+  - '**/*.config.mjs'
+  - .github/**/*
