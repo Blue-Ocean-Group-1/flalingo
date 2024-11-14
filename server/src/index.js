@@ -43,7 +43,7 @@ connectDB();
 
 // start server
 const PORT = env.PORT ?? 3000;
-const MONGODB_URI = env.MONGODB_URI ?? 'mongodb://localhost:27017/flalingo';
+const MONGODB_URI = env.MONGODB_URI ?? 'mongodb://localhost:27017/polyglot';
 const SERVER_HOST = env.SERVER_HOST ?? 'localhost';
 const NODE_ENV = env.NODE_ENV ?? 'development';
 

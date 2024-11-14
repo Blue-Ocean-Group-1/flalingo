@@ -37,7 +37,7 @@ export const env = {
   API_TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT || '10000', 10),
 
   // App Settings
-  APP_NAME: import.meta.env.VITE_APP_NAME || 'Flalingo',
+  APP_NAME: import.meta.env.VITE_APP_NAME || 'PolyGlot',
 
   // Logging
   LOG_LEVEL: validateLogLevel(import.meta.env.VITE_LOG_LEVEL),
@@ -60,7 +60,7 @@ export const env = {
 const envExample = {
   VITE_API_URL: 'http://localhost:3000/api',
   VITE_API_TIMEOUT: '10000',
-  VITE_APP_NAME: 'Flalingo',
+  VITE_APP_NAME: 'PolyGlot',
   VITE_LOG_LEVEL: 'debug',
   VITE_DEBUG_MODE: 'true',
   VITE_LOG_REQUESTS: 'true',
