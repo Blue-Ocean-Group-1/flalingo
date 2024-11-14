@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
           }]
     }
   ],
+  dailyWords: {type: [{ date: {type: Date, required: true}, words: { type: [String], required: true }}]},
   dailyGoalProgress: [{ date: {type: Date}, completed: {type: Boolean, default: false}}],
   currentLoginStreak: Number,
   longestLoginStreak: Number,
