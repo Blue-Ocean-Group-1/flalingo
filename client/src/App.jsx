@@ -5,8 +5,9 @@ import FlashcardsPage from './pages/FlashcardsPage.jsx';
 import ConversationRoomsPage from './pages/ConversationRoomsPage.jsx';
 import CalendarPage from './pages/CalendarPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import SettingsPage from './pages/SettingsPage.jsx';
+import AchievementsPage from './pages/AchievementsPage.jsx';
 import SupportPage from './pages/SupportPage.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 function App() {
   return (
@@ -50,7 +51,7 @@ function App() {
             path="/profile"
             element={
               <ProtectedRoute>
-                <ServerTest />
+                <ProfilePage />
               </ProtectedRoute>
             }
           />
@@ -58,7 +59,7 @@ function App() {
             path="/achievements"
             element={
               <ProtectedRoute>
-                <SettingsPage />
+                <AchievementsPage />
               </ProtectedRoute>
             }
           />
