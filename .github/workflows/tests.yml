@@ -24,7 +24,6 @@ jobs:
         uses: actions/setup-node@v4.1.0
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Client - Install Dependencies
         working-directory: ./client
