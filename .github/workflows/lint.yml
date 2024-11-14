@@ -1,0 +1,80 @@
+# .github/workflows/lint.yml
+name: Lint
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # Client checks
+      - name: Client - Cache dependencies
+        uses: actions/cache@v4.1.2
+        id: client-cache
+        with:
+          path: |
+            client/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-client-${{ hashFiles('client/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-client-
+
+      - name: Client - Install Dependencies
+        if: steps.client-cache.outputs.cache-hit != 'true'
+        working-directory: ./client
+        run: npm ci
+
+      - name: Client - Run ESLint
+        working-directory: ./client
+        run: npm run lint
+
+      - name: Client - Run Style Lint
+        working-directory: ./client
+        run: npm run lint:style
+
+      # Server checks
+      - name: Server - Cache dependencies
+        uses: actions/cache@v4.1.2
+        id: server-cache
+        with:
+          path: |
+            server/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-server-${{ hashFiles('server/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-server-
+
+      - name: Server - Install Dependencies
+        if: steps.server-cache.outputs.cache-hit != 'true'
+        working-directory: ./server
+        run: npm ci
+
+      - name: Server - Run ESLint
+        working-directory: ./server
+        run: npm run lint
+
+      # Cache ESLint results
+      - name: Cache ESLint results
+        uses: actions/cache@v4.1.2
+        with:
+          path: |
+            .eslintcache
+            client/.eslintcache
+            server/.eslintcache
+          key: ${{ runner.os }}-eslint-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-eslint-
