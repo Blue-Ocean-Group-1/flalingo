@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import { deckSchema } from './deck.model.js';
 
 const languageSchema = new mongoose.Schema({

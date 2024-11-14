@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { flashcardSchema } from './flashcard.model.js';
 
 const deckSchema = new mongoose.Schema({
   name: { type: String, required: true },
