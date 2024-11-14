@@ -6,6 +6,7 @@ import ConversationRoomsPage from './pages/ConversationRoomsPage.jsx';
 import CalendarPage from './pages/CalendarPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
+import SupportPage from './pages/SupportPage.jsx';
 
 function App() {
   return (
@@ -13,14 +14,6 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/server_test"
-            element={
-              <ProtectedRoute>
-                <ServerTest />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="/welcome"
             element={
@@ -54,7 +47,7 @@ function App() {
             }
           />
           <Route
-            path="/account/your_profile"
+            path="/profile"
             element={
               <ProtectedRoute>
                 <ServerTest />
@@ -62,10 +55,26 @@ function App() {
             }
           />
           <Route
-            path="/account/settings"
+            path="/achievements"
             element={
               <ProtectedRoute>
                 <SettingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <ProtectedRoute>
+                <SupportPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/server_test"
+            element={
+              <ProtectedRoute>
+                <ServerTest />
               </ProtectedRoute>
             }
           />

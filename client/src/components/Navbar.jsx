@@ -90,7 +90,7 @@ export default function Navbar() {
               >
                 <MenuItem>
                   <Link
-                    href="/account/your_profile"
+                    href="/profile"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Your Profile
@@ -98,7 +98,7 @@ export default function Navbar() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    href="/account/settings"
+                    href="/achievements"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Settings
@@ -106,10 +106,10 @@ export default function Navbar() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    href="/account/support"
+                    href="/support"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
-                    Sign out
+                    Support
                   </Link>
                 </MenuItem>
               </MenuItems>
