@@ -1,8 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { React, Router, Routes, Route, ServerTest } from './imports';
 import LandingPage from './pages/LandingPage.jsx';
-import ServerTest from './components/common/ServerTest.jsx';
-import { redirectIfNoUser } from './utils/loaders.js';
+import Homepage from './pages/HomePage.jsx';
+import FlashcardsPage from './pages/FlashcardsPage.jsx';
+import ConversationRoomsPage from './pages/ConversationRoomsPage.jsx';
+import CalendarPage from './pages/CalendarPage.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import SettingsPage from './pages/SettingsPage.jsx';
 
 function App() {
   return (
@@ -10,16 +13,62 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<LandingPage />} />
-
           <Route
             path="/server_test"
-            element={<ServerTest />}
-            loader={redirectIfNoUser}
+            element={
+              <ProtectedRoute>
+                <ServerTest />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/server_test" element={<ServerTest />} />
-          <Route path="/flashcards" element={<ServerTest />} />
-
-          {/* <Route path="/conversations_rooms" element={insert your page here} /> */}
+          <Route
+            path="/welcome"
+            element={
+              <ProtectedRoute>
+                <Homepage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/flashcards"
+            element={
+              <ProtectedRoute>
+                <FlashcardsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/conversation_rooms"
+            element={
+              <ProtectedRoute>
+                <ConversationRoomsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar"
+            element={
+              <ProtectedRoute>
+                <CalendarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account/your_profile"
+            element={
+              <ProtectedRoute>
+                <ServerTest />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account/settings"
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>
@@ -27,42 +76,3 @@ function App() {
 }
 
 export default App;
-// <Router>
-//   <div className="App">
-//     <Routes>
-//       <Route
-//         path="/"
-//         element={
-//           <ProtectedRoute>
-//             <LandingPage />
-//           </ProtectedRoute>
-//         }
-//       />
-//       <Route
-//         path="/flashcards"
-//         element={
-//           <ProtectedRoute>
-//             <FlashcardsPage />
-//           </ProtectedRoute>
-//         }
-//       />
-//       <Route
-//         path="/conversations_rooms"
-//         element={
-//           <ProtectedRoute>
-//             <ServerTest />
-//           </ProtectedRoute>
-//         }
-//       />
-
-//       <Route
-//         path="/server_test"
-//         element={
-//           <ProtectedRoute>
-//             <ServerTest />
-//           </ProtectedRoute>
-//         }
-//       />
-
-//       {/* <Route path="/conversations_rooms" element={insert your page here} /> */}
-//     </Routes>
