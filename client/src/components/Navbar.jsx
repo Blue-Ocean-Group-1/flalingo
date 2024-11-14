@@ -80,7 +80,7 @@ export default function Navbar() {
             {/* This will need to be swapped out for login/signup button */}
             <Menu as="div" className="relative ml-3">
               <div>
-                <MenuButton className="relative flex rounded-full bg-gray-800 text-sm">
+                <MenuButton className="relative flex rounded-full text-sm">
                   <p className="font-bold">Account</p>
                 </MenuButton>
               </div>
