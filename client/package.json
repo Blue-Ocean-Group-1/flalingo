@@ -13,15 +13,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^2.2.4",
     "@awesome.me/kit-5597d7fcb7": "^1.0.4",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
-    "@fortawesome/free-brands-svg-icons": "^6.6.0",
-    "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@headlessui/react": "^2.2.0",
     "axios": "^1.6.2",
-    "dompurify": "^3.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.28.0"
