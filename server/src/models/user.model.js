@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
+  profilePicture: { type: String, default: null },
   demographics: {
     age: Number,
     gender: String,
@@ -15,16 +16,35 @@ const userSchema = new mongoose.Schema({
   allLanguages: [String],
   progress: [
     {
-      language: String,
-      skillLevel: String,
-      cardsCorrect: [
-        { deck: {type:  mongoose.Schema.Types.ObjectId, ref: 'Deck'},
-          cardsCorrect: {type: Map, of: Number, default: {}},
-          timesCompleted:{type: Number, default: 0}
-          }]
+      language: { type: String, required: true },
+      skillLevel: { type: String, required: true, default: 'beginner' },
+      decks: [
+        {
+          deckName: { type: String, required: true },
+          deck_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Deck', required: true },
+          skillLevel: { type: String, required: true },
+          timesCompleted: [
+            {
+              attemptNo: { type: Number, required: true },
+              totalCorrect: { type: Number, required: true },
+              date: { type: Date, required: true }
+            }
+          ],
+          perWordCorrect: [
+            {
+              word: { type: String, required: true },
+              correct: { type: Number, required: true },
+            }
+          ]
+        }
+      ]
     }
   ],
-  dailyWords: {type: [{ date: {type: Date, required: true}, words: { type: [String], required: true }}]},
+  streaks: [{
+    highestFlashcard: { type: Number, default: 0 },
+    currentFlashcard: { type: Number, default: 0 },
+  }],
+  dailyWords: {type: [{ date: {type: Date, required: true}, words: { type: [{ word: { type: String}, translatedWord: {type: String}}], required: true }}]},
   dailyGoalProgress: [{ date: {type: Date}, completed: {type: Boolean, default: false}}],
   currentLoginStreak: Number,
   longestLoginStreak: Number,

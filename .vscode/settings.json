@@ -24,49 +24,49 @@
   },
   "terminal.integrated.profiles.osx": {
     "server-dev": {
-      "path": "bash",
+      "path": "zsh",
       "overrideName": true,
       "args": ["-c", "cd server && npm run dev"],
       "icon": "server",
       "color": "terminal.ansiGreen"
     },
     "client-dev": {
-      "path": "bash",
+      "path": "zsh",
       "overrideName": true,
       "args": ["-c", "cd client && npm run dev"],
       "icon": "browser",
       "color": "terminal.ansiBlue"
     },
     "Git": {
-      "path": "bash",
+      "path": "zsh",
       "overrideName": true,
       "args": ["-c", "git status; exec $SHELL"],
       "icon": "git-branch",
       "color": "terminal.ansiMagenta"
     },
     "server-lint": {
-      "path": "bash",
+      "path": "zsh",
       "overrideName": true,
       "args": ["-c", "cd server && npm run lint; exec $SHELL"],
       "icon": "bracket-error",
       "color": "terminal.ansiRed"
     },
     "client-lint": {
-      "path": "bash",
+      "path": "zsh",
       "overrideName": true,
       "args": ["-c", "cd client && npm run lint; exec $SHELL"],
       "icon": "bracket-error",
       "color": "terminal.ansiRed"
     },
-    "bash": {
-      "path": "bash",
+    "zsh": {
+      "path": "zsh",
       "overrideName": true,
-      "icon": "terminal-bash",
+      "icon": "terminal-zsh",
       "color": "terminal.ansiYellow",
       "args": ["-c", "echo 'PolyGlot Development Environment'; exec $SHELL"]
     }
   },
-  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.profiles.windows": {
     "server-dev": {
       "path": "cmd.exe",
@@ -197,5 +197,8 @@
   ],
   "css.customData": [".vscode/css-data.json"],
   "jest.jestCommandLine": "npx jest",
-  "jest.disabledWorkspaceFolders": ["client", "server"]
+  "jest.disabledWorkspaceFolders": ["client", "server"],
+  "yaml.schemas": {
+    "https://www.artillery.io/schema.json": []
+  }
 }
