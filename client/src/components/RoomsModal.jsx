@@ -40,14 +40,14 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
             chatting!
           </Description>
           <div className="h-2/3 max-h-2/3 bg-slate-200 p-2 flex flex-col gap-2 overflow-y-auto">
-            {roomsData.map((room) => (
-              <p>{room.name}</p>
+            {roomsData.map((room, idx) => (
+              <p key={room._id}>{room.name}</p>
             ))}
             {roomsData.map((room) => (
-              <p>{room.name}</p>
+              <p key={room._id}>{room.name}</p>
             ))}
             {roomsData.map((room) => (
-              <p>{room.name}</p>
+              <p key={room._id}>{room.name}</p>
             ))}
           </div>
           <div className="flex justify-center">
@@ -67,4 +67,10 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
 RoomsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   setIsOpen: PropTypes.func.isRequired,
+  roomsData: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };

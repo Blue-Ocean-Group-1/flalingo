@@ -1,4 +1,5 @@
 import Navbar from '../Navbar';
+import PropTypes from 'prop-types';
 
 export default function DefaultPageLayout({ children }) {
   return (
@@ -13,3 +14,7 @@ export default function DefaultPageLayout({ children }) {
     </div>
   );
 }
+
+DefaultPageLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
