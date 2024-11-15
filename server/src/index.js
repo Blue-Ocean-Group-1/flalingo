@@ -10,14 +10,6 @@ import { errorLogger, AppError } from './middleware/errorLogger.js';
 import { requestLogger } from './middleware/requestLogger.js';
 import { messageRouter, testRouter, userRouter, deckRouter, chatroomRouter } from './routes/index.js';
 
-import {
-  messageRouter,
-  testRouter,
-  userRouter,
-  chatroomRouter,
-} from './routes/index.js';
-
-
 validateEnv();
 
 const app = express();
