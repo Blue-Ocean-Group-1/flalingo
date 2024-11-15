@@ -1,3 +1,4 @@
+import chatroomRouter from './chatroom.routes.js';
 import deckRouter from './deck.routes.js';
 import flashcardRouter from './flashcard.routes.js';
 import languageRouter from './language.routes.js';
@@ -12,4 +13,5 @@ export {
   deckRouter,
   flashcardRouter,
   languageRouter,
+  chatroomRouter,
 };

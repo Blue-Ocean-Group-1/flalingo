@@ -12,15 +12,16 @@ import FontAwesomeIcon from './common/Icon.jsx';
 
 const navigation = [
   { name: 'Flashcards', href: '/flashcards', current: false },
-  { name: 'Conversation Rooms', href: '/conversations_rooms', current: false },
-  { name: 'Calendar', href: '/calendar', current: false },
+  { name: 'Conversation Rooms', href: '/conversation_rooms', current: false },
+  { name: 'Achievements', href: '/achievements', current: false },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-// FIX ANCHOR TAGS
+// TODO: LOGOUT BUTTON FUNCTIONALITY
+// TODO: FIX SELECTED PAGE STATE INDICATOR
 
 export default function Navbar() {
   return (
@@ -98,19 +99,16 @@ export default function Navbar() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    href="/achievements"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                  >
-                    Settings
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link
                     href="/support"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Support
                   </Link>
+                </MenuItem>
+                <MenuItem>
+                  <div className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none">
+                    Logout
+                  </div>
                 </MenuItem>
               </MenuItems>
             </Menu>
