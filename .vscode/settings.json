@@ -24,49 +24,49 @@
   },
   "terminal.integrated.profiles.osx": {
     "server-dev": {
-      "path": "zsh",
+      "path": "bash",
       "overrideName": true,
       "args": ["-c", "cd server && npm run dev"],
       "icon": "server",
       "color": "terminal.ansiGreen"
     },
     "client-dev": {
-      "path": "zsh",
+      "path": "bash",
       "overrideName": true,
       "args": ["-c", "cd client && npm run dev"],
       "icon": "browser",
       "color": "terminal.ansiBlue"
     },
     "Git": {
-      "path": "zsh",
+      "path": "bash",
       "overrideName": true,
       "args": ["-c", "git status; exec $SHELL"],
       "icon": "git-branch",
       "color": "terminal.ansiMagenta"
     },
     "server-lint": {
-      "path": "zsh",
+      "path": "bash",
       "overrideName": true,
       "args": ["-c", "cd server && npm run lint; exec $SHELL"],
       "icon": "bracket-error",
       "color": "terminal.ansiRed"
     },
     "client-lint": {
-      "path": "zsh",
+      "path": "bash",
       "overrideName": true,
       "args": ["-c", "cd client && npm run lint; exec $SHELL"],
       "icon": "bracket-error",
       "color": "terminal.ansiRed"
     },
-    "zsh": {
-      "path": "zsh",
+    "bash": {
+      "path": "bash",
       "overrideName": true,
-      "icon": "terminal-zsh",
+      "icon": "terminal-bash",
       "color": "terminal.ansiYellow",
       "args": ["-c", "echo 'PolyGlot Development Environment'; exec $SHELL"]
     }
   },
-  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.osx": "bash",
   "terminal.integrated.profiles.windows": {
     "server-dev": {
       "path": "cmd.exe",
