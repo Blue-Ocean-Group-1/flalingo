@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AchievementsPage from './pages/AchievementsPage.jsx';
 import SupportPage from './pages/SupportPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route
-            path="/welcome"
+            path="/dashboard"
             element={
               <ProtectedRoute>
                 <Homepage />
@@ -71,6 +72,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/*" element={<NotFoundPage />} />
           <Route
             path="/server_test"
             element={
