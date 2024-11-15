@@ -17,8 +17,6 @@ ${chalk.blue('━━━━━━━━━━━━━━━━━━━━━━
 export const requestLogger = (req, res, next) => {
   const start = performance.now();
 
-  console.log(req.url, 'url');
-
   res.on('finish', () => {
     if (res.statusCode < 400) {
       const duration = performance.now() - start;

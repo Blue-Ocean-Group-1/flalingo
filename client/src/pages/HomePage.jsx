@@ -12,7 +12,7 @@ import './mycss.css';
 
 import { findBestDisplayDecks } from '../utils/deckProgress';
 
-import { addTimesCompleted } from './heh.js';
+import { addTimesCompleted } from '../utils/addDeckProgress.js';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
@@ -22,7 +22,6 @@ export default function HomePage() {
 
   // You want data? This will give you data
   useEffect(() => {
-    let myDecks;
     axios.get(`${env.API_URL}/users/${userID}`).then((res) => {
       setUser(res.data);
       setDisplayDecks(findBestDisplayDecks(res.data));
@@ -46,7 +45,6 @@ export default function HomePage() {
       response.data ? setDailyWords(response.data) : null;
     };
     getRandomWords();
-    console.log(displayDecks);
   }, []);
 
   const flipWord = (index) => {
