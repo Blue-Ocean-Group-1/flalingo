@@ -12,7 +12,7 @@ import FontAwesomeIcon from './common/Icon.jsx';
 
 const navigation = [
   { name: 'Flashcards', href: '/flashcards', current: false },
-  { name: 'Conversation Rooms', href: '/conversations_rooms', current: false },
+  { name: 'Conversation Rooms', href: '/conversation_rooms', current: false },
   { name: 'Calendar', href: '/calendar', current: false },
 ];
 
