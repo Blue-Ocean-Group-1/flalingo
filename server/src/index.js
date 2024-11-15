@@ -8,7 +8,12 @@ import { env, validateEnv } from './config/env.js';
 import logger from './config/logger.js';
 import { errorLogger, AppError } from './middleware/errorLogger.js';
 import { requestLogger } from './middleware/requestLogger.js';
-import { messageRouter, testRouter, userRouter } from './routes/index.js';
+import {
+  messageRouter,
+  testRouter,
+  userRouter,
+  chatroomRouter,
+} from './routes/index.js';
 
 validateEnv();
 
@@ -20,7 +25,9 @@ app.use(express.json());
 app.use(requestLogger);
 
 // Routes
+
 app.use('/api/messages', messageRouter);
+app.use('/api/chatrooms', chatroomRouter);
 app.use('/api/users', userRouter);
 app.use('/api/test', testRouter);
 
