@@ -1,6 +1,6 @@
 import { Deck } from '../models/deck.model.js';
 
-export const getDecks = async (req, res) => {
+const getDecks = async (req, res) => {
   try {
     const decks = await Deck.find();
     res.json(decks);
@@ -8,3 +8,14 @@ export const getDecks = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+const getDecksByLanguage = async (req, res) => {
+  try {
+    const decks = await Deck.find({ language: req.params.language });
+    res.status(200).send(decks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export { getDecks, getDecksByLanguage };
