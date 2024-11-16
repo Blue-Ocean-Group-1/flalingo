@@ -1,5 +1,6 @@
 import express from 'express';
 import RateLimit from 'express-rate-limit';
+
 import { getUsers, getUserById, getDailyWords, addDeckProgress } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
