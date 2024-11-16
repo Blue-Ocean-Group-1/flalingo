@@ -1,5 +1,6 @@
 import express from 'express';
 import RateLimit from 'express-rate-limit';
+
 import { getChatrooms } from '../controllers/chatroom.controller.js';
 
 const chatroomsRouter = express.Router();
