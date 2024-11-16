@@ -26,7 +26,7 @@ const validateNodeEnv = (env) => {
   const validEnvs = ['development', 'production', 'test'];
   if (!validEnvs.includes(env)) {
     throw new Error(
-      `Invalid NODE_ENV: ${env}. Must be one of: ${validEnvs.join(', ')}`
+      `Invalid NODE_ENV: ${env}. Must be one of: ${validEnvs.join(', ')}`,
     );
   }
   return env;
@@ -36,7 +36,7 @@ const validateLogLevel = (level) => {
   const validLevels = ['error', 'warn', 'info', 'http', 'query', 'debug'];
   if (!validLevels.includes(level)) {
     throw new Error(
-      `Invalid LOG_LEVEL: ${level}. Must be one of: ${validLevels.join(', ')}`
+      `Invalid LOG_LEVEL: ${level}. Must be one of: ${validLevels.join(', ')}`,
     );
   }
   return level;
@@ -107,6 +107,7 @@ if (env.isProduction) {
 }
 
 if (!env.SILENT && env.isDevelopment) {
+  /* eslint-disable */
   console.info('✔︎ Environment variables validated successfully');
 
   if (env.VERBOSE) {
@@ -118,4 +119,5 @@ if (!env.SILENT && env.isDevelopment) {
       DEBUG_MODE: env.DEBUG_MODE,
     });
   }
+  /* eslint-enable */
 }

@@ -1,6 +1,13 @@
 import express from 'express';
 import RateLimit from 'express-rate-limit';
-import { getUsers, getUserById, getDailyWords, addDeckProgress } from '../controllers/user.controller.js';
+
+import {
+  getUsers,
+  getUserData,
+  getUserById,
+  getDailyWords,
+  addDeckProgress,
+} from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
 
@@ -18,5 +25,6 @@ userRouter.get('/:id', getUserByIdLimiter, getUserById);
 userRouter.get('/:id/dailyWords', getDailyWords);
 
 userRouter.post('/deckProgress', addDeckProgress);
+userRouter.get('/me', getUserData);
 
 export default userRouter;

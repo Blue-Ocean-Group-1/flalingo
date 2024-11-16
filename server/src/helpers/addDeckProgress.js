@@ -1,7 +1,8 @@
- import logger from '../config/logger';
+import logger from '../config/logger.js';
+// import User from '../models/user.model.js';
 
- const helper = async (userId, language, deckName, attempt) => {
-   try {
+const helper = async (userId, language, deckName, attempt) => {
+  try {
     // Find the user by their ID and update their progress
     const user = await User.findOneAndUpdate(
       {
@@ -19,10 +20,9 @@
         arrayFilters: [{ 'deck.deckName': deckName }], // This is for targeting the deck in the array
       },
     );
-
   } catch {
     logger.error('Error adding deck progress');
   }
-}
+};
 
 export default helper;

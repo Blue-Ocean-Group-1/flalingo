@@ -1,10 +1,7 @@
 describe('Sample test', () => {
-  beforeAll(() => {
-    console.log('Test is running!');
-  });
+  beforeAll(() => {});
 
   it('should work', () => {
-    console.log('Running test case');
     expect(true).toBe(true);
   });
 });
