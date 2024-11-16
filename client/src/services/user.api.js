@@ -1,6 +1,34 @@
 import api from './index.js';
+import Logger from '../../config/logger.js';
 
-const getMessages = async () => {
-  const response = await api.get('/messages');
-  return response.data;
+export const fetchUserData = async (token) => {
+  try {
+    Logger.info('user.api.js: Fetching user data');
+    const response = await api.get(`/users/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    Logger.info('user.api.js: User data fetched successfully');
+    return response.data;
+  } catch (error) {
+    Logger.error(`user.api.js: Error fetching user data - ${error.message}`);
+    throw error;
+  }
+};
+
+export const updateUserData = async (token, updatedData) => {
+  try {
+    Logger.info('user.api.js: Updating user data');
+    const response = await api.put(`/users/me`, updatedData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    Logger.info('user.api.js: User data updated successfully');
+    return response.data;
+  } catch (error) {
+    Logger.error(`user.api.js: Error updating user data - ${error.message}`);
+    throw error;
+  }
 };

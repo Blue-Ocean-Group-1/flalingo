@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';
-
-import { env } from '../../config/env';
-
 import axios from 'axios';
-
 import Navbar from '../components/Navbar';
+import useUserData from '../hooks/useUserData.jsx';
+import Logger from '../../config/logger.js';
+import { useEffect, useState } from 'react';
+import { env } from '../../config/env';
+import { addTimesCompleted } from '../utils/addDeckProgress.js';
+import { findBestDisplayDecks } from '../utils/deckProgress';
 
 const userID = '6737bd5921b1fac154eadf76';
 
-import { findBestDisplayDecks } from '../utils/deckProgress';
-
-import { addTimesCompleted } from '../utils/addDeckProgress.js';
-
 export default function HomePage() {
+  const [userData] = useUserData();
+  Logger.debug('HomePage: userData:', userData);
   const [dailyWords, setDailyWords] = useState([]);
   const [dailyMotivation, setDailyMotivation] = useState('');
   const [user, setUser] = useState('');

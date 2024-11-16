@@ -7,8 +7,9 @@ export { useState, useEffect } from 'react';
 // Router imports
 export { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-// Auth0 imports
-export { useAuth0 } from '@auth0/auth0-react';
+// Auth imports
+export { default as AuthProvider } from './context/AuthContext.jsx';
+export { default as ProtectedRoute } from './components/ProtectedRoute.jsx';
 
 // HeadlessUI imports
 export { Dialog } from '@headlessui/react';
@@ -23,3 +24,7 @@ export { default as ServerTest } from './components/common/ServerTest.jsx';
 // Services and utilities
 export { default as getHealth } from './services/test.api.js';
 export { default as logger } from '../config/logger.js';
+
+// Pages
+export { default as Login } from './pages/Login.jsx';
+export { default as Signup } from './pages/Signup.jsx';
