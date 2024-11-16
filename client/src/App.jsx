@@ -3,12 +3,12 @@ import LandingPage from './pages/LandingPage.jsx';
 import Homepage from './pages/HomePage.jsx';
 import FlashcardsPage from './pages/FlashcardsPage.jsx';
 import ConversationRoomsPage from './pages/ConversationRoomsPage.jsx';
-import CalendarPage from './pages/CalendarPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AchievementsPage from './pages/AchievementsPage.jsx';
 import SupportPage from './pages/SupportPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
+import ChatRoomPage from './pages/ChatRoomPage.jsx';
 
 function App() {
   return (
@@ -41,10 +41,10 @@ function App() {
             }
           />
           <Route
-            path="/calendar"
+            path="/conversation_rooms/:roomId"
             element={
               <ProtectedRoute>
-                <CalendarPage />
+                <ChatRoomPage />
               </ProtectedRoute>
             }
           />

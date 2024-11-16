@@ -197,5 +197,8 @@
   ],
   "css.customData": [".vscode/css-data.json"],
   "jest.jestCommandLine": "npx jest",
-  "jest.disabledWorkspaceFolders": ["client", "server"]
+  "jest.disabledWorkspaceFolders": ["client", "server"],
+  "yaml.schemas": {
+    "https://www.artillery.io/schema.json": []
+  }
 }
