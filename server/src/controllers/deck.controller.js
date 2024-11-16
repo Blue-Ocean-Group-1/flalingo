@@ -10,7 +10,6 @@ const getDecks = async (req, res) => {
 };
 
 const getDecksByLanguage = async (req, res) => {
-  console.log(req.params.language);
   try {
     const decks = await Deck.find({ language: req.params.language });
     res.status(200).send(decks);

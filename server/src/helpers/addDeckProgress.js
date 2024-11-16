@@ -1,3 +1,5 @@
+ import logger from '../config/logger';
+
  const helper = async (userId, language, deckName, attempt) => {
    try {
     // Find the user by their ID and update their progress
@@ -18,13 +20,8 @@
       },
     );
 
-    if (user) {
-      console.log('Successfully added timesCompleted:', user);
-    } else {
-      console.log('No user found or deck name does not match');
-    }
-  } catch (error) {
-    console.error('Error updating timesCompleted:', error);
+  } catch {
+    logger.error('Error adding deck progress');
   }
 }
 

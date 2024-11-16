@@ -51,12 +51,8 @@ const getRandomDailyWords = async (userId) => {
           },
         },
       },
-    ).then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err)
-    });
+    ).then(() => {})
+    .catch(() => {});
 
     return newWords;
   }
