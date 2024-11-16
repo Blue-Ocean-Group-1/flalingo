@@ -8,8 +8,6 @@ import Navbar from '../components/Navbar';
 
 const userID = '6737bd5921b1fac154eadf76';
 
-import './mycss.css';
-
 import { findBestDisplayDecks } from '../utils/deckProgress';
 
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
