@@ -32,6 +32,9 @@ export const validateEnv = () => {
 };
 
 export const env = {
+  // cloudinary
+  CLOUDINARY_API_LINK: import.meta.env.VITE_CLOUDINARY_API_LINK,
+
   // API
   API_URL: validateApiUrl(requireEnvVar('VITE_API_URL')),
   API_TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT || '10000', 10),
