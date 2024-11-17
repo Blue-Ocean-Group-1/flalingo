@@ -44,7 +44,11 @@ const userSchema = new mongoose.Schema({
     highestFlashcard: { type: Number, default: 0 },
     currentFlashcard: { type: Number, default: 0 },
   }],
-  dailyWords: {type: [{ date: {type: Date, required: true}, words: { type: [{ word: { type: String}, translatedWord: {type: String}}], required: true }}]},
+  dailyWords: {type: [
+    { date: {type: Date, required: true},
+     words: { type: [{ word: { type: String},
+     translatedWord: {type: String}}], required: true },
+     deckName: { type: String, required: true }}], default: []},
   dailyGoalProgress: [{ date: {type: Date}, completed: {type: Boolean, default: false}}],
   currentLoginStreak: Number,
   longestLoginStreak: Number,
