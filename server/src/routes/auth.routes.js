@@ -15,7 +15,12 @@ const loginLimiter = RateLimit({
   max: 100, // max 100 requests per windowMs
 });
 
-router.post('/register', register);
+const registerLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
+router.post('/register', registerLimiter, register);
 router.post('/login', loginLimiter, login);
 router.get(
   '/protected',
