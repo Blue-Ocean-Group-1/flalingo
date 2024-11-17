@@ -52,10 +52,10 @@ export const validateEnv = () => {
     requireEnvVar('MONGODB_URI');
     requireEnvVar('CORS_ORIGIN');
     requireEnvVar('JWT_SECRET');
-    validatePort(process.env.PORT || '3000');
+    validatePort(process.env.PORT ?? '3000');
     validateMongoUri(process.env.MONGODB_URI);
-    validateNodeEnv(process.env.NODE_ENV || 'development');
-    validateLogLevel(process.env.LOG_LEVEL || 'info');
+    validateNodeEnv(process.env.NODE_ENV ?? 'development');
+    validateLogLevel(process.env.LOG_LEVEL ?? 'info');
   } catch (error) {
     logger.error(error.message);
     process.exit(1);
@@ -84,8 +84,8 @@ export const env = {
   LOG_TIMESTAMPS: process.env.LOG_TIMESTAMPS !== 'false',
 
   // Security
-  CORS_ORIGIN: requireEnvVar('CORS_ORIGIN'),
-  JWT_SECRET: requireEnvVar('JWT_SECRET'),
+  CORS_ORIGIN: requireEnvVar('CORS_ORIGIN') ?? 'http://localhost:3000',
+  JWT_SECRET: requireEnvVar('JWT_SECRET') ?? 'secret',
 
   // Debug
   DEBUG_MODE: process.env.DEBUG_MODE === 'true',
