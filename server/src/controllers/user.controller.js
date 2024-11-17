@@ -34,7 +34,7 @@ const getDailyWords = async (req, res) => {
 
 const addDeckProgress = async (req, res) => {
     try {
-     await progressHelper(req.body.userId, req.body.language, req.body.deckName, req.body.attempt);
+     await progressHelper(req.body.userId, req.body.language, req.body.deckName, req.body.attempt, req.body.skillLevel);
       res.status(200).send('Successfully added timesCompleted');
     }
     catch (error) {
