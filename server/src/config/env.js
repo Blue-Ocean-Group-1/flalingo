@@ -1,6 +1,7 @@
 import logger from './logger.js';
 const requireEnvVar = (name) => {
   const value = process.env[name];
+  if (process.env.NODE_ENV === 'test') return value;
   if (!value) {
     throw new Error(`Missing required environment variable: ${name}`);
   }
@@ -43,9 +44,14 @@ const validateLogLevel = (level) => {
 };
 
 export const validateEnv = () => {
+  if (process.env.NODE_ENV === 'test') {
+    return;
+  }
+
   try {
     requireEnvVar('MONGODB_URI');
     requireEnvVar('CORS_ORIGIN');
+    requireEnvVar('JWT_SECRET');
     validatePort(process.env.PORT || '3000');
     validateMongoUri(process.env.MONGODB_URI);
     validateNodeEnv(process.env.NODE_ENV || 'development');
