@@ -79,6 +79,7 @@ export const env = {
 
   // Security
   CORS_ORIGIN: requireEnvVar('CORS_ORIGIN'),
+  JWT_SECRET: requireEnvVar('JWT_SECRET'),
 
   // Debug
   DEBUG_MODE: process.env.DEBUG_MODE === 'true',
@@ -96,6 +97,8 @@ if (env.isDevelopment) {
   env.DEBUG_MODE = env.DEBUG_MODE ?? true;
   env.STACK_TRACE = env.STACK_TRACE ?? true;
   env.VERBOSE = env.VERBOSE ?? true;
+  env.SILENT = env.SILENT ?? false;
+  env.PRETTY_LOGGING = env.PRETTY_LOGGING ?? true;
 }
 
 if (env.isProduction) {
@@ -117,6 +120,12 @@ if (!env.SILENT && env.isDevelopment) {
       LOG_REQUESTS: env.LOG_REQUESTS,
       LOG_QUERIES: env.LOG_QUERIES,
       DEBUG_MODE: env.DEBUG_MODE,
+      STACK_TRACE: env.STACK_TRACE,
+      VERBOSE: env.VERBOSE,
+      PORT: env.PORT,
+      MONGODB_URI: env.MONGODB_URI,
+      CORS_ORIGIN: env.CORS_ORIGIN,
+      JWT_SECRET: env.JWT_SECRET,
     });
   }
   /* eslint-enable */
