@@ -59,6 +59,13 @@ describe('Auth Controller', () => {
     it('should return 409 if user already exists', async () => {
       MockedUser.findOne.mockResolvedValue({});
 
+      await request(app).post('/api/auth/register').send({
+        username: 'testuser',
+        email: 'test@example.com',
+        password: 'password',
+        name: 'Test User',
+      });
+
       const res = await request(app).post('/api/auth/register').send({
         username: 'testuser',
         email: 'test@example.com',
