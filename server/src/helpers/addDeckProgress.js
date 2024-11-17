@@ -1,5 +1,5 @@
 import logger from '../config/logger.js';
-// import User from '../models/user.model.js';
+import { User } from '../models/user.model.js';
 
 const helper = async (userId, language, deckName, attempt) => {
   try {
