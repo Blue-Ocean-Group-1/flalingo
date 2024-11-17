@@ -25,6 +25,11 @@ userRouter.get('/:id', getUserByIdLimiter, getUserById);
 userRouter.get('/:id/dailyWords', getDailyWords);
 
 userRouter.post('/deckProgress', addDeckProgress);
-userRouter.get('/me', getUserData);
+const getUserDataLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
+userRouter.get('/me', getUserDataLimiter, getUserData);
 
 export default userRouter;
