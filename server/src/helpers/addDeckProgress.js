@@ -4,7 +4,7 @@ import { User } from '../models/user.model.js';
 const helper = async (userId, language, deckName, attempt) => {
   try {
     // Find the user by their ID and update their progress
-    const user = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       {
         _id: userId,
         'progress.language': language,
