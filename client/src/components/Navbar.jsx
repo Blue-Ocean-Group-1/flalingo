@@ -10,6 +10,7 @@ import {
 import useAuth from '../hooks/useAuth.jsx';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from './common/Icon.jsx';
+import Brand from './common/Brand.jsx';
 
 const navigation = [
   { name: 'Flashcards', href: '/flashcards', current: false },
@@ -54,11 +55,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-1 w-full items-center justify-center sm:items-stretch sm:justify-between">
             <div className="flex sm:justify-start shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
+              <Brand />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">

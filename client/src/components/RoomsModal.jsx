@@ -55,7 +55,7 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
                 onClick={() => setSelectedRoomId(room._id)}
               >
                 <p
-                  className={`p-1 ${selectedRoomId === room._id && 'bg-green-300'}`}
+                  className={`p-1 ${selectedRoomId === room._id && 'bg-argentBlue'}`}
                 >
                   {room.name}
                 </p>
