@@ -11,6 +11,7 @@ library.add(...all);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    {/* <UserProvider> */}
     <Auth0Provider
       domain="dev-uhp1wd5lz84zsq4b.us.auth0.com"
       clientId="VqWFyqtKlRUqGFrrjahRkWxXBJ37rWrU"
@@ -20,5 +21,6 @@ createRoot(document.getElementById('root')).render(
     >
       <App />
     </Auth0Provider>
+    {/* </UserProvider> */}
   </StrictMode>,
 );
