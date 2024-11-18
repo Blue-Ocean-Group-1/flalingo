@@ -1,6 +1,6 @@
 // src/hooks/useAuth.js
 import { useContext, useState } from 'react';
-import { AuthContext } from '../context/authContext.jsx';
+import AuthContext from '../context/authContext.js';
 import { loginService } from '../services/auth.api.js';
 import Logger from '../../config/logger.js';
 

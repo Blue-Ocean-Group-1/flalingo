@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AuthContext } from '../../../context/authContext.jsx';
+import AuthContext from '../../../context/authContext.js';
 import useAuth from '../../../hooks/useAuth.jsx';
 import * as authApi from '../../../services/auth.api.js';
 

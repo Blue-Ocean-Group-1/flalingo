@@ -2,9 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Logger from '../../config/logger.js';
-import { AuthContext } from './authContext.js';
-
-export { AuthContext };
+import AuthContext from './authContext.js';
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
