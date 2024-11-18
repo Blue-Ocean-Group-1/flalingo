@@ -30,7 +30,11 @@ userRouter.get(
   getUserDataLimiter,
   getUserData,
 );
-userRouter.get('/', getUsers);
+const getUsersLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+userRouter.get('/', getUsersLimiter, getUsers);
 userRouter.get('/:id', getUserByIdLimiter, getUserById);
 
 userRouter.get('/:id/dailyWords', getDailyWords);
