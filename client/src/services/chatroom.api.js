@@ -5,13 +5,17 @@ const getChatrooms = async () => {
   return response.data;
 };
 
-const createChatMessage = async (userId, roomId, content) => {
-  const response = await api.post(`/chatrooms/${roomId}`, {
-    userId,
-    roomId,
-    content,
-  });
+const getChatroom = async (roomId) => {
+  const response = await api.get(`/chatrooms/${roomId}`);
   return response.data;
 };
 
-export { getChatrooms, createChatMessage };
+const getChatroomMessages = async (roomId) => {
+  const response = await api.get(`/chatrooms/${roomId}/messages`);
+  return response.data;
+};
+
+const createChatMessage = async (roomId, message) => {
+  console.log('create chat msg here');
+};
+export { getChatrooms, getChatroom, getChatroomMessages, createChatMessage };

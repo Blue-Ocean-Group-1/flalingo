@@ -50,11 +50,15 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
           <div className="h-3/5  flex flex-col overflow-y-auto">
             {roomsData.map((room, idx) => (
               <button
-                className={`${selectedRoomId === room._id && 'bg-green-300'}   text-left`}
+                className={`$ text-left bg-gray-200`}
                 key={room._id}
                 onClick={() => setSelectedRoomId(room._id)}
               >
-                <p className="p-1">{room.name}</p>
+                <p
+                  className={`p-1 ${selectedRoomId === room._id && 'bg-green-300'}`}
+                >
+                  {room.name}
+                </p>
               </button>
             ))}
           </div>
