@@ -2,22 +2,37 @@
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
+import passport from 'passport';
 
 import { connectDB } from './config/database.js';
 import { env, validateEnv } from './config/env.js';
 import logger from './config/logger.js';
+import configurePassport from './config/passport.js';
 import { errorLogger, AppError } from './middleware/errorLogger.js';
 import { requestLogger } from './middleware/requestLogger.js';
-import { messageRouter, testRouter, userRouter, deckRouter, chatroomRouter } from './routes/index.js';
+import {
+  messageRouter,
+  testRouter,
+  userRouter,
+  deckRouter,
+  chatroomRouter,
+  AuthRouter,
+} from './routes/index.js';
 
+// Validate environment variables
 validateEnv();
 
+// Initialize Express app
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
+app.use(passport.initialize());
+
+// Configure Passport
+configurePassport(passport);
 
 // Routes
 
@@ -25,6 +40,7 @@ app.use('/api/messages', messageRouter);
 app.use('/api/chatrooms', chatroomRouter);
 app.use('/api/users', userRouter);
 app.use('/api/test', testRouter);
+app.use('/api/auth', AuthRouter);
 app.use('/api/decks', deckRouter);
 
 // Development settings
@@ -34,27 +50,30 @@ if (env.isDevelopment) {
   mongoose.set('debug', false);
 }
 
+// 404 Error handling
 app.use((req, res, next) => {
   logger.warn(`Not Found - ${req.method} ${req.originalUrl}`);
   next(new AppError(`Not Found - ${req.originalUrl}`, 404));
 });
 
+// Error logging middleware
 app.use(errorLogger);
 
-// connect to DB
+// Connect to DB
 connectDB();
 
-// start server
+// Start server
 const PORT = env.PORT ?? 3000;
 const MONGODB_URI = env.MONGODB_URI ?? 'mongodb://localhost:27017/polyglot';
 const SERVER_HOST = env.SERVER_HOST ?? 'localhost';
 const NODE_ENV = env.NODE_ENV ?? 'development';
 
-app.listen(PORT, () => {
-  logger.info(`Server is running on port ${PORT}`);
-  logger.info(`Environment: ${NODE_ENV}`);
-  logger.info(`MongoDB URI: ${MONGODB_URI}`);
-  logger.info(`visit http://${SERVER_HOST}:${PORT}`);
-});
-
+if (NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    logger.info(`Server is running on port ${PORT}`);
+    logger.info(`Environment: ${NODE_ENV}`);
+    logger.info(`MongoDB URI: ${MONGODB_URI}`);
+    logger.info(`Visit http://${SERVER_HOST}:${PORT}`);
+  });
+}
 export default app;

@@ -1,13 +1,16 @@
-import { useAuth0 } from '@auth0/auth0-react';
+// src/components/ProtectedRoute.jsx
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { AuthContext } from '../context/authContext.jsx';
 
-export default function ProtectedRoute({ children }) {
-  const { isAuthenticated, isLoading } = useAuth0();
+const ProtectedRoute = ({ children }) => {
+  const { auth } = useContext(AuthContext);
 
-  // TODO: This can be uncommented to enable route protection
-  // if (!isAuthenticated && !isLoading) {
-  //   return <Navigate to="/" />;
-  // }
+  if (!auth.isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
 
   return children;
-}
+};
+
+export default ProtectedRoute;

@@ -8,7 +8,7 @@ const generateDailyWords = async (user) => {
       (p) => p.language === user.activeLanguages[0]
     ).skillLevel;
     const filteredDecks = decks.filter(
-      (deck) => deck.skillLevel === skillLevel
+      (deck) => deck.skillLevel === skillLevel,
     );
 
     const words = [];
@@ -25,7 +25,7 @@ const generateDailyWords = async (user) => {
         word,
         translatedWord,
         deckName: randomDeck.name,
-      }
+      };
       words.push(insert);
     }
     return words;
@@ -57,7 +57,7 @@ const getRandomDailyWords = async (userId) => {
             words: newWords,
           },
         },
-      }
+      },
     )
       .then(() => {})
       .catch(() => {});
