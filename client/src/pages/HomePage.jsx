@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
-
-import { env } from '../../config/env';
-
 import axios from 'axios';
-
 import Navbar from '../components/Navbar';
+import useUserData from '../hooks/useUserData.jsx';
+import { useEffect, useState } from 'react';
+import { env } from '../../config/env';
+import { addTimesCompleted } from '../utils/addDeckProgress.js';
+import { findBestDisplayDecks } from '../utils/deckProgress';
+import logger from '../../config/logger.js';
 
 const userID = '6737bd5921b1fac154eadf76';
 
@@ -18,6 +19,7 @@ import MainProgress from '../components/dashboard/MainProgress';
 import RecommendedLessons from '../components/dashboard/RecommendedLessons';
 
 export default function HomePage() {
+  const [userData] = useUserData();
   const [dailyWords, setDailyWords] = useState([]);
   const [dailyMotivation, setDailyMotivation] = useState('');
   const [user, setUser] = useState('');
@@ -27,6 +29,7 @@ export default function HomePage() {
   // You want data? This will give you data
   useEffect(() => {
     const getData = async () => {
+      logger.info('HomePage: user data:', userData);
       axios.get(`${env.API_URL}/users/${userID}`).then((res) => {
         setUser(res.data);
         setDisplayDecks(findBestDisplayDecks(res.data));
@@ -52,7 +55,7 @@ export default function HomePage() {
       response.data ? setDailyWords(response.data) : null;
     };
     getRandomWords();
-  }, []);
+  }, [userData]);
 
   useEffect(() => {
     if (displayDecks) {

@@ -1,12 +1,14 @@
 // src/config/logger.js
 import { env } from './env';
 
+/* eslint-disable no-unused-vars */
 const levels = {
   error: 0,
   warn: 1,
   info: 2,
   debug: 3,
 };
+/* eslint-enable no-unused-vars */
 
 const colors = {
   error: '#FF5252', // Red

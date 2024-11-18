@@ -190,13 +190,32 @@
     "dompurify",
     "headlessui",
     "lcov",
+    "mongoimport",
     "optimizelegibility",
     "polyglot",
     "signup",
+    "Skyla",
+    "skylayreiner",
     "tailwindcss",
+    "testpass",
+    "testuser",
     "VITE"
   ],
   "css.customData": [".vscode/css-data.json"],
   "jest.jestCommandLine": "npx jest",
-  "jest.disabledWorkspaceFolders": ["client", "server"]
+  "jest.disabledWorkspaceFolders": ["client", "server"],
+  "yaml.schemas": {
+    "https://www.artillery.io/schema.json": []
+  },
+  "presentation-mode.configBackup": {
+    "editor.fontSize": "undefined",
+    "editor.matchBrackets": "undefined",
+    "editor.minimap.enabled": "undefined",
+    "editor.scrollbar.verticalScrollbarSize": "undefined",
+    "workbench.activityBar.visible": "undefined",
+    "workbench.statusBar.visible": "undefined",
+    "workbench.colorTheme": "undefined",
+    "workbench.colorCustomizations": "undefined",
+    "window.zoomLevel": "undefined"
+  }
 }

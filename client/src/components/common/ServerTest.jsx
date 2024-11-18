@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Dialog } from '@headlessui/react';
 import getHealth from '../../services/test.api.js';
 import logger from '../../../config/logger.js';
 import FontAwesomeIcon from './Icon.jsx';

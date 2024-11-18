@@ -7,11 +7,11 @@ const flashcardSchema = new mongoose.Schema({
     {
       type: Map,
       of: String,
-      required: true
-    }
-  ]
+      required: true,
+    },
+  ],
 });
 
-const Flashcard = mongoose.model('Flashcard', flashcardSchema)
+const Flashcard = mongoose.model('Flashcard', flashcardSchema);
 
-export { flashcardSchema, Flashcard }
+export { flashcardSchema, Flashcard };
