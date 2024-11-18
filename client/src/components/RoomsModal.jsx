@@ -64,7 +64,7 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
           </div>
           <div className="flex justify-center">
             <button
-              className="bg-argentBlue py-3 px-2 w-fit lg:w-1/4 rounded-md text-nowrap"
+              className={`bg-argentBlue py-3 px-2 w-fit lg:w-1/4 rounded-md text-nowrap ${roomsData.length === 0 && 'disabled:opacity-50 cursor-not-allowed'}`}
               onClick={handleJoin}
             >
               Join Room

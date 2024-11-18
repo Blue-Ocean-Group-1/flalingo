@@ -27,8 +27,26 @@ export const getChatroomMessages = async (req, res) => {
     })
       .lean()
       .sort('-timestamp')
-      .limit(5);
+      .limit(100);
     res.json({ messages: messages.reverse() });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const createChatroomMessage = async (req, res) => {
+  try {
+    const { senderId, senderName, language, content } = req.body;
+    const chatroomId = req.params.roomId;
+    const newMessage = new Message({
+      senderId,
+      senderName,
+      content,
+      language,
+      chatroomId,
+    });
+    await newMessage.save();
+    res.sendStatus(201);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

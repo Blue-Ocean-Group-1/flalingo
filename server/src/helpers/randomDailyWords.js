@@ -5,7 +5,7 @@ const generateDailyWords = async (user) => {
   const decks = await Deck.find({ language: user.activeLanguages[0] });
   if (decks.length) {
     const skillLevel = user.progress.find(
-      (p) => p.language === user.activeLanguages[0]
+      (p) => p.language === user.activeLanguages[0],
     ).skillLevel;
     const filteredDecks = decks.filter(
       (deck) => deck.skillLevel === skillLevel,

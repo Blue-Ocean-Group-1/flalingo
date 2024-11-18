@@ -12,8 +12,12 @@ export default function ConversationRoomsPage() {
 
   useEffect(() => {
     const fetchChatrooms = async () => {
-      const chatrooms = await getChatrooms();
-      setRooms(chatrooms);
+      try {
+        const chatrooms = await getChatrooms();
+        setRooms(chatrooms);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchChatrooms();
   }, []);
@@ -74,7 +78,7 @@ function RoomLanguageCard({ language, roomsData }) {
         className="flex p-3 gap-4 w-full bg-white hover:bg-platinum rounded-md shadow-md"
       >
         <img
-          className="min-h-16 max-w-20 bg-slate-300 rounded-md "
+          className="min-h-16 max-w-20 bg-slate-300 rounded-md"
           src={`/Flags/${language}.png`}
           alt="flag-img"
         />

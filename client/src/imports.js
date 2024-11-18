@@ -8,7 +8,7 @@ export { useState, useEffect } from 'react';
 export { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 // Auth imports
-export { default as AuthProvider } from './context/AuthContext.jsx';
+export { default as AuthProvider } from './context/authContext.jsx';
 export { default as ProtectedRoute } from './components/ProtectedRoute.jsx';
 
 // HeadlessUI imports
@@ -32,8 +32,8 @@ export { default as LandingPage } from './pages/LandingPage.jsx'; // eslint-disa
 export { default as Homepage } from './pages/HomePage.jsx';
 export { default as FlashcardsPage } from './pages/FlashcardsPage.jsx';
 export { default as ConversationRoomsPage } from './pages/ConversationRoomsPage.jsx';
-export { default as CalendarPage } from './pages/CalendarPage.jsx';
 export { default as AchievementsPage } from './pages/AchievementsPage.jsx';
 export { default as SupportPage } from './pages/SupportPage.jsx';
 export { default as ProfilePage } from './pages/ProfilePage.jsx';
 export { default as NotFoundPage } from './pages/NotFoundPage.jsx';
+export { default as ChatRoomPage } from './pages/ChatRoomPage.jsx';
