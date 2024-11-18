@@ -15,14 +15,11 @@ const splitDecksByLanguageAndTheme = (
   }
   user.progress.forEach((cat) => {
     let decks = getDeckPercentage(cat.decks.slice());
-    console.log(decks);
     const lang = cat.language;
     let beginner = {};
     let proficient = {};
     let advanced = {};
     decks.forEach((deck) => {
-      console.log(deck);
-      console.log(comparator(deck));
       if (comparator(deck)) {
         if (deck.skillLevel === 'beginner') {
           let theme = deck.deckName.split(' ')[0];
@@ -50,7 +47,6 @@ const splitDecksByLanguageAndTheme = (
         }
       }
     });
-    console.log({ lang, beginner, proficient, advanced });
     deckTheme.push({ lang, beginner, proficient, advanced });
   });
 

@@ -22,6 +22,7 @@ export default function HomePage() {
   const [dailyMotivation, setDailyMotivation] = useState('');
   const [user, setUser] = useState('');
   const [displayDecks, setDisplayDecks] = useState([]);
+  const [maxPercentage, setMaxPercentage] = useState(0);
 
   // You want data? This will give you data
   useEffect(() => {
@@ -53,6 +54,14 @@ export default function HomePage() {
     getRandomWords();
   }, []);
 
+  useEffect(() => {
+    if (displayDecks) {
+      setMaxPercentage(() => {
+        return Math.max(...displayDecks.map((deck) => deck.percentage));
+      });
+    }
+  }, [displayDecks]);
+
   const flipWord = (index) => {
     let newDailyWords = [...dailyWords];
     newDailyWords[index].flipped = !newDailyWords[index].flipped;
@@ -79,7 +88,7 @@ export default function HomePage() {
                 />
               ))}
           </div>
-          <div className="bg-transparent rounded-lg w-full flex flex-col w-2/4 px-2">
+          <div className="bg-transparent rounded-lg flex w-1/2 flex-col max-w-2/4 px-2">
             <div className="flex justify-center align-center">
               <h3 className="text-5xl text-jet">My Decks</h3>
             </div>
@@ -89,6 +98,7 @@ export default function HomePage() {
                     key={deck._id}
                     deck={deck}
                     language={user.activeLanguages[0]}
+                    maxPercentage={maxPercentage}
                   />
                 ))
               : null}

@@ -8,7 +8,7 @@ const RecommendedLessons = ({ user }) => {
       let decks = response.data;
     });
   });
-  return <div>I am a recommended lesson!</div>;
+  return <div className="text-jet">I am a recommended lesson!</div>;
 };
 
 export default RecommendedLessons;

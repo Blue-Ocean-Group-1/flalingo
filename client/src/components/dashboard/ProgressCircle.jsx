@@ -3,14 +3,38 @@ import PropTypes from 'prop-types';
 
 import flagObject from '../../assets/Flags/flagObject';
 
-const ProgressCircle = ({ deck, language }) => {
+const ProgressCircle = ({ deck, language, maxPercentage }) => {
   const [ring, setRing] = useState(314.159);
+  const [displayPercentage, setDisplayPercentage] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => {
-      setRing(deck.offset);
-    }, 500);
-  });
+    if (deck.percentage <= 0 || maxPercentage <= 0) return;
+
+    const numberOfSteps = 100;
+    const intervalDuration = 10;
+    const exactPercentageIncrement = deck.percentage / numberOfSteps;
+    const offsetIncrement = (314.159 * deck.percentage) / (100 * numberOfSteps);
+
+    let currentStep = 0;
+
+    const intervalId = setInterval(() => {
+      if (currentStep >= numberOfSteps) {
+        clearInterval(intervalId);
+        setDisplayPercentage(Math.round(deck.percentage));
+      } else {
+        setRing((prev) => prev - offsetIncrement);
+        setDisplayPercentage((prev) =>
+          Math.min(
+            Math.round(prev + exactPercentageIncrement),
+            Math.round(deck.percentage),
+          ),
+        );
+        currentStep++;
+      }
+    }, intervalDuration);
+
+    return () => clearInterval(intervalId);
+  }, [deck.percentage, maxPercentage]);
 
   return (
     <button
@@ -50,7 +74,7 @@ const ProgressCircle = ({ deck, language }) => {
             strokeDashoffset={ring}
           ></circle>
         </svg>
-        <p className="font-bold absolute top-[calc(50% -.75rem)] text-jet">{`${deck.percentage}%`}</p>
+        <p className="font-bold absolute top-[calc(50% -.75rem)] text-jet">{`${displayPercentage}%`}</p>
       </div>
     </button>
   );

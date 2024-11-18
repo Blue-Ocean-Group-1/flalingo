@@ -27,10 +27,6 @@ const MainProgress = ({ user }) => {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log(nearestBadge);
-  }, [nearestBadge]);
-
   return (
     <div className="main-progress w-2/3 p-8 bg-argentBlue rounded-xl">
       <div className="main-progress-top justify-between">
