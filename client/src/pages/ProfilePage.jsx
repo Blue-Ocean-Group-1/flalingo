@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import { env } from '../../config/env.js';
+import logger from '../../config/logger.js';
 
 export default function ProfilePage() {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -188,19 +189,19 @@ export default function ProfilePage() {
 
   const uploadImage = (e) => {
     e.preventDefault();
-    console.log('selected image: ', selectedImg);
+    logger.debug('selected image: ', selectedImg);
     const formData = new FormData();
     formData.append('file', selectedImg);
     formData.append('upload_preset', 'blueocean');
     axios
       .post(env.CLOUDINARY_API_LINK, formData)
       .then((response) => {
-        console.log('uploaded picture response: ', response.data);
+        logger.debug('uploaded picture response: ', response.data);
         // TODO: make put request to api update profile
         setDisplayedImg(response.data.url);
       })
       .catch((err) => {
-        console.log('error uploading image', err);
+        logger.error('error uploading image', err);
       });
   };
 
