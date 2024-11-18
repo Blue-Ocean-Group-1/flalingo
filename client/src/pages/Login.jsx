@@ -71,7 +71,7 @@ const Login = () => {
   return loading ? (
     <p>Loading...</p>
   ) : (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-3xl text-gray-900 font-bold mb-4">Login</h1>
       <Icon
         icon="fa-solid fa-circle-user"
