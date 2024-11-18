@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
   ServerTest,
-  AuthProvider,
   ProtectedRoute,
   Login,
   Signup,
@@ -17,16 +16,23 @@ import {
   NotFoundPage,
   ChatRoomPage,
 } from './imports';
+import useAuth from './hooks/useAuth';
 
 function App() {
+  const { isAuthenticated } = useAuth();
+  console.log('isAuthenticated', isAuthenticated);
+
   return (
-    <AuthProvider>
-      <Router>
-        <div className="App">
+    <Router>
+      <div className="App">
+        {!isAuthenticated ? (
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+          </Routes>
+        ) : (
+          <Routes>
             <Route
               path="/dashboard"
               element={
@@ -94,9 +100,9 @@ function App() {
               }
             />
           </Routes>
-        </div>
-      </Router>
-    </AuthProvider>
+        )}
+      </div>
+    </Router>
   );
 }
 
