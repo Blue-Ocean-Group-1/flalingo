@@ -88,6 +88,7 @@ export const env = {
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV === 'production',
   isTest: process.env.NODE_ENV === 'test',
+  SG_API_KEY: process.env.SG_API_KEY,
 };
 
 if (env.isDevelopment) {

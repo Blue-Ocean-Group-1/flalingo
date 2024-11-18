@@ -2,8 +2,10 @@ import sgMail from '@sendgrid/mail';
 import express from 'express';
 import cron from 'node-cron';
 
-const API_KEY = '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';
-sgMail.setApiKey(API_KEY);
+import {env} from '../config/env.js';
+
+const {SG_API_KEY} = env;
+sgMail.setApiKey(SG_API_KEY);
 
 const sendemailRouter = express.Router();
 const scheduledTasks = {};
