@@ -5,7 +5,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import ProtectedRoute from '../../../components/ProtectedRoute.jsx';
-import { AuthContext } from '../../../context/authContext.jsx';
+import AuthContext from '../../../context/authContext.js';
 
 describe('ProtectedRoute', () => {
   it('renders children when authenticated', () => {
