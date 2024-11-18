@@ -1,6 +1,7 @@
 import logger from './logger.js';
 const requireEnvVar = (name) => {
   const value = process.env[name];
+  if (process.env.NODE_ENV === 'test') return value;
   if (!value) {
     throw new Error(`Missing required environment variable: ${name}`);
   }
@@ -26,7 +27,7 @@ const validateNodeEnv = (env) => {
   const validEnvs = ['development', 'production', 'test'];
   if (!validEnvs.includes(env)) {
     throw new Error(
-      `Invalid NODE_ENV: ${env}. Must be one of: ${validEnvs.join(', ')}`
+      `Invalid NODE_ENV: ${env}. Must be one of: ${validEnvs.join(', ')}`,
     );
   }
   return env;
@@ -36,20 +37,25 @@ const validateLogLevel = (level) => {
   const validLevels = ['error', 'warn', 'info', 'http', 'query', 'debug'];
   if (!validLevels.includes(level)) {
     throw new Error(
-      `Invalid LOG_LEVEL: ${level}. Must be one of: ${validLevels.join(', ')}`
+      `Invalid LOG_LEVEL: ${level}. Must be one of: ${validLevels.join(', ')}`,
     );
   }
   return level;
 };
 
 export const validateEnv = () => {
+  if (process.env.NODE_ENV === 'test') {
+    return;
+  }
+
   try {
     requireEnvVar('MONGODB_URI');
     requireEnvVar('CORS_ORIGIN');
-    validatePort(process.env.PORT || '3000');
+    requireEnvVar('JWT_SECRET');
+    validatePort(process.env.PORT ?? '3000');
     validateMongoUri(process.env.MONGODB_URI);
-    validateNodeEnv(process.env.NODE_ENV || 'development');
-    validateLogLevel(process.env.LOG_LEVEL || 'info');
+    validateNodeEnv(process.env.NODE_ENV ?? 'development');
+    validateLogLevel(process.env.LOG_LEVEL ?? 'info');
   } catch (error) {
     logger.error(error.message);
     process.exit(1);
@@ -78,7 +84,8 @@ export const env = {
   LOG_TIMESTAMPS: process.env.LOG_TIMESTAMPS !== 'false',
 
   // Security
-  CORS_ORIGIN: requireEnvVar('CORS_ORIGIN'),
+  CORS_ORIGIN: requireEnvVar('CORS_ORIGIN') ?? 'http://localhost:3000',
+  JWT_SECRET: requireEnvVar('JWT_SECRET') ?? 'secret',
 
   // Debug
   DEBUG_MODE: process.env.DEBUG_MODE === 'true',
@@ -97,6 +104,8 @@ if (env.isDevelopment) {
   env.DEBUG_MODE = env.DEBUG_MODE ?? true;
   env.STACK_TRACE = env.STACK_TRACE ?? true;
   env.VERBOSE = env.VERBOSE ?? true;
+  env.SILENT = env.SILENT ?? false;
+  env.PRETTY_LOGGING = env.PRETTY_LOGGING ?? true;
 }
 
 if (env.isProduction) {
@@ -108,6 +117,7 @@ if (env.isProduction) {
 }
 
 if (!env.SILENT && env.isDevelopment) {
+  /* eslint-disable */
   console.info('✔︎ Environment variables validated successfully');
 
   if (env.VERBOSE) {
@@ -117,6 +127,13 @@ if (!env.SILENT && env.isDevelopment) {
       LOG_REQUESTS: env.LOG_REQUESTS,
       LOG_QUERIES: env.LOG_QUERIES,
       DEBUG_MODE: env.DEBUG_MODE,
+      STACK_TRACE: env.STACK_TRACE,
+      VERBOSE: env.VERBOSE,
+      PORT: env.PORT,
+      MONGODB_URI: env.MONGODB_URI,
+      CORS_ORIGIN: env.CORS_ORIGIN,
+      JWT_SECRET: env.JWT_SECRET,
     });
   }
+  /* eslint-enable */
 }

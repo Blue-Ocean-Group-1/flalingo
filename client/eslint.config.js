@@ -8,7 +8,6 @@ import importPlugin from 'eslint-plugin-import';
 import configAirbnb from 'eslint-config-airbnb';
 import eslintPluginPrettier from 'eslint-plugin-prettier';
 import testingLibrary from 'eslint-plugin-testing-library';
-import jest from 'eslint-plugin-jest';
 
 export default [
   { ignores: ['dist'] },
@@ -44,6 +43,9 @@ export default [
       ...reactHooks.configs.recommended.rules,
       ...jsxA11y.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
+      'react/prop-types': 'off',
+      'react/require-default-props': 'off',
+      'react/jsx-props-no-spreading': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
@@ -60,28 +62,35 @@ export default [
     },
   },
   {
-    files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+    files: [
+      '**/__tests__/**/*.[jt]s?(x)',
+      '**/?(*.)+(spec|test).[jt]s?(x)',
+      '**/*.test.mjs',
+      '**/*.test.cjs',
+    ],
     ...testingLibrary.configs['flat/react'],
     ...testingLibrary.configs['flat/dom'],
-    ...jest.configs['flat/recommended'],
     plugins: {
       'testing-library': testingLibrary,
-      jest,
     },
     languageOptions: {
       globals: {
-        ...globals.jest,
+        ...globals.jestDom,
+        ...globals.testingLibrary,
       },
     },
     rules: {
       ...testingLibrary.configs['flat/react'].rules,
       ...testingLibrary.configs['flat/dom'].rules,
-      ...jest.configs['flat/recommended'].rules,
-      'jest/no-disabled-tests': 'warn',
-      'jest/no-focused-tests': 'error',
-      'jest/no-identical-title': 'error',
-      'jest/prefer-to-have-length': 'warn',
-      'jest/valid-expect': 'error',
+      semi: ['error', 'always'],
+      'no-unused-vars': ['warn', { varsIgnorePattern: '^React$' }],
+      'prettier/prettier': [
+        'error',
+        {
+          indent: ['error', 2],
+          singleQuote: true,
+        },
+      ],
     },
   },
 ];

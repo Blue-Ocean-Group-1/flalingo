@@ -1,7 +1,10 @@
 import express from 'express';
 import RateLimit from 'express-rate-limit';
 
-import { getDecks, getDecksByLanguage } from '../controllers/deck.controller.js';
+import {
+  getDecks,
+  getDecksByLanguage,
+} from '../controllers/deck.controller.js';
 
 const deckRouter = express.Router();
 
