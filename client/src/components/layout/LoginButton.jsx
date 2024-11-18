@@ -1,13 +1,13 @@
 import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
 const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
+  const navigate = useNavigate();
 
   return (
     <button
-      onClick={() => loginWithRedirect()}
+      onClick={() => navigate('/login')}
       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
     >
       <FontAwesomeIcon icon="fa-solid fa-right-to-bracket" className="mr-2" />
