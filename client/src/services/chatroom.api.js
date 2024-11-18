@@ -15,7 +15,11 @@ const getChatroomMessages = async (roomId) => {
   return response.data;
 };
 
-const createChatMessage = async (roomId, message) => {
-  console.log('create chat msg here');
+const createChatMessage = async (roomId, userId, message) => {
+  const response = await api.post(`/chatrooms/${roomId}/messages`, {
+    userId,
+    message,
+  });
+  return response.data;
 };
 export { getChatrooms, getChatroom, getChatroomMessages, createChatMessage };
