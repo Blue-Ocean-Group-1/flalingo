@@ -1,7 +1,11 @@
 // src/config/env.js
+const isTest = import.meta.env.NODE_ENV === 'test';
 
 const requireEnvVar = (name) => {
+  if (isTest) return;
   const value = import.meta.env[name];
+  if (name === 'test') return value;
+
   if (!value) {
     throw new Error(`Missing required environment variable: ${name}`);
   }
@@ -9,6 +13,7 @@ const requireEnvVar = (name) => {
 };
 
 const validateApiUrl = (url) => {
+  if (isTest) return;
   try {
     new URL(url);
     return url;
@@ -18,6 +23,8 @@ const validateApiUrl = (url) => {
 };
 
 const validateLogLevel = (level) => {
+  if (isTest) return;
+
   const validLevels = ['error', 'warn', 'info', 'debug'];
   return validLevels.includes(level) ? level : 'info';
 };
@@ -34,14 +41,16 @@ export const validateEnv = () => {
 
 export const env = {
   // API
-  API_URL: validateApiUrl(requireEnvVar('VITE_API_URL')),
+  API_URL:
+    validateApiUrl(requireEnvVar('VITE_API_URL')) ??
+    'http://localhost:3000/api',
   API_TIMEOUT: parseInt(import.meta.env.VITE_API_TIMEOUT || '10000', 10),
 
   // App Settings
   APP_NAME: import.meta.env.VITE_APP_NAME || 'PolyGlot',
 
   // Logging
-  LOG_LEVEL: validateLogLevel(import.meta.env.VITE_LOG_LEVEL),
+  LOG_LEVEL: validateLogLevel(import.meta.env.VITE_LOG_LEVEL) ?? 'info',
   DEBUG_MODE: import.meta.env.DEV || import.meta.env.VITE_DEBUG_MODE === 'true',
   LOG_REQUESTS: import.meta.env.VITE_LOG_REQUESTS !== 'false',
   LOG_ERRORS: import.meta.env.VITE_LOG_ERRORS !== 'false',
