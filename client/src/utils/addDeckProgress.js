@@ -20,9 +20,8 @@ async function addTimesCompleted(userId, language, deckName, attempt) {
       deckName,
       attempt,
     })
-    .then((response) => {
-      console.log(response);
-    });
+    .then(() => {})
+    .catch(() => {});
 }
 
 export { addTimesCompleted };

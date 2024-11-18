@@ -58,8 +58,10 @@ const userSchema = new mongoose.Schema({
           type: [{ word: { type: String }, translatedWord: { type: String } }],
           required: true,
         },
+        deckName: { type: String, required: true },
       },
     ],
+    default: [],
   },
   dailyGoalProgress: [
     { date: { type: Date }, completed: { type: Boolean, default: false } },

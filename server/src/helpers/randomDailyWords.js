@@ -21,7 +21,12 @@ const generateDailyWords = async (user) => {
         ];
       let word = randomFlashcard.word;
       let translatedWord = randomFlashcard.translatedWord;
-      words.push({ word, translatedWord });
+      let insert = {
+        word,
+        translatedWord,
+        deckName: randomDeck.name,
+      };
+      words.push(insert);
     }
     return words;
   }
