@@ -48,7 +48,7 @@ const helper = async (userId, language, deckName, attempt, skillLevel) => {
             },
           },
         },
-        { new: true }
+        { new: true },
       );
     }
   } catch (error) {
