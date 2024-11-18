@@ -1,6 +1,5 @@
 import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
-import jest from 'eslint-plugin-jest';
 import eslintPluginPrettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 
@@ -81,22 +80,10 @@ export default [
   },
   {
     files: ['**/__tests__/**/*.js', '**/*.test.js', '**/*.spec.js'],
-    ...jest.configs['flat/recommended'],
-    plugins: {
-      jest,
-    },
+    plugins: {},
     languageOptions: {
-      globals: {
-        ...globals.jest,
-      },
+      globals: {},
     },
-    rules: {
-      ...jest.configs['flat/recommended'].rules,
-      'jest/no-disabled-tests': 'warn',
-      'jest/no-focused-tests': 'error',
-      'jest/no-identical-title': 'error',
-      'jest/prefer-to-have-length': 'warn',
-      'jest/valid-expect': 'error',
-    },
+    rules: {},
   },
 ];

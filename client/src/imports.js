@@ -28,3 +28,12 @@ export { default as logger } from '../config/logger.js';
 // Pages
 export { default as Login } from './pages/Login.jsx';
 export { default as Signup } from './pages/Signup.jsx';
+export { default as LandingPage } from './pages/LandingPage.jsx'; // eslint-disable-line
+export { default as Homepage } from './pages/HomePage.jsx';
+export { default as FlashcardsPage } from './pages/FlashcardsPage.jsx';
+export { default as ConversationRoomsPage } from './pages/ConversationRoomsPage.jsx';
+export { default as CalendarPage } from './pages/CalendarPage.jsx';
+export { default as AchievementsPage } from './pages/AchievementsPage.jsx';
+export { default as SupportPage } from './pages/SupportPage.jsx';
+export { default as ProfilePage } from './pages/ProfilePage.jsx';
+export { default as NotFoundPage } from './pages/NotFoundPage.jsx';

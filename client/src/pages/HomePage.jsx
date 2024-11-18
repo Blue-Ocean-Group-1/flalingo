@@ -1,17 +1,16 @@
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import useUserData from '../hooks/useUserData.jsx';
-import Logger from '../../config/logger.js';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env';
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
 import { findBestDisplayDecks } from '../utils/deckProgress';
+import logger from '../../config/logger.js';
 
 const userID = '6737bd5921b1fac154eadf76';
 
 export default function HomePage() {
   const [userData] = useUserData();
-  Logger.debug('HomePage: userData:', userData);
   const [dailyWords, setDailyWords] = useState([]);
   const [dailyMotivation, setDailyMotivation] = useState('');
   const [user, setUser] = useState('');
@@ -19,6 +18,7 @@ export default function HomePage() {
 
   // You want data? This will give you data
   useEffect(() => {
+    logger.info('HomePage: user data:', userData);
     axios.get(`${env.API_URL}/users/${userID}`).then((res) => {
       setUser(res.data);
       setDisplayDecks(findBestDisplayDecks(res.data));
@@ -42,7 +42,7 @@ export default function HomePage() {
       response.data ? setDailyWords(response.data) : null;
     };
     getRandomWords();
-  }, []);
+  }, [userData]);
 
   const flipWord = (index) => {
     let newDailyWords = [...dailyWords];

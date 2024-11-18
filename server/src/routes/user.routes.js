@@ -1,5 +1,6 @@
 import express from 'express';
 import RateLimit from 'express-rate-limit';
+import passport from 'passport';
 
 import {
   getUsers,
@@ -18,18 +19,22 @@ const getUserByIdLimiter = RateLimit({
   max: 100, // max 100 requests per windowMs
 });
 
-userRouter.get('/', getUsers);
-
-userRouter.get('/:id', getUserByIdLimiter, getUserById);
-
-userRouter.get('/:id/dailyWords', getDailyWords);
-
-userRouter.post('/deckProgress', addDeckProgress);
 const getUserDataLimiter = RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // max 100 requests per windowMs
 });
 
-userRouter.get('/me', getUserDataLimiter, getUserData);
+userRouter.get(
+  '/me',
+  passport.authenticate('jwt', { session: false }),
+  getUserDataLimiter,
+  getUserData,
+);
+userRouter.get('/', getUsers);
+userRouter.get('/:id', getUserByIdLimiter, getUserById);
+
+userRouter.get('/:id/dailyWords', getDailyWords);
+
+userRouter.post('/deckProgress', addDeckProgress);
 
 export default userRouter;

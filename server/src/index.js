@@ -1,7 +1,6 @@
 // src/index.js
 import cors from 'cors';
 import express from 'express';
-import session from 'express-session';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
@@ -9,7 +8,6 @@ import { connectDB } from './config/database.js';
 import { env, validateEnv } from './config/env.js';
 import logger from './config/logger.js';
 import configurePassport from './config/passport.js';
-import { sessionConfig } from './middleware/auth.js';
 import { errorLogger, AppError } from './middleware/errorLogger.js';
 import { requestLogger } from './middleware/requestLogger.js';
 import {
@@ -31,9 +29,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
-app.use(session(sessionConfig));
 app.use(passport.initialize());
-app.use(passport.session());
 
 // Configure Passport
 configurePassport(passport);

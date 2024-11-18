@@ -1,4 +1,4 @@
-import jest from 'jest'; // eslint-disable-line no-unused-vars
+import { describe, it, expect } from 'vitest';
 
 describe('Example', () => {
   it('should pass', () => {

@@ -1,4 +1,5 @@
 // src/config/env.js
+
 const requireEnvVar = (name) => {
   const value = import.meta.env[name];
   if (!value) {
@@ -56,7 +57,6 @@ export const env = {
   isTest: import.meta.env.MODE === 'test',
 };
 
-// Example .env file values
 const envExample = {
   VITE_API_URL: 'http://localhost:3000/api',
   VITE_API_TIMEOUT: '10000',
@@ -69,17 +69,19 @@ const envExample = {
   VITE_MOCK_API: 'false',
 };
 
-if (env.isDevelopment) {
-  console.group('Environment Configuration');
-  console.log('API URL:', env.API_URL);
-  console.log('Debug Mode:', env.DEBUG_MODE);
-  console.log('Log Level:', env.LOG_LEVEL);
-  console.log('Environment:', env.NODE_ENV);
-  console.groupEnd();
+if (import.meta.env.MODE !== 'test') {
+  validateEnv();
 
-  console.group('Environment Variables Example');
-  console.log(envExample);
-  console.groupEnd();
+  if (env.isDevelopment) {
+    console.group('Environment Configuration');
+    console.log('API URL:', env.API_URL);
+    console.log('Debug Mode:', env.DEBUG_MODE);
+    console.log('Log Level:', env.LOG_LEVEL);
+    console.log('Environment:', env.NODE_ENV);
+    console.groupEnd();
+
+    console.group('Environment Variables Example');
+    console.log(envExample);
+    console.groupEnd();
+  }
 }
-
-validateEnv();

@@ -8,18 +8,15 @@ import {
   ProtectedRoute,
   Login,
   Signup,
+  Homepage,
+  FlashcardsPage,
+  ConversationRoomsPage,
+  CalendarPage,
+  AchievementsPage,
+  SupportPage,
+  ProfilePage,
+  NotFoundPage,
 } from './imports';
-import LandingPage from './pages/LandingPage.jsx'; // eslint-disable-line
-import Homepage from './pages/HomePage.jsx';
-import FlashcardsPage from './pages/FlashcardsPage.jsx';
-import ConversationRoomsPage from './pages/ConversationRoomsPage.jsx';
-import CalendarPage from './pages/CalendarPage.jsx';
-import AchievementsPage from './pages/AchievementsPage.jsx';
-import SupportPage from './pages/SupportPage.jsx';
-import ProfilePage from './pages/ProfilePage.jsx';
-
-import NotFoundPage from './pages/NotFoundPage.jsx';
-// ? @skylayreiner — can we move these to imports.js? @EmmaG2020 you do it
 
 function App() {
   return (
