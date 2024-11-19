@@ -7,9 +7,9 @@ const languageSchema = new mongoose.Schema({
   skillLevels: [
     {
       level: { type: String, enum: ['beginner', 'proficient', 'advanced'] },
-      decks: [deckSchema]
-    }
-  ]
+      decks: [deckSchema],
+    },
+  ],
 });
 
 export const Language = mongoose.model('Language', languageSchema);

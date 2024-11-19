@@ -7,10 +7,18 @@ import {
 } from '@headlessui/react';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from './common/Icon.jsx';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
+  const navigate = useNavigate();
+  const [selectedRoomId, setSelectedRoomId] = useState(-1);
+
   function handleJoin() {
-    setIsOpen(false);
+    if (selectedRoomId !== -1) {
+      navigate(`./${selectedRoomId}`);
+      setIsOpen(false);
+    }
   }
 
   return (
@@ -26,7 +34,7 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
       <div className="text-black fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel
           transition
-          className="relative sm:w-2/3 h-5/6 sm:h-3/4 sm:max-h-3/4 space-y-2 bg-white pt-8 pb-2 px-10 duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
+          className="relative sm:w-2/3 h-5/6 sm:h-3/4 sm:max-h-3/4 space-y-2 bg-white rounded-2xl pt-8 pb-2 px-10 duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
         >
           <button
             className="absolute h-4 w-4 right-4 top-2"
@@ -39,20 +47,24 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
             Select a room and join by clicking the join room button to start
             chatting!
           </Description>
-          <div className="h-2/3 max-h-2/3 bg-slate-200 p-2 flex flex-col gap-2 overflow-y-auto">
+          <div className="h-3/5  flex flex-col overflow-y-auto">
             {roomsData.map((room, idx) => (
-              <p key={room._id}>{room.name}</p>
-            ))}
-            {roomsData.map((room) => (
-              <p key={room._id}>{room.name}</p>
-            ))}
-            {roomsData.map((room) => (
-              <p key={room._id}>{room.name}</p>
+              <button
+                className={`$ text-left bg-gray-200`}
+                key={room._id}
+                onClick={() => setSelectedRoomId(room._id)}
+              >
+                <p
+                  className={`p-1 ${selectedRoomId === room._id && 'bg-green-300'}`}
+                >
+                  {room.name}
+                </p>
+              </button>
             ))}
           </div>
           <div className="flex justify-center">
             <button
-              className=" bg-slate-200 py-3 w-1/4 rounded-sm"
+              className={`bg-argentBlue py-3 px-2 w-fit lg:w-1/4 rounded-md text-nowrap ${roomsData.length === 0 && 'disabled:opacity-50 cursor-not-allowed'}`}
               onClick={handleJoin}
             >
               Join Room

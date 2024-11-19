@@ -7,6 +7,7 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/react';
+import useAuth from '../hooks/useAuth.jsx';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from './common/Icon.jsx';
 
@@ -24,8 +25,12 @@ function classNames(...classes) {
 // TODO: FIX SELECTED PAGE STATE INDICATOR
 
 export default function Navbar() {
+  const { logout } = useAuth();
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure
+      as="nav"
+      className="sticky top-0 z-40 w-full lex-none duration-500 lg:z-50 bg-gray-900"
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-12 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -106,7 +111,17 @@ export default function Navbar() {
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <div className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none">
+                  <div
+                    onClick={logout}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        logout();
+                      }
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none cursor-pointer"
+                  >
                     Logout
                   </div>
                 </MenuItem>

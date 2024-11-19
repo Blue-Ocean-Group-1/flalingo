@@ -1,4 +1,4 @@
-import 'dotenv/config.js';
+import 'dotenv/config.js'; // eslint-disable-line
 import winston from 'winston';
 
 const levels = {
@@ -30,7 +30,7 @@ const buildFormat = () => {
     formatters.push(
       winston.format.timestamp({
         format: 'YYYY-MM-DD HH:mm:ss',
-      })
+      }),
     );
   }
 
@@ -47,7 +47,7 @@ const buildFormat = () => {
         return process.env.LOG_TIMESTAMPS === 'true'
           ? `${info.timestamp} ${base}${details}`
           : `${base}${details}`;
-      })
+      }),
     );
   } else {
     formatters.push(winston.format.json());
@@ -65,7 +65,7 @@ const logger = winston.createLogger({
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
-        winston.format.simple()
+        winston.format.simple(),
       ),
     }),
   ],
