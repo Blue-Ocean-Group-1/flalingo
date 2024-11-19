@@ -10,8 +10,13 @@ describe('AuthProvider', () => {
     localStorage.clear();
   });
 
-  test('should set isAuthenticated to true if token is found in localStorage', () => {
-    localStorage.setItem('token', 'test-token');
+  test('should set isAuthenticated to true if token is found in localStorage', async () => {
+    // Create a valid JWT token for testing
+    const testToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QtaWQiLCJpYXQiOjE2MTYxNjI4MDAsImV4cCI6OTk5OTk5OTk5OX0.dEyZkn2kfyGvbkr1ROBjrXAY7GQGkpg2rd4n4sKCIpE';
+
+    localStorage.setItem('token', testToken);
+
     render(
       <AuthProvider>
         <AuthContext.Consumer>
@@ -23,6 +28,7 @@ describe('AuthProvider', () => {
         </AuthContext.Consumer>
       </AuthProvider>,
     );
+
     expect(screen.getByText('Authenticated')).toBeInTheDocument();
   });
 
