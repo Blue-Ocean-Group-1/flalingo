@@ -3,6 +3,7 @@ import axios from 'axios';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import { env } from '../../config/env.js';
 import logger from '../../config/logger.js';
+import flagObject from '../assets/Flags/flagObject.js';
 
 export default function ProfilePage() {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -179,7 +180,8 @@ export default function ProfilePage() {
         'Saudi Arabia': 'Arabic.png',
         // Add other countries and their corresponding flag filenames here
       };
-      const flag = await import(`../../assets/flags/${flagMap[country]}`);
+      const flag = await import(`../../assets/flags/${flagObject[country]}`);
+
       setCountryFlag(flag.default);
     } catch (error) {
       console.error('Error loading flag:', error);
