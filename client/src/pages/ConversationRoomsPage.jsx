@@ -38,8 +38,8 @@ export default function ConversationRoomsPage() {
     };
 
     fetchChatrooms();
-
-    const intervalId = setInterval(() => {
+    let intervalId;
+    intervalId = setInterval(() => {
       fetchChatrooms();
     }, 5000);
 

@@ -3,9 +3,9 @@ import Logger from '../../config/logger.js';
 
 const getChatrooms = async () => {
   try {
-    Logger.info('Attempting to get all chatrooms');
+    // Logger.info('Attempting to get all chatrooms');
     const response = await api.get('/chatrooms');
-    Logger.info('Successfully retrieved all chatrooms');
+    // Logger.info('Successfully retrieved all chatrooms');
     return response.data;
   } catch (error) {
     Logger.error('Failed to get all chatrooms', error);
@@ -16,11 +16,9 @@ const getChatrooms = async () => {
 // eventType is either 'join' or 'leave'
 const updateChatroomParticipantCount = async (roomId, eventType) => {
   try {
-    Logger.info('Attempting to update chatroom participant count');
     const response = await api.patch(`/chatrooms/${roomId}/participantCount`, {
       eventType: eventType,
     });
-    Logger.info('Successfully updated chatroom participant count');
     return response.data;
   } catch (error) {
     Logger.error('Failed to update chatroom participant count', error);
