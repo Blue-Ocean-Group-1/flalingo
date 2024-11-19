@@ -3,12 +3,12 @@ import { Button } from '@headlessui/react';
 import Navbar from '../components/Navbar.jsx';
 import api from '../services/index.js';
 import Logger from '../../config/logger.js';
-//import useUserDate from '../hooks/useUserData.js';
+import useUserData from '../hooks/useUserData.jsx';
 
 export default function FlashcardsPage() {
   //load flashcards from database
   const [flashcards, setFlashcards] = useState([]);
-
+  const [userData, loading, error, updateUser] = useUserData();
   const [currentDeck, setCurrentDeck] = useState();
   const [currentCard, setCurrentCard] = useState();
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -30,7 +30,8 @@ export default function FlashcardsPage() {
   useEffect(() => {
     //fetch first deck from database
     //Logger.info('Fetching decks...');
-    let language = 'Spanish';
+    let language = userData.activeLanguages[0];
+    setSkillLevel(userData.progress[0].skillLevel);
 
     const fetchDecks = async () => {
       try {
