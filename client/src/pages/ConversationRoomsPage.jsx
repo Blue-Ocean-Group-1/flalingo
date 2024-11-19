@@ -35,7 +35,14 @@ export default function ConversationRoomsPage() {
         console.log(err);
       }
     };
+
     fetchChatrooms();
+
+    setInterval(() => {
+      fetchChatrooms();
+    }, 5000);
+
+    return () => clearInterval(fetchChatrooms);
   }, []);
 
   function getOtherRoomLanguages(rooms) {
@@ -102,6 +109,10 @@ function RoomLanguageCard({ language, roomsData }) {
           <h2 className="text-black">{language}</h2>
           <p className="text-black text-xs">
             Number of rooms: {roomsData.length}
+          </p>
+          <p className="text-black text-xs">
+            Active Participants:{' '}
+            {roomsData.reduce((acc, room) => acc + room.participantCount, 0)}
           </p>
         </div>
       </button>
