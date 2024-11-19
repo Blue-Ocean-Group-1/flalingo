@@ -2,7 +2,8 @@ import '@testing-library/jest-dom';
 import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import { beforeEach, describe, expect, test } from 'vitest';
-import AuthProvider, { AuthContext } from '../../../context/authContext.jsx';
+import AuthProvider from '../../../context/authContext.jsx';
+import AuthContext from '../../../context/authContext.js';
 
 describe('AuthProvider', () => {
   beforeEach(() => {

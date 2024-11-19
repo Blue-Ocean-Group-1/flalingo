@@ -1,7 +1,12 @@
 import express from 'express';
 import RateLimit from 'express-rate-limit';
 
-import { getChatrooms } from '../controllers/chatroom.controller.js';
+import {
+  getChatrooms,
+  getChatroom,
+  getChatroomMessages,
+  createChatroomMessage,
+} from '../controllers/chatroom.controller.js';
 
 const chatroomsRouter = express.Router();
 
@@ -12,6 +17,11 @@ const limiter = RateLimit({
 });
 
 // apply rate limiter to the getChatrooms route
-chatroomsRouter.get('/', limiter, getChatrooms);
+chatroomsRouter.get('/', getChatrooms);
+chatroomsRouter.get('/:roomId', limiter, getChatroom);
+chatroomsRouter.get('/:roomId/messages', getChatroomMessages);
+chatroomsRouter.post('/:roomId/messages', limiter, createChatroomMessage);
+
+// chatroomsRouter.get('/:roomId', limiter, getChatroom);
 
 export default chatroomsRouter;

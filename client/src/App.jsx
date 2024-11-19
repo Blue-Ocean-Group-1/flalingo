@@ -11,11 +11,11 @@ import {
   Homepage,
   FlashcardsPage,
   ConversationRoomsPage,
-  CalendarPage,
   AchievementsPage,
   SupportPage,
   ProfilePage,
   NotFoundPage,
+  ChatRoomPage,
 } from './imports';
 
 function App() {
@@ -52,13 +52,14 @@ function App() {
               }
             />
             <Route
-              path="/calendar"
+              path="/conversation_rooms/:roomId"
               element={
                 <ProtectedRoute>
-                  <CalendarPage />
+                  <ChatRoomPage />
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/profile"
               element={

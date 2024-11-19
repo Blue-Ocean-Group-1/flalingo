@@ -11,8 +11,7 @@ const messageSchema = new mongoose.Schema({
   language: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
   chatroomId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Chatroom',
+    type: String,
     required: true,
   },
 });
