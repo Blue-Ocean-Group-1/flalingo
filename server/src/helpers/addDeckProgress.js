@@ -1,4 +1,4 @@
- import logger from '../config/logger';
+ import logger from '../config/logger.js';
 
  const helper = async (userId, language, deckName, attempt) => {
    try {
