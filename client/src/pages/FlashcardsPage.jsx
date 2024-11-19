@@ -30,8 +30,10 @@ export default function FlashcardsPage() {
   useEffect(() => {
     //fetch first deck from database
     //Logger.info('Fetching decks...');
-    let language = userData.activeLanguages[0];
-    setSkillLevel(userData.progress[0].skillLevel);
+    if (!userData) return;
+
+    let language = userData?.activeLanguages[0];
+    setSkillLevel(userData?.progress[0]?.skillLevel);
 
     const fetchDecks = async () => {
       try {
