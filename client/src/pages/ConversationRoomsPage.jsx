@@ -3,6 +3,7 @@ import { getChatrooms } from '../services/chatroom.api.js';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RoomsModal from '../components/RoomsModal.jsx';
+import Logger from '../../config/logger.js';
 
 export default function ConversationRoomsPage() {
   const [rooms, setRooms] = useState([]);
@@ -32,17 +33,19 @@ export default function ConversationRoomsPage() {
         const chatrooms = await getChatrooms();
         setRooms(sortByDifficulty(chatrooms));
       } catch (err) {
-        console.log(err);
+        Logger.error(err);
       }
     };
 
     fetchChatrooms();
 
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       fetchChatrooms();
     }, 5000);
 
-    return () => clearInterval(fetchChatrooms);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   function getOtherRoomLanguages(rooms) {
