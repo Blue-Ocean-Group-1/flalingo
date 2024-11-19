@@ -5,10 +5,6 @@ import AuthContext from '../context/authContext.js';
 import Logger from '../../config/logger.js';
 
 const ProtectedRoute = ({ children }) => {
-<<<<<<< HEAD
-  const { auth } = useContext(AuthContext);
-  console.log('isAuthenticated', auth.isAuthenticated);
-=======
   const { auth, authInitialized } = useContext(AuthContext);
   const location = useLocation();
 
@@ -16,7 +12,6 @@ const ProtectedRoute = ({ children }) => {
     Logger.debug('ProtectedRoute: Auth initialization in progress...');
     return <div>Loading...</div>;
   }
->>>>>>> 2d34f7caa24961dcebebdd3f2666023078f5fb61
 
   if (!auth.isAuthenticated) {
     Logger.debug(

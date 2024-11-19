@@ -3,6 +3,38 @@ import axios from 'axios';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import { env } from '../../config/env.js';
 import logger from '../../config/logger.js';
+import { Select } from '@headlessui/react';
+
+const COUNTRY_DATA = {
+  Bangladesh: 'Bengali',
+  China: 'Chinese',
+  'Czech Republic': 'Czech',
+  Denmark: 'Danish',
+  Finland: 'Finnish',
+  France: 'French',
+  Germany: 'German',
+  Greece: 'Greek',
+  India: 'Hindi',
+  Indonesia: 'Indonesian',
+  Israel: 'Hebrew',
+  Italy: 'Italian',
+  Japan: 'Japanese',
+  Malaysia: 'Malay',
+  Netherlands: 'Dutch',
+  Nigeria: 'Norwegian',
+  Poland: 'Polish',
+  Portugal: 'Portuguese',
+  Romania: 'Romanian',
+  Russia: 'Russian',
+  'Saudi Arabia': 'Arabic',
+  'South Korea': 'Korean',
+  Spain: 'Spanish',
+  Sweden: 'Swedish',
+  Thailand: 'Thai',
+  Turkey: 'Turkish',
+  Ukraine: 'Ukrainian',
+  Vietnam: 'Vietnamese',
+};
 
 export default function ProfilePage() {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -174,14 +206,8 @@ export default function ProfilePage() {
 
   const importFlag = async (country) => {
     try {
-      const flagMap = {
-        China: 'Chinese.png',
-        'Saudi Arabia': 'Arabic.png',
-        // Add other countries and their corresponding flag filenames here
-      };
-      const flag = await import(`../../assets/flags/${flagObject[country]}`);
-
-      setCountryFlag(flag.default);
+      const flag = `/Flags/${COUNTRY_DATA[country]}.png`;
+      setCountryFlag(flag);
     } catch (error) {
       console.error('Error loading flag:', error);
     }
@@ -205,6 +231,8 @@ export default function ProfilePage() {
       });
   };
 
+  console.log('countryflag', countryFlag);
+
   return (
     <DefaultPageLayout>
       <div className="max-w-xl mx-auto">
@@ -224,16 +252,19 @@ export default function ProfilePage() {
         </button>
         <div className="flex ml-10">
           <div className="relative mr-50">
-            <img
-              src={`${displayedImg}`}
-              alt="Profile-pic"
-              className="w-36 h-36 rounded-full object-cover mr-48"
-            />
-            <img
-              src={countryFlag}
-              alt="Flag"
-              className="w-8 h-8 absolute bottom-12 left-28"
-            />
+            <div className="relative">
+              <img
+                src={`${displayedImg}`}
+                alt="Profile-pic"
+                className="w-36 h-36 rounded-full object-cover mr-48"
+              />
+              <img
+                src={countryFlag}
+                alt="Flag"
+                className="w-9 h-6 absolute bottom-0 left-28"
+              />
+            </div>
+
             {editMode && (
               <form onSubmit={uploadImage}>
                 <input
@@ -309,36 +340,11 @@ export default function ProfilePage() {
                     value={profileData.country}
                     onChange={handleInputChange}
                   >
-                    <option value="Saudi Arabia">Saudi Arabia</option>
-                    <option value="Bangladesh">Bangladesh</option>
-                    <option value="China">China</option>
-                    <option value="Czech Republic">Czech Republic</option>
-                    <option value="Denmark">Denmark</option>
-                    <option value="Netherlands">Netherlands</option>
-                    <option value="Finland">Finland</option>
-                    <option value="France">France</option>
-                    <option value="Germany">Germany</option>
-                    <option value="Greece">Greece</option>
-                    <option value="Israel">Israel</option>
-                    <option value="India">India</option>
-                    <option value="Hungary">Hungary</option>
-                    <option value="Indonesia">Indonesia</option>
-                    <option value="Italy">Italy</option>
-                    <option value="Japan">Japan</option>
-                    <option value="South Korea">South Korea</option>
-                    <option value="Malaysia">Malaysia</option>
-                    <option value="Norway">Norway</option>
-                    <option value="Poland">Poland</option>
-                    <option value="Portugal">Portugal</option>
-                    <option value="Romania">Romania</option>
-                    <option value="Russia">Russia</option>
-                    <option value="Spain">Spain</option>
-                    <option value="Sweden">Sweden</option>
-                    <option value="Philippines">Philippines</option>
-                    <option value="Thailand">Thailand</option>
-                    <option value="Turkey">Turkey</option>
-                    <option value="Ukraine">Ukraine</option>
-                    <option value="Vietnam">Vietnam</option>
+                    {Object.keys(COUNTRY_DATA).map((country, idx) => (
+                      <option key={`${country}-${idx}`} value={country}>
+                        {country}
+                      </option>
+                    ))}
                   </select>
                 </div>
               ) : (

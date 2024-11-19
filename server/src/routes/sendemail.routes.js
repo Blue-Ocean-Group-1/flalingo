@@ -2,9 +2,10 @@ import sgMail from '@sendgrid/mail';
 import express from 'express';
 import cron from 'node-cron';
 
-import {env} from '../config/env.js';
+import { env } from '../config/env.js';
+import { User } from '../models/user.model.js';
 
-const {SG_API_KEY} = env;
+const { SG_API_KEY } = env;
 sgMail.setApiKey(SG_API_KEY);
 
 const sendemailRouter = express.Router();
@@ -39,27 +40,35 @@ sendemailRouter.post('/schedule-daily', (req, res) => {
   const { email } = req.body;
 
   if (scheduledTasks[email]) {
-    return res.status(400).send({ message: 'Daily reminder already scheduled.' });
+    return res
+      .status(400)
+      .send({ message: 'Daily reminder already scheduled.' });
   }
 
-  const task = cron.schedule('0 7 * * *', async () => {
-    const msg = {
-      to: email,
-      from: {
-        name: 'Polyglot',
-        email: 'emmaemma0768@gmail.com',
-      },
-      subject: 'Daily Reminder',
-      text: 'This is your daily reminder.',
-      html: '<p>This is your daily reminder.</p>',
-    };
+  const task = cron.schedule('*/2 * * * *', () => {
+    User.findOne({ email: 'user3@example.com' })
+      .then(async (user) => {
+        const msg = {
+          to: email,
+          from: {
+            name: 'Polyglot',
+            email: 'emmaemma0768@gmail.com',
+          },
+          subject: 'Daily Reminder',
+          text: 'This is your daily reminder:' + user.name,
+          html: `<p>This is your daily reminder: ${user.name}</p>`,
+        };
 
-    try {
-      await sgMail.send(msg);
-      console.log('Daily reminder sent to:', email);
-    } catch (error) {
-      console.log('Error sending daily reminder:', error);
-    }
+        try {
+          await sgMail.send(msg);
+          console.log('Daily reminder sent to:', email);
+        } catch (error) {
+          console.log('Error sending daily reminder:', error);
+        }
+      })
+      .catch((error) => {
+        console.log('Error fetching user:', error);
+      });
   });
 
   scheduledTasks[email] = task;
@@ -70,7 +79,9 @@ sendemailRouter.post('/unschedule-daily', (req, res) => {
   const { email } = req.body;
 
   if (!scheduledTasks[email]) {
-    return res.status(400).send({ message: 'No daily reminder scheduled for this email.' });
+    return res
+      .status(400)
+      .send({ message: 'No daily reminder scheduled for this email.' });
   }
 
   scheduledTasks[email].stop();
@@ -82,7 +93,9 @@ sendemailRouter.post('/schedule-weekly', (req, res) => {
   const { email } = req.body;
 
   if (weeklyScheduledTasks[email]) {
-    return res.status(400).send({ message: 'Weekly reminder already scheduled.' });
+    return res
+      .status(400)
+      .send({ message: 'Weekly reminder already scheduled.' });
   }
 
   const task = cron.schedule('0 6 * * 1', async () => {
@@ -113,19 +126,25 @@ sendemailRouter.post('/unschedule-weekly', (req, res) => {
   const { email } = req.body;
 
   if (!weeklyScheduledTasks[email]) {
-    return res.status(400).send({ message: 'No weekly reminder scheduled for this email.' });
+    return res
+      .status(400)
+      .send({ message: 'No weekly reminder scheduled for this email.' });
   }
 
   weeklyScheduledTasks[email].stop();
   delete weeklyScheduledTasks[email];
-  res.status(200).send({ message: 'Weekly reminder unscheduled successfully.' });
+  res
+    .status(200)
+    .send({ message: 'Weekly reminder unscheduled successfully.' });
 });
 
 sendemailRouter.post('/schedule-monthly', (req, res) => {
   const { email } = req.body;
 
   if (monthlyScheduledTasks[email]) {
-    return res.status(400).send({ message: 'Monthly progress report already scheduled.' });
+    return res
+      .status(400)
+      .send({ message: 'Monthly progress report already scheduled.' });
   }
 
   const task = cron.schedule('0 8 18 * *', async () => {
@@ -149,26 +168,34 @@ sendemailRouter.post('/schedule-monthly', (req, res) => {
   });
 
   monthlyScheduledTasks[email] = task;
-  res.status(200).send({ message: 'Monthly progress report scheduled successfully.' });
+  res
+    .status(200)
+    .send({ message: 'Monthly progress report scheduled successfully.' });
 });
 
 sendemailRouter.post('/unschedule-monthly', (req, res) => {
   const { email } = req.body;
 
   if (!monthlyScheduledTasks[email]) {
-    return res.status(400).send({ message: 'No monthly progress report scheduled for this email.' });
+    return res.status(400).send({
+      message: 'No monthly progress report scheduled for this email.',
+    });
   }
 
   monthlyScheduledTasks[email].stop();
   delete monthlyScheduledTasks[email];
-  res.status(200).send({ message: 'Monthly progress report unscheduled successfully.' });
+  res
+    .status(200)
+    .send({ message: 'Monthly progress report unscheduled successfully.' });
 });
 
 sendemailRouter.post('/schedule-promotion', (req, res) => {
   const { email } = req.body;
 
   if (promotionScheduledTasks[email]) {
-    return res.status(400).send({ message: 'Promotion alert already scheduled.' });
+    return res
+      .status(400)
+      .send({ message: 'Promotion alert already scheduled.' });
   }
 
   const task = cron.schedule('30 8 20 * *', async () => {
@@ -199,12 +226,16 @@ sendemailRouter.post('/unschedule-promotion', (req, res) => {
   const { email } = req.body;
 
   if (!promotionScheduledTasks[email]) {
-    return res.status(400).send({ message: 'No promotion alert scheduled for this email.' });
+    return res
+      .status(400)
+      .send({ message: 'No promotion alert scheduled for this email.' });
   }
 
   promotionScheduledTasks[email].stop();
   delete promotionScheduledTasks[email];
-  res.status(200).send({ message: 'Promotion alert unscheduled successfully.' });
+  res
+    .status(200)
+    .send({ message: 'Promotion alert unscheduled successfully.' });
 });
 
 export default sendemailRouter;
