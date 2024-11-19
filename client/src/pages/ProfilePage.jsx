@@ -3,7 +3,6 @@ import axios from 'axios';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import { env } from '../../config/env.js';
 import logger from '../../config/logger.js';
-import flagObject from '../assets/Flags/flagObject.js';
 
 export default function ProfilePage() {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -299,7 +298,7 @@ export default function ProfilePage() {
               )}
 
               {editMode ? (
-                <div className="flex items-center mb-2">
+                <div className="flex items-center mb-2 relative">
                   <label htmlFor="country" className="mr-2 font-bold">
                     Country
                   </label>

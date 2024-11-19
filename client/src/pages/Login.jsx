@@ -13,8 +13,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const from = sessionStorage.getItem('intendedDestination') || '/dashboard';
+
     if (isAuthenticated) {
-      navigate('/dashboard');
+      Logger.info('Login.jsx: User is authenticated, redirecting to:', from);
+      sessionStorage.removeItem('intendedDestination');
+      navigate(from);
     }
   }, [isAuthenticated, navigate]);
 

@@ -1,6 +1,5 @@
 // src/context/authContext.jsx
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Logger from '../../config/logger.js';
 import AuthContext from './authContext.js';
 
@@ -9,17 +8,37 @@ const AuthProvider = ({ children }) => {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
   });
+  const [authInitialized, setAuthInitialized] = useState(false);
 
   useEffect(() => {
-    if (auth.token) {
-      Logger.info(
-        'authContext.jsx: Token found in localStorage, setting isAuthenticated to true',
-      );
-      setAuth((prevAuth) => ({ ...prevAuth, isAuthenticated: true }));
-    } else {
-      Logger.debug('authContext.jsx: No token found in localStorage');
-    }
-  }, [auth.token]);
+    const initializeAuth = async () => {
+      const token = localStorage.getItem('token');
+      Logger.debug('authContext.jsx: Initializing auth with token:', token);
+
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          const isExpired = payload.exp * 1000 < Date.now();
+
+          if (isExpired) {
+            Logger.warn('authContext.jsx: Token is expired');
+            localStorage.removeItem('token');
+            setAuth({ token: null, isAuthenticated: false });
+          } else {
+            Logger.info('authContext.jsx: Token is valid');
+            setAuth({ token, isAuthenticated: true });
+          }
+        } catch (error) {
+          Logger.error('authContext.jsx: Error parsing token:', error);
+          localStorage.removeItem('token');
+          setAuth({ token: null, isAuthenticated: false });
+        }
+      }
+      setAuthInitialized(true);
+    };
+
+    initializeAuth();
+  }, []);
 
   const login = (token) => {
     try {
@@ -45,14 +64,10 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, login, logout, authInitialized }}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default AuthProvider;
