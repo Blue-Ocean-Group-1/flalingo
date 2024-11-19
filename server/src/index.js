@@ -10,7 +10,6 @@ import logger from './config/logger.js';
 import configurePassport from './config/passport.js';
 import { errorLogger, AppError } from './middleware/errorLogger.js';
 import { requestLogger } from './middleware/requestLogger.js';
-import { Chatroom } from './models/chatroom.model.js';
 import {
   messageRouter,
   testRouter,
@@ -78,6 +77,7 @@ if (NODE_ENV !== 'test') {
   });
 }
 
+// import { Chatroom } from './models/chatroom.model.js';
 // mongoose.connection.once('open', () => {
 //   Chatroom.updateMany({}, { participantCount: 0 })
 //     .then((res) => {
