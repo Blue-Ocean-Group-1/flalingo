@@ -10,8 +10,9 @@ import AuthContext from '../../../context/authContext.js';
 describe('ProtectedRoute', () => {
   it('renders children when authenticated', () => {
     const auth = { isAuthenticated: true };
+    const authInitialized = true;
     render(
-      <AuthContext.Provider value={{ auth }}>
+      <AuthContext.Provider value={{ auth, authInitialized }}>
         <MemoryRouter>
           <ProtectedRoute>
             <div>Protected Content</div>
