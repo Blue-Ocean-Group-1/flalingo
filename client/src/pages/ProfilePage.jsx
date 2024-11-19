@@ -175,9 +175,8 @@ export default function ProfilePage() {
   const importFlag = async (country) => {
     try {
       const flagMap = {
-        USA: 'usa.png',
         China: 'Chinese.png',
-        'Saudi Arabia': 'saudi-arabia.png',
+        'Saudi Arabia': 'Arabic.png',
         // Add other countries and their corresponding flag filenames here
       };
       const flag = await import(`../../assets/flags/${flagMap[country]}`);
@@ -206,8 +205,8 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex justify-center">
-      <DefaultPageLayout>
+    <DefaultPageLayout>
+      <div className="max-w-xl mx-auto">
         <br />
         <br />
         <button
@@ -477,7 +476,7 @@ export default function ProfilePage() {
             </button>
           </form>
         </div>
-      </DefaultPageLayout>
-    </div>
+      </div>
+    </DefaultPageLayout>
   );
 }
