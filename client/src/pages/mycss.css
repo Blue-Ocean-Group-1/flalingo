@@ -2,19 +2,19 @@
   transform: scale(1.025);
 }
 
-.dailyWordsHeader {
+.daily-words-header {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.dailyHeader {
+.daily-header {
   font-size: 3rem;
   color: #343434;
   text-transform: uppercase
 }
 
-.deckProgressContainer {
+.deck-progress-container {
   background-color: transparent;
 
   /* border: 1px solid black; */
@@ -117,7 +117,7 @@
   padding: .5rem
 }
 
-.progressText {
+.progress-text {
   color: #343434;
   background-color: transparent;
   z-index: 1;
