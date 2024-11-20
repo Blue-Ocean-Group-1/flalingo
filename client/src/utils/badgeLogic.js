@@ -54,8 +54,8 @@ const splitDecksByLanguageAndTheme = (
 };
 
 const getBadges = (user) => {
-  let badges = user.badges.slice();
-  let startingLength = badges.length;
+  let newBadges = user.badges.slice();
+  let startingLength = newBadges.length;
 
   let deckTheme = splitDecksByLanguageAndTheme(user, 80);
 
@@ -73,8 +73,8 @@ const getBadges = (user) => {
           name: `${beginnerKeys[index]} Beginner`,
           language: entry.lang,
         };
-        if (!badges.includes(badge)) {
-          badges.push(badge);
+        if (!newBadges.includes(badge)) {
+          newBadges.push(badge);
         }
       }
     });
@@ -85,8 +85,8 @@ const getBadges = (user) => {
           name: `${proficientKeys[index]} Proficient`,
           language: entry.lang,
         };
-        if (!badges.includes(badge)) {
-          badges.push(badge);
+        if (!newBadges.includes(badge)) {
+          newBadges.push(badge);
         }
       }
     });
@@ -96,16 +96,18 @@ const getBadges = (user) => {
           name: `${advancedKeys[index]} Advanced`,
           language: entry.lang,
         };
-        if (!badges.includes(badge)) {
-          badges.push(badge);
+        if (!newBadges.includes(badge)) {
+          newBadges.push(badge);
         }
       }
     });
   });
-  console.log(badges);
-  if (badges.length > startingLength) {
+  if (newBadges.length > startingLength) {
     // logic for updating user badges
+    // or just leave it blank and let it calculate each time? (less efficient)
   }
+
+  return newBadges;
 };
 
 const findPriorityValue = (obj) => {
@@ -147,8 +149,8 @@ const findNearestBadge = (user) => {
     );
     let firstDeck = firstDecks.decks[0];
     badge = {
-      skillLevel: firstDeck.skillLevel,
-      key: firstDeck.deckName.split(' ')[1],
+      skillLevel: firstDeck?.skillLevel,
+      key: firstDeck?.deckName.split(' ')[1],
       value: 0,
     };
   }

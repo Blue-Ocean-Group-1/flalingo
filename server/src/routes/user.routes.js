@@ -8,6 +8,7 @@ import {
   getUserById,
   getDailyWords,
   addDeckProgress,
+  updateUserData,
   getUserReportById
 } from '../controllers/user.controller.js';
 
@@ -31,6 +32,14 @@ userRouter.get(
   getUserDataLimiter,
   getUserData,
 );
+
+userRouter.put(
+  '/me',
+  passport.authenticate('jwt', { session: false }),
+  getUserDataLimiter,
+  updateUserData,
+);
+
 const getUsersLimiter = RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // max 100 requests per windowMs
@@ -44,3 +53,5 @@ userRouter.get('/:id/dailyWords', getDailyWords);
 userRouter.post('/deckProgress', addDeckProgress);
 
 export default userRouter;
+
+
