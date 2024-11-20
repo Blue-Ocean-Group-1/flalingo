@@ -17,6 +17,7 @@ import {
   deckRouter,
   chatroomRouter,
   AuthRouter,
+  languageRouter,
 } from './routes/index.js';
 
 // Validate environment variables
@@ -42,6 +43,7 @@ app.use('/api/users', userRouter);
 app.use('/api/test', testRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/decks', deckRouter);
+app.use('/api/languages', languageRouter);
 
 // Development settings
 if (env.isDevelopment) {

@@ -1,4 +1,3 @@
-import Logger from '../config/logger.js';
 import progressHelper from '../helpers/addDeckProgress.js';
 import { generateUserReport } from '../helpers/generateUserReport.js';
 import { getRandomDailyWords } from '../helpers/randomDailyWords.js';
@@ -6,32 +5,21 @@ import { User } from '../models/user.model.js';
 
 export const getUsers = async (req, res) => {
   try {
-    Logger.info('user.controller.js: Fetching all users');
     const users = await User.find();
-    Logger.info('user.controller.js: Successfully fetched all users');
     res.json({ message: 'Users fetched successfully', users });
   } catch (error) {
-    Logger.error(`user.controller.js: Error fetching users - ${error.message}`);
     res.status(500).json({ message: 'Server error', error });
   }
 };
 
 export const getUserData = async (req, res) => {
   try {
-    Logger.info(`user.controller.js: Fetching data for user ${req.user.id}`);
     const user = await User.findById(req.user.id).select('-password');
     if (!user) {
-      Logger.info(`user.controller.js: User ${req.user.id} not found`);
       return res.status(404).json({ message: 'User not found' });
     }
-    Logger.info(
-      `user.controller.js: Successfully fetched data for user ${req.user.id}`,
-    );
     res.json(user);
   } catch (error) {
-    Logger.error(
-      `user.controller.js: Error fetching user data - ${error.message}`,
-    );
     res.status(500).json({ message: 'Server error', error });
   }
 };
@@ -71,8 +59,6 @@ export const addDeckProgress = async (req, res) => {
 
 export const updateUserData = async (req, res) => {
   try {
-    Logger.info(`user.controller.js: Updating data for user ${req.user.id}`);
-
     const protectedFields = ['password', '_id', 'username'];
     let updateData = {};
 
@@ -130,16 +116,8 @@ export const updateUserData = async (req, res) => {
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    Logger.info(
-      `user.controller.js: Successfully updated data for user ${req.user.id}`,
-    );
     res.json(updatedUser);
   } catch (error) {
-    Logger.error(
-      `user.controller.js: Error updating user data - ${error.message}`,
-    );
-
     if (error.name === 'ValidationError') {
       return res.status(400).json({
         message: 'Validation Error',

@@ -7,6 +7,7 @@ import {
   findBestDisplayDecks,
   findRecommendedDeck,
 } from '../utils/deckProgress';
+import OnboardingModal from '../components/layout/OnboardingModal.jsx';
 
 import ProgressCircle from '../components/dashboard/progressCircle';
 import DailyWord from '../components/dashboard/DailyWord';
@@ -22,13 +23,13 @@ export default function HomePage() {
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(true);
 
   // You want data? This will give you data
   useEffect(() => {
     setUser(userData);
     if (userData?.progress?.length) {
       setDisplayDecks(findBestDisplayDecks(userData));
-      setRecommendedDeck(findRecommendedDeck(userData));
     }
 
     const getRecommendedDeck = async () => {
@@ -47,6 +48,8 @@ export default function HomePage() {
           },
         },
       );
+
+      // TODO: add logic to show onboarding modal
 
       response.data.map((word) => {
         word.flipped = false;
@@ -75,10 +78,15 @@ export default function HomePage() {
     setDailyWords(newDailyWords);
   };
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <DefaultPageLayout>
       <section className="flex content-center items-center rounded-xl w-full">
         <div className="flex bg-white mt-12 rounded-2xl w-full">
+          <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
           <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8">
             <div className="flex flex-col p-4 rounded-lg gap-4 bg-white w-2/4">
               <div className="flex justify-center align-center">
