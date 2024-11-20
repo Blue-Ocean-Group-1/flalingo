@@ -6,6 +6,7 @@ import { env } from '../../config/env';
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
 import { findBestDisplayDecks } from '../utils/deckProgress';
 import logger from '../../config/logger.js';
+import OnboardingModal from '../components/layout/OnboardingModal.jsx';
 
 const userID = '6737bd5921b1fac154eadf76';
 
@@ -15,10 +16,10 @@ export default function HomePage() {
   const [dailyMotivation, setDailyMotivation] = useState('');
   const [user, setUser] = useState('');
   const [displayDecks, setDisplayDecks] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(true);
 
   // You want data? This will give you data
   useEffect(() => {
-    logger.info('HomePage: user data:', userData);
     axios.get(`${env.API_URL}/users/${userID}`).then((res) => {
       setUser(res.data);
       setDisplayDecks(findBestDisplayDecks(res.data));
@@ -35,6 +36,8 @@ export default function HomePage() {
         },
       );
 
+      // TODO: add logic to show onboarding modal
+
       response.data.map((word) => {
         word.flipped = false;
       });
@@ -50,10 +53,15 @@ export default function HomePage() {
     setDailyWords(newDailyWords);
   };
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div>
       <Navbar />
       <h1>Home Page</h1>
+      <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
       <div className="grid">
         <div className="leftSide">
           <div className="dailyWordsContainer">
