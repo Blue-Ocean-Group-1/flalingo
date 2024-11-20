@@ -28,8 +28,10 @@ import Thai from './Thai.png';
 import Turkish from './Turkish.png';
 import Ukrainian from './Ukrainian.png';
 import Vietnamese from './Vietnamese.png';
+import USA from './USA.png';
 
 const flagObject = {
+  USA,
   Arabic,
   Bengali,
   Chinese,
