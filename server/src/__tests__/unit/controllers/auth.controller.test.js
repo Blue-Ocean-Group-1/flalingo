@@ -32,7 +32,7 @@ vi.mock('../../../models/user.model.js', () => {
       name: { type: String, required: true },
       currentLoginStreak: Number,
       longestLoginStreak: Number,
-      timeUsingApp: Number,
+      timeUsingApp: Array,
       gems: { type: Number, default: 0 },
     },
   };
@@ -102,7 +102,7 @@ describe('Auth Controller', () => {
         name: validUserData.name,
         currentLoginStreak: 0,
         longestLoginStreak: 0,
-        timeUsingApp: 0,
+        timeUsingApp: [],
         gems: 0,
       });
 
