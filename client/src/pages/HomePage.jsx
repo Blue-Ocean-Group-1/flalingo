@@ -9,8 +9,6 @@ import logger from '../../config/logger.js';
 
 const userID = '6737bd5921b1fac154eadf76';
 
-import { findBestDisplayDecks } from '../utils/deckProgress';
-
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
 
 import ProgressCircle from '../components/dashboard/progressCircle';
