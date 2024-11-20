@@ -139,3 +139,10 @@ export const getUserReportById = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+// export const initDailyProgress = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.id);
+
+//   }
+// }

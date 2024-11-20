@@ -1,22 +1,10 @@
-import { hashCode } from '../../utils/utils';
-import {
-  quotesByLanguage,
-  getMotivationalQuote,
-} from '../../utils/motivationalQuotes.js';
+import { getMotivationalQuote } from '../../utils/motivationalQuotes.js';
 import useUserData from '../../hooks/useUserData';
 import { useEffect, useState } from 'react';
 
 export default function ProgressSidebar() {
   const [userData] = useUserData();
   const [randomQuote, setRandomQuote] = useState('');
-
-  // function getQuote(date = 0) {
-  //   console.log(quotesByLanguage[0]);
-  //   const quoteIdx = Math.abs(hashCode(date) % quotesByLanguage.length);
-  //   return quotesByLanguage[quoteIdx];
-  // }
-
-  console.log(getMotivationalQuote('Spanish'));
 
   useEffect(() => {
     setRandomQuote(

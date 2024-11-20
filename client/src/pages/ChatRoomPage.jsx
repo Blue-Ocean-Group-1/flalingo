@@ -140,7 +140,7 @@ export default function ChatRoomPage() {
 
   return (
     <DefaultPageLayout>
-      <div className="inline-flex justify-between items-center gap-2 mx-6 text-black mb-1 overflow-y-hidden ">
+      <div className="flex pr-justify-between items-center gap-2 mx-6 text-black mb-1 overflow-y-hidden bg-white">
         <button
           onClick={() => navigate('/conversation_rooms')}
           className="bg-wisteria h-8 px-3 sm:mt-2 mb-1 rounded-md text-black text-sm font-semibold self-center"
@@ -155,7 +155,7 @@ export default function ChatRoomPage() {
       >
         <div className="">
           {messages.map((message) => (
-            <div key={message._id} className="flex gap-2">
+            <div key={message._id} className="flex gap-2 pb-1.5">
               <p
                 className={`text-sm font-semibold text-nowrap text-${getMsgColor(message.senderId)} brightness-90`}
               >
@@ -166,7 +166,7 @@ export default function ChatRoomPage() {
           ))}
         </div>
       </div>
-      <div className="relative bg-white -mt-[0.01rem] px-2">
+      <div className="relative -mt-[0.01rem] px-2">
         <ChatInput onMsgSend={handleChatSend} />
         <div className="absolute -top-1 left-4 text-red-500 text-xs">
           {errMsg}
