@@ -70,4 +70,14 @@ if (NODE_ENV !== 'test') {
     logger.info(`Visit http://${SERVER_HOST}:${PORT}`);
   });
 }
+
+// import { Chatroom } from './models/chatroom.model.js';
+// mongoose.connection.once('open', () => {
+//   Chatroom.updateMany({}, { participantCount: 0 })
+//     .then((res) => {
+//       console.log('succesfully updated chatrooms');
+//     })
+//     .catch((err) => console.log(err));
+// });
+
 export default app;
