@@ -3,17 +3,49 @@ import { getChatrooms } from '../services/chatroom.api.js';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RoomsModal from '../components/RoomsModal.jsx';
+import Logger from '../../config/logger.js';
 
 export default function ConversationRoomsPage() {
   const [rooms, setRooms] = useState([]);
   const defaultLanguages = ['Spanish'];
 
+  function sortByDifficulty(rooms) {
+    const levelOrder = ['Beginner', 'Proficient', 'Advanced'];
+
+    return rooms.sort((a, b) => {
+      const [languageA, levelA, numA] = a.name.split(' ');
+      const [languageB, levelB, numB] = b.name.split(' ');
+
+      const levelIndexA = levelOrder.indexOf(levelA);
+      const levelIndexB = levelOrder.indexOf(levelB);
+
+      if (levelIndexA === levelIndexB) {
+        return parseInt(numA) - parseInt(numB);
+      }
+
+      return levelIndexA - levelIndexB;
+    });
+  }
+
   useEffect(() => {
     const fetchChatrooms = async () => {
-      const chatrooms = await getChatrooms();
-      setRooms(chatrooms);
+      try {
+        const chatrooms = await getChatrooms();
+        setRooms(sortByDifficulty(chatrooms));
+      } catch (err) {
+        Logger.error(err);
+      }
     };
+
     fetchChatrooms();
+    let intervalId;
+    intervalId = setInterval(() => {
+      fetchChatrooms();
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   function getOtherRoomLanguages(rooms) {
@@ -45,7 +77,7 @@ export default function ConversationRoomsPage() {
           ))}
         </div>
         <h2 className="text-lg font-medium">Other Languages</h2>
-        <div className="p-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-3 gap-y-2">
+        <div className="p-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-2 gap-y-2">
           {rooms &&
             getOtherRoomLanguages(rooms).map((language, idx) => (
               <RoomLanguageCard
@@ -69,13 +101,21 @@ function RoomLanguageCard({ language, roomsData }) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex p-3 gap-3 w-full bg-slate-50 hover:bg-slate-200 rounded-md shadow-md"
+        className="flex p-3 gap-4 w-full bg-white hover:bg-platinum rounded-md shadow-md"
       >
-        <img className="min-h-16 max-w-20 bg-slate-300" src="" alt="flag-img" />
+        <img
+          className="min-h-16 max-w-20 bg-slate-300 rounded-md"
+          src={`/Flags/${language}.png`}
+          alt="flag-img"
+        />
         <div className="text-left">
           <h2 className="text-black">{language}</h2>
           <p className="text-black text-xs">
             Number of rooms: {roomsData.length}
+          </p>
+          <p className="text-black text-xs">
+            Active Participants:{' '}
+            {roomsData.reduce((acc, room) => acc + room.participantCount, 0)}
           </p>
         </div>
       </button>

@@ -1,22 +1,21 @@
-import { useEffect, useState } from 'react';
-
-import { env } from '../../config/env';
-
 import axios from 'axios';
-
 import Navbar from '../components/Navbar';
+import useUserData from '../hooks/useUserData.jsx';
+import { useEffect, useState } from 'react';
+import { env } from '../../config/env';
+import { addTimesCompleted } from '../utils/addDeckProgress.js';
+import { findBestDisplayDecks } from '../utils/deckProgress';
+import OnboardingModal from '../components/layout/OnboardingModal.jsx';
 
 const userID = '6737bd5921b1fac154eadf76';
 
-import { findBestDisplayDecks } from '../utils/deckProgress';
-
-import { addTimesCompleted } from '../utils/addDeckProgress.js';
-
 export default function HomePage() {
+  const [userData] = useUserData();
   const [dailyWords, setDailyWords] = useState([]);
   const [dailyMotivation, setDailyMotivation] = useState('');
   const [user, setUser] = useState('');
   const [displayDecks, setDisplayDecks] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(true);
 
   // You want data? This will give you data
   useEffect(() => {
@@ -36,6 +35,8 @@ export default function HomePage() {
         },
       );
 
+      // TODO: add logic to show onboarding modal
+
       response.data.map((word) => {
         word.flipped = false;
       });
@@ -43,7 +44,7 @@ export default function HomePage() {
       response.data ? setDailyWords(response.data) : null;
     };
     getRandomWords();
-  }, []);
+  }, [userData]);
 
   const flipWord = (index) => {
     let newDailyWords = [...dailyWords];
@@ -51,10 +52,15 @@ export default function HomePage() {
     setDailyWords(newDailyWords);
   };
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div>
       <Navbar />
       <h1>Home Page</h1>
+      <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
       <div className="grid">
         <div className="leftSide">
           <div className="dailyWordsContainer">

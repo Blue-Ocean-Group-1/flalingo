@@ -7,8 +7,10 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/react';
+import useAuth from '../hooks/useAuth.jsx';
 import { Link } from 'react-router-dom';
 import FontAwesomeIcon from './common/Icon.jsx';
+import Brand from './common/Brand.jsx';
 
 const navigation = [
   { name: 'Flashcards', href: '/flashcards', current: false },
@@ -24,8 +26,12 @@ function classNames(...classes) {
 // TODO: FIX SELECTED PAGE STATE INDICATOR
 
 export default function Navbar() {
+  const { logout } = useAuth();
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure
+      as="nav"
+      className="sticky top-0 z-40 w-full lex-none duration-500 lg:z-50 bg-gray-900"
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-12 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -49,11 +55,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-1 w-full items-center justify-center sm:items-stretch sm:justify-between">
             <div className="flex sm:justify-start shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
+              <Brand />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -91,7 +93,7 @@ export default function Navbar() {
               >
                 <MenuItem>
                   <Link
-                    href="/profile"
+                    to="/profile"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Your Profile
@@ -99,14 +101,24 @@ export default function Navbar() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    href="/support"
+                    to="/support"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Support
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <div className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none">
+                  <div
+                    onClick={logout}
+                    tabIndex="0"
+                    role="button"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        logout();
+                      }
+                    }}
+                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none cursor-pointer"
+                  >
                     Logout
                   </div>
                 </MenuItem>
