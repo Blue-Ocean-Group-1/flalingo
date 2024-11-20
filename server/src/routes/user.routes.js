@@ -8,6 +8,7 @@ import {
   getUserById,
   getDailyWords,
   addDeckProgress,
+  getUserReportById
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
@@ -36,6 +37,7 @@ const getUsersLimiter = RateLimit({
 });
 userRouter.get('/', getUsersLimiter, getUsers);
 userRouter.get('/:id', getUserByIdLimiter, getUserById);
+userRouter.get('/:id/reports', getUserReportById);
 
 userRouter.get('/:id/dailyWords', getDailyWords);
 

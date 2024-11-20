@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   },
   activeLanguages: [String],
   allLanguages: [String],
-  progress: [
+  progress: {type: [
     {
       language: { type: String, required: true },
       skillLevel: { type: String, required: true, default: 'beginner' },
@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
         },
       ],
     },
-  ],
+  ], default: []},
   streaks: [
     {
       highestFlashcard: { type: Number, default: 0 },
@@ -64,12 +64,17 @@ const userSchema = new mongoose.Schema({
     default: [],
   },
   dailyGoalProgress: [
-    { date: { type: Date }, completed: { type: Boolean, default: false } },
+    {
+      date: { type: Date, default: new Date() },
+      loggedIn: { type: Boolean, default: false },
+      deckCompleted: { type: Boolean, default: false },
+      conversationRoomJoined: { type: Boolean, default: false }
+    },
   ],
   currentLoginStreak: Number,
   longestLoginStreak: Number,
-  loginHistory: [{ type: Date, dailyGoalsCompleted: Boolean }],
-  timeUsingApp: Number,
+  loginHistory: [{ type: Date, required: true }],
+  timeUsingApp: [{ date: { type: Date, required: true}, flashcards: { type: Number, required: true }, conversations: { type: Number, required: true }, loggedIn: { type: Number, required: true } }],
   topBadges: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Badge' }],
   allBadges: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Badge' }],
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
