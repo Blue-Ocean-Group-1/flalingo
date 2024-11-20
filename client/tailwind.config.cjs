@@ -36,6 +36,21 @@ module.exports = {
         battleship: '#9A9A9A',
         whiteSmoke: '#f5f5f5',
       },
+      transformStyle: {
+        '3d': 'preserve-3d',
+      },
+      rotate: {
+        'x-180': 'rotateX(180deg)',
+      },
+      strokeWidth: {
+        10: '10',
+      },
+      strokeDashArray: {
+        314: '314.159',
+      },
+      strokeDashoffset: {
+        100: '100',
+      },
     },
     keyframes: {
       wiggle: {
@@ -56,5 +71,25 @@ module.exports = {
     },
   },
 
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.transform-style-3d': {
+          transformStyle: 'preserve-3d',
+        },
+      });
+    },
+    function ({ addUtilities }) {
+      addUtilities({
+        '.backface-hidden': {
+          backfaceVisibility: 'hidden',
+        },
+      });
+    },
+    function ({ addUtilities }) {
+      addUtilities({
+        '.stroke-linecap-round': { 'stroke-linecap': 'round' },
+      });
+    },
+  ],
 };
