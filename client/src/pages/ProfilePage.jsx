@@ -3,7 +3,7 @@ import axios from 'axios';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import { env } from '../../config/env.js';
 import logger from '../../config/logger.js';
-import { Select } from '@headlessui/react';
+import useUserData from '../hooks/useUserData.jsx';
 
 const COUNTRY_DATA = {
   Bangladesh: 'Bengali',
@@ -21,7 +21,7 @@ const COUNTRY_DATA = {
   Japan: 'Japanese',
   Malaysia: 'Malay',
   Netherlands: 'Dutch',
-  Nigeria: 'Norwegian',
+  Norway: 'Norwegian',
   Poland: 'Polish',
   Portugal: 'Portuguese',
   Romania: 'Romanian',
@@ -37,6 +37,8 @@ const COUNTRY_DATA = {
 };
 
 export default function ProfilePage() {
+  const [userData, updateUser] = useUserData();
+  console.log('userData', userData);
   const [selectedImg, setSelectedImg] = useState(null);
   const [displayedImg, setDisplayedImg] = useState(
     'https://muffinman.io/img/image-resize/rickmorty-250x250.jpg',
@@ -44,12 +46,12 @@ export default function ProfilePage() {
   const [countryFlag, setCountryFlag] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [profileData, setProfileData] = useState({
-    name: 'Emma',
-    username: '@emma',
-    country: 'China',
-    phoneNumber: '(123)-456-7890',
-    gender: 'Female',
-    email: 'emmaemma0768@icloud.com',
+    name: '',
+    username: '',
+    country: '',
+    phoneNumber: '',
+    gender: '',
+    email: '',
   });
   const [notificationSettings, setNotificationSettings] = useState({
     dailyReminder: false,
@@ -62,6 +64,15 @@ export default function ProfilePage() {
     importFlag(profileData.country);
   }, [profileData.country]);
 
+  useEffect(() => {
+    setProfileData({
+      name: userData && userData.name,
+      username: userData && `@${userData.username}`,
+      country: userData && userData.country,
+      phoneNumber: userData && userData.phoneNumber,
+      email: userData && userData.email,
+    });
+  }, [userData]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData({ ...profileData, [name]: value });
