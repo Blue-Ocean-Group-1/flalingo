@@ -10,7 +10,6 @@ import {
   addDeckProgress,
   updateUserData,
   getUserReportById,
-  initDailyProgress,
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
