@@ -37,7 +37,7 @@ const COUNTRY_DATA = {
 };
 
 export default function ProfilePage() {
-  const [userData, updateUser] = useUserData();
+  const [userData, loading, error, updateUser] = useUserData();
   console.log('userData', userData);
   const [selectedImg, setSelectedImg] = useState(null);
   const [displayedImg, setDisplayedImg] = useState(
@@ -81,6 +81,12 @@ export default function ProfilePage() {
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
     setNotificationSettings({ ...notificationSettings, [name]: checked });
+  };
+
+  const handleSaveInfo = () => {
+    setEditMode(false);
+    console.log('userData', userData);
+    updateUser(profileData);
   };
 
   const handleSubmit = (e) => {
@@ -246,21 +252,24 @@ export default function ProfilePage() {
 
   return (
     <DefaultPageLayout>
-      <div className="max-w-xl mx-auto">
+      <div className="max-w-4xl mx-auto text-jet">
         <br />
         <br />
+        <h1 className="text-3xl -ml-5 text-3xl font-semibold mb-10">Profile</h1>
         <button
-          className="-ml-5 border border-white"
+          className="-ml-5 bg-argentBlue px-2 h-8 mr-1 rounded-md"
           onClick={() => setEditMode(true)}
         >
           Edit
         </button>
-        <button
-          className="ml-25 border border-white"
-          onClick={() => setEditMode(false)}
-        >
-          save
-        </button>
+        {editMode && (
+          <button
+            className="bg-argentBlue bg-argentBlue px-2 h-8 rounded-md"
+            onClick={handleSaveInfo}
+          >
+            Save
+          </button>
+        )}
         <div className="flex ml-10">
           <div className="relative mr-50">
             <div className="relative">
@@ -272,7 +281,7 @@ export default function ProfilePage() {
               <img
                 src={countryFlag}
                 alt="Flag"
-                className="w-9 h-6 absolute bottom-0 left-28"
+                className="w-9 h-6 absolute bottom-0 left-28 border border-gray-400 rounded-sm antialiasing"
               />
             </div>
 
@@ -287,7 +296,10 @@ export default function ProfilePage() {
                     setSelectedImg(event.target.files[0]);
                   }}
                 />
-                <button type="submit" className="mt-2 ml-5 border border-white">
+                <button
+                  type="submit"
+                  className="mt-2 ml-5 bg-argentBlue p-1 rounded-md px-2"
+                >
                   upload
                 </button>
               </form>
@@ -297,7 +309,7 @@ export default function ProfilePage() {
             <form>
               {editMode ? (
                 <div className="flex items-center mb-2">
-                  <label htmlFor="name" className="mr-2 font-bold">
+                  <label htmlFor="name" className="mr-1 font-bold">
                     Name
                   </label>
                   <input
@@ -307,7 +319,7 @@ export default function ProfilePage() {
                     placeholder={profileData.name}
                     value={profileData.name}
                     onChange={handleInputChange}
-                    className="block w-full"
+                    className="block w-full bg-platinum px-1"
                   />
                 </div>
               ) : (
@@ -328,7 +340,7 @@ export default function ProfilePage() {
                     type="text"
                     placeholder={profileData.username}
                     value={profileData.username}
-                    className="block w-full"
+                    className="block w-full bg-platinum px-1"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -347,7 +359,7 @@ export default function ProfilePage() {
                   <select
                     id="country"
                     name="country"
-                    className="block w-full"
+                    className="block w-full bg-platinum px-1"
                     value={profileData.country}
                     onChange={handleInputChange}
                   >
@@ -377,7 +389,7 @@ export default function ProfilePage() {
                     placeholder={profileData.phoneNumber}
                     value={profileData.phoneNumber}
                     onChange={handleInputChange}
-                    className="w-auto"
+                    className="block w-auto bg-platinum px-1"
                   />
                 </div>
               ) : (
@@ -395,7 +407,7 @@ export default function ProfilePage() {
                   <select
                     id="gender"
                     name="gender"
-                    className="block w-full"
+                    className="block w-full bg-platinum px-1"
                     value={profileData.gender}
                     onChange={handleInputChange}
                   >
@@ -423,7 +435,7 @@ export default function ProfilePage() {
                     placeholder={profileData.email}
                     value={profileData.email}
                     onChange={handleInputChange}
-                    className="block w-full"
+                    className="block w-full bg-platinum px-1"
                   />
                 </div>
               ) : (
@@ -435,7 +447,7 @@ export default function ProfilePage() {
             </form>
           </div>
         </div>
-        <div className="mt-40">
+        <div className="mt-16">
           <h1 className="font-bold text-2xl">Notification Settings</h1>
           <form className="mt-4" onSubmit={handleSubmit}>
             <div className="mb-2">
@@ -486,12 +498,14 @@ export default function ProfilePage() {
                 Receive promotion alerts
               </label>
             </div>
-            <button
-              type="submit"
-              className="mt-4 border border-white px-4 py-2"
-            >
-              Update your settings
-            </button>
+            <div className="mt-10">
+              <button
+                type="submit"
+                className="px-4 h-10 bg-argentBlue text-lg font-semibold rounded-md"
+              >
+                Update your settings
+              </button>
+            </div>
           </form>
         </div>
       </div>
