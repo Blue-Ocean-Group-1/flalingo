@@ -1,15 +1,13 @@
-import mongoose from 'mongoose';
-
 import logger from '../config/logger.js';
 import { User } from '../models/user.model.js';
 
 const helper = async (userId, language, deckName, attempt, skillLevel) => {
   try {
-    const sanitizedUserId = mongoose.Types.ObjectId(userId);
-    const sanitizedLanguage = mongoose.escape(language);
-    const sanitizedDeckName = mongoose.escape(deckName);
-    const sanitizedAttempt = mongoose.escape(attempt);
-    const sanitizedSkillLevel = mongoose.escape(skillLevel);
+    const sanitizedUserId = userId.replace(/[^\w\s]/gi, '');
+    const sanitizedLanguage = language.replace(/[^\w\s]/gi, '');
+    const sanitizedDeckName = deckName.replace(/[^\w\s]/gi, '');
+    const sanitizedAttempt = { ...attempt };
+    const sanitizedSkillLevel = skillLevel;
     const user = await User.findOne({
       _id: sanitizedUserId,
       'progress.language': sanitizedLanguage,
@@ -30,7 +28,8 @@ const helper = async (userId, language, deckName, attempt, skillLevel) => {
         },
         {
           new: true,
-          arrayFilters: [{ 'deck.deckName': sanitizedDeckName }], // This is for targeting the deck in the array
+          // This is for targeting the deck in the array in case anyone's wondering
+          arrayFilters: [{ 'deck.deckName': sanitizedDeckName }],
         },
       );
     } else {

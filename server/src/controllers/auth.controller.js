@@ -20,6 +20,7 @@ export const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // changes to user model necessitate this change
     const newUser = new User({
       username,
       email,
@@ -27,7 +28,7 @@ export const register = async (req, res) => {
       name,
       currentLoginStreak: 0,
       longestLoginStreak: 0,
-      timeUsingApp: 0,
+      timeUsingApp: [],
       gems: 0,
     });
 
