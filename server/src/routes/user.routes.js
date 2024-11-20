@@ -46,7 +46,12 @@ const getUsersLimiter = RateLimit({
 });
 userRouter.get('/', getUsersLimiter, getUsers);
 userRouter.get('/:id', getUserByIdLimiter, getUserById);
-userRouter.get('/:id/reports', getUserReportById);
+
+const getUserReportByIdLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+userRouter.get('/:id/reports', getUserReportByIdLimiter, getUserReportById);
 
 userRouter.get('/:id/dailyWords', getDailyWords);
 
