@@ -3,12 +3,13 @@ import useUserData from '../hooks/useUserData.jsx';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env';
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
+
 import {
   findBestDisplayDecks,
   findRecommendedDeck,
 } from '../utils/deckProgress';
-import OnboardingModal from '../components/layout/OnboardingModal.jsx';
 
+import OnboardingModal from '../components/layout/OnboardingModal.jsx';
 import ProgressCircle from '../components/dashboard/progressCircle';
 import DailyWord from '../components/dashboard/DailyWord';
 import MainProgress from '../components/dashboard/MainProgress';
