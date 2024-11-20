@@ -57,8 +57,6 @@ export const addDeckProgress = async (req, res) => {
 
 export const updateUserData = async (req, res) => {
   try {
-    Logger.info(`user.controller.js: Updating data for user ${req.user.id}`);
-
     const protectedFields = ['password', '_id', 'username'];
     let updateData = {};
 
@@ -116,16 +114,8 @@ export const updateUserData = async (req, res) => {
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    Logger.info(
-      `user.controller.js: Successfully updated data for user ${req.user.id}`,
-    );
     res.json(updatedUser);
   } catch (error) {
-    Logger.error(
-      `user.controller.js: Error updating user data - ${error.message}`,
-    );
-
     if (error.name === 'ValidationError') {
       return res.status(400).json({
         message: 'Validation Error',

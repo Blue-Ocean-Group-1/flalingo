@@ -36,7 +36,7 @@ const countries = [
 ];
 
 const OnboardingModal = ({ isOpen, onClose }) => {
-  const [userData, updateUser] = useUserData();
+  const [userData, loading, error, updateUser] = useUserData();
   const [languageOptions, setLanguageOptions] = useState([]);
   const [formData, setFormData] = useState({
     nativeCountry: '',
