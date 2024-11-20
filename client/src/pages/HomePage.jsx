@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { env } from '../../config/env';
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
 import { findBestDisplayDecks } from '../utils/deckProgress';
-import logger from '../../config/logger.js';
 import OnboardingModal from '../components/layout/OnboardingModal.jsx';
 
 const userID = '6737bd5921b1fac154eadf76';
