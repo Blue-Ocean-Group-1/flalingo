@@ -31,7 +31,7 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
         transition
         className="fixed inset-0 bg-black/30 duration-300 ease-out data-[closed]:opacity-0"
       />
-      <div className="text-black fixed inset-0 flex w-screen items-center justify-center p-4">
+      <div className="text-black fixed inset-0 flex w-screen items-center justify-center xl:ml-[9rem] p-4">
         <DialogPanel
           transition
           className="relative sm:w-2/3 h-5/6 sm:h-3/4 sm:max-h-3/4 space-y-2 bg-white rounded-2xl py-8 px-10 duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
@@ -47,7 +47,7 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
             Select a room and join by clicking the join room button to start
             chatting!
           </Description>
-          <div className="bg-gray-200 flex flex-col overflow-y-auto">
+          <div className="bg-gray-200 h-2/3 flex flex-col overflow-y-auto">
             {roomsData.map((room, idx) => (
               <button
                 className={`text-left inline-flex p-1 gap-2 ${selectedRoomId === room._id && 'bg-argentBlue'}`}
@@ -60,10 +60,13 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
                 </p>
               </button>
             ))}
+            {!roomsData.length && (
+              <p className="text-left p-2 text-gray-400">No rooms available</p>
+            )}
           </div>
           <div className="flex justify-center">
             <button
-              className={`md:mt-6 bg-argentBlue py-3 px-2 w-fit lg:w-1/4 rounded-md text-nowrap ${roomsData.length === 0 && 'disabled:opacity-50 cursor-not-allowed'}`}
+              className={`md:mt-3.5 bg-argentBlue py-3 px-2 w-fit lg:w-1/4 rounded-md text-nowrap ${roomsData.length === 0 && 'disabled:opacity-50 cursor-not-allowed'}`}
               onClick={handleJoin}
             >
               Join Room

@@ -11,12 +11,11 @@ import {
 } from '../utils/deckProgress';
 
 import OnboardingModal from '../components/layout/OnboardingModal.jsx';
-import ProgressCircle from '../components/dashboard/progressCircle';
-import DailyWord from '../components/dashboard/DailyWord';
-import MainProgress from '../components/dashboard/MainProgress';
-import UserReportDisplay from '../components/dashboard/UserReportDisplay';
-import DefaultPageLayout from '../components/layout/DefaultPageLayout';
-import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal';
+import ProgressCircle from '../components/dashboard/ProgressCircle.jsx';
+import DailyWord from '../components/dashboard/DailyWord.jsx';
+import MainProgress from '../components/dashboard/MainProgress.jsx';
+import UserReportDisplay from '../components/dashboard/UserReportDisplay.jsx';
+import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);

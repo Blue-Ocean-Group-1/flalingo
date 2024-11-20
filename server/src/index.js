@@ -80,12 +80,21 @@ if (NODE_ENV !== 'test') {
 }
 
 // import { Chatroom } from './models/chatroom.model.js';
+
 // mongoose.connection.once('open', () => {
 //   Chatroom.updateMany({}, { participantCount: 0 })
 //     .then((res) => {
 //       console.log('succesfully updated chatrooms');
 //     })
 //     .catch((err) => console.log(err));
+// });
+
+// import { User } from './models/user.model.js';
+// mongoose.connection.once('open', () => {
+//   User.updateMany(
+//     {},
+//   {dailyProgressGoals: },
+//   );
 // });
 
 export default app;
