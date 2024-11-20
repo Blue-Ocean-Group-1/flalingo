@@ -5,11 +5,11 @@ import { User } from '../models/user.model.js';
 
 const helper = async (userId, language, deckName, attempt, skillLevel) => {
   try {
-    const sanitizedUserId = mongoose.Types.ObjectId(userId);
-    const sanitizedLanguage = mongoose.escape(language);
-    const sanitizedDeckName = mongoose.escape(deckName);
-    const sanitizedAttempt = mongoose.escape(attempt);
-    const sanitizedSkillLevel = mongoose.escape(skillLevel);
+    const sanitizedUserId = new mongoose.Types.ObjectId(userId);
+    const sanitizedLanguage = language;
+    const sanitizedDeckName = deckName;
+    const sanitizedAttempt = attempt;
+    const sanitizedSkillLevel = skillLevel;
     const user = await User.findOne({
       _id: sanitizedUserId,
       'progress.language': sanitizedLanguage,

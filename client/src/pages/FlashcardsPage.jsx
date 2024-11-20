@@ -6,9 +6,7 @@ import Logger from '../../config/logger.js';
 import useUserData from '../hooks/useUserData.jsx';
 
 export default function FlashcardsPage() {
-  //load flashcards from database
   const [flashcards, setFlashcards] = useState([]);
-  const [userData, loading, error, updateUser] = useUserData();
   const [currentDeck, setCurrentDeck] = useState();
   const [currentCard, setCurrentCard] = useState();
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -19,51 +17,30 @@ export default function FlashcardsPage() {
 
   //user info/progress
   const [skillLevel, setSkillLevel] = useState('beginner');
-  const [numCorrect, setNumCorrect] = useState();
+  const [numCorrect, setNumCorrect] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [correctPopUp, setCorrectPopUp] = useState(false);
   const [incorrectPopUp, setIncorrectPopUp] = useState(false);
   const [isCorrect, setIsCorrect] = useState();
   const [isFinished, setIsFinished] = useState(false);
-  ///const [userData, setUserData] = useUserData();
+
+  const [language, setLanguage] = useState('Spanish');
+
+  const [userData, loading, error, updateUser] = useUserData();
 
   useEffect(() => {
-    //fetch first deck from database
-    //Logger.info('Fetching decks...');
-    if (!userData) return;
+    if (userData) {
+      setLanguage(userData?.activeLanguages[0]);
+      setCurrentTheme(userData?.progress[0]?.theme);
+      setSkillLevel(userData?.progress[0]?.skillLevel);
+    }
+  }, [userData]);
 
-    let language = userData?.activeLanguages[0];
-    setSkillLevel(userData?.progress[0]?.skillLevel);
-
-    const fetchDecks = async () => {
-      try {
-        const response = await api.get(
-          `/decks/${language}/${skillLevel}/${currentTheme}`,
-        );
-        //console.log('Response:', response);
-        setThemeDecks(response.data);
-        if (
-          response.data.length > 0 &&
-          response.data[0].flashcards.length > 0
-        ) {
-          Logger.info('Data in useEffect', response.data);
-          setCurrentDeck(response.data[0]);
-          setFlashcards(response.data[0].flashcards);
-          setCurrentCard(response.data[0].flashcards[currentCardIndex]);
-          createAnswerChoices();
-          setIsFinished(false);
-          Logger.info('flashcards', flashcards);
-          Logger.info('currentCard', currentCard);
-          Logger.info('currentChoices', currentChoices);
-        } else {
-          Logger.warn('No data found');
-        }
-      } catch (error) {
-        Logger.error('Error fetching deck:', error);
-      }
-    };
-    fetchDecks();
-  }, [skillLevel, currentTheme]);
+  useEffect(() => {
+    if (language && skillLevel && currentTheme) {
+      fetchDecks();
+    }
+  }, [language, skillLevel, currentTheme]);
 
   useEffect(() => {
     if (currentCard) {
@@ -77,10 +54,47 @@ export default function FlashcardsPage() {
     if (flashcards && currentCardIndex < flashcards.length) {
       setCurrentCard(flashcards[currentCardIndex]);
       setIsFinished(false);
+      setIsCorrect(true);
     } else {
       setIsFinished(true);
     }
   }, [currentCardIndex, flashcards]);
+
+  const fetchDecks = async () => {
+    try {
+      const response = await api.get(
+        `/decks/${language}/${skillLevel}/${currentTheme}`,
+      );
+
+      if (response.data.length > 0 && response.data[0].flashcards.length > 0) {
+        setThemeDecks(response.data);
+        Logger.info('Data in useEffect', response.data);
+        setCurrentDeck(response.data[0]);
+        setFlashcards(filterByDiscard(response.data[0].flashcards));
+        setCurrentCard(response.data[0].flashcards[currentCardIndex]);
+        createAnswerChoices();
+        setIsFinished(false);
+        Logger.info('flashcards', flashcards);
+        Logger.info('currentCard', currentCard);
+        Logger.info('currentChoices', currentChoices);
+      } else {
+        Logger.warn('No data found');
+        setThemeDecks([]);
+      }
+    } catch (error) {
+      Logger.error('Error fetching deck:', error);
+    }
+  };
+
+  const filterByDiscard = (flashcards) => {
+    if (!userData?.discardedFlashcards) return flashcards;
+    return flashcards.filter(
+      (flashcard) =>
+        !userData.discardedFlashcards.some(
+          (discarded) => discarded.word === flashcard.word,
+        ),
+    );
+  };
 
   const createAnswerChoices = () => {
     let answerChoices = [];
@@ -110,11 +124,14 @@ export default function FlashcardsPage() {
       console.log('Correct!');
       setCorrectPopUp(true);
       setIsCorrect(true);
-      setTimeout(() => setCorrectPopUp(false), 1000);
-      setCurrentCardIndex(currentCardIndex + 1);
-      setNumCorrect(numCorrect + 1);
-      setCurrentStreak(currentStreak + 1);
+      setTimeout(() => setCorrectPopUp(true), 1000);
 
+      if (isCorrect) {
+        setNumCorrect(numCorrect + 1);
+        setCurrentStreak(currentStreak + 1);
+      }
+
+      setCurrentCardIndex(currentCardIndex + 1);
       //update streak
     } else {
       setIsCorrect(false);
@@ -122,24 +139,23 @@ export default function FlashcardsPage() {
       setIncorrectPopUp(true);
       setTimeout(() => setIncorrectPopUp(false), 1000);
     }
+    console.log('Correct:', numCorrect);
   };
 
-  const discardBtnClicked = async () => {
+  const discardBtnClicked = () => {
     if (!currentDeck?._id || !currentCard?.word) {
       console.error('Missing deck ID or card word');
       return;
     }
 
-    try {
-      const response = await api.delete(
-        `/decks/card/${currentDeck._id}/${currentCard.word}`,
-      );
+    userData.discardedFlashcards.push({
+      deckId: currentDeck._id,
+      word: currentCard.word,
+    });
+    updateUser(userData);
 
-      console.log('Flashcard deleted', response.data);
-      setCurrentCardIndex(currentCardIndex + 1);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    console.log(userData.discardedFlashcards);
+    console.log(userData);
   };
 
   const shuffleBtnClicked = () => {
@@ -147,8 +163,34 @@ export default function FlashcardsPage() {
   };
 
   const displayFinished = () => {
+    if (userData) {
+      const updateProgressEntry = userData.progress.find(
+        (progress) => progress.language === language,
+      );
+
+      if (updateProgressEntry) {
+        const deck = updateProgressEntry.decks.find(
+          (deck) => deck.deckName === currentDeck.name,
+        );
+
+        //what if deck doesn't exist?
+        if (deck) {
+          const attempt = deck.timesCompleted.length + 1;
+          const totalCorrect = numCorrect;
+          const date = new Date();
+          let obj = {
+            attemptNo: attempt,
+            totalCorrect: totalCorrect,
+            date: date,
+          };
+
+          deck.timesCompleted.push(obj);
+        }
+      }
+    }
+
     return (
-      <div className="bg-green-500 rounded-lg p-4 mb-6 text-white text-center">
+      <div className="bg-[#C6E600] rounded-lg p-4 mb-6 text-[#3A3A3A] text-center">
         <h1 className="text-2xl font-bold mb-2">Quiz Finished!</h1>
         <h2>
           You got {numCorrect} out of {flashcards.length} correct!
@@ -158,14 +200,14 @@ export default function FlashcardsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
       <div className="flashcardDisplay w-full flex min-h-[calc(100vh-64px)]">
         {/* Main Content */}
         <div className="w-3/4 p-4">
           <div className=" mx-auto">
             {/* Header */}
-            <div className="bg-blue-500 rounded-lg p-4 mb-6 text-white text-center">
+            <div className="bg-[#6AB9F2] rounded-lg p-4 mb-6 text-black text-center">
               <h1 className="text-2xl font-bold mb-2">{currentDeck.name}</h1>
               <div>
                 <h2>
@@ -175,7 +217,7 @@ export default function FlashcardsPage() {
               {currentStreak > 1 ? (
                 <h2>Current Streak {currentStreak + 1} in a row!</h2>
               ) : (
-                <h2>Start the quiz!</h2>
+                <h2>Start A Streak!</h2>
               )}
             </div>
 
@@ -185,7 +227,7 @@ export default function FlashcardsPage() {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <Button
-                  className="px-6 py-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+                  className="px-6 py-2 text-[#3A3A3A] transition-colors duration-150 bg-[#6AB9F2] rounded-lg focus:shadow-outline"
                   onClick={discardBtnClicked}
                 >
                   Discard
@@ -195,12 +237,12 @@ export default function FlashcardsPage() {
               {/* Pop-up Messages */}
               <div className="relative">
                 {correctPopUp && (
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-green-500 text-white px-4 py-2 rounded">
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-[#C6E600] text-[#3A3A3A] px-4 py-2 rounded">
                     Correct!
                   </div>
                 )}
                 {incorrectPopUp && (
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-red-500 text-white px-4 py-2 rounded">
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-[#FF8DE6] text-[#3A3A3A] px-4 py-2 rounded">
                     Incorrect!
                   </div>
                 )}
@@ -222,7 +264,7 @@ export default function FlashcardsPage() {
                 {currentChoices.map((choice, index) => (
                   <Button
                     key={index}
-                    className="py-3 px-6 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+                    className="py-3 px-6 text-lg text-black transition-colors duration-150 bg-[#6AB9F2] rounded-lg focus:shadow-outline hover:bg-[#C6E600] hover:text-[#3A3A3A]"
                     value={choice}
                     onClick={(e) => answerBtnClicked(e)}
                   >
@@ -240,10 +282,10 @@ export default function FlashcardsPage() {
           </div>
           <p className="font-semibold mb-4 text-black">Other Flashcards</p>
           <div className="flex flex-col gap-2">
-            {themeDecks.map((deck, index) => (
+            {themeDecks?.map((deck, index) => (
               <Button
                 key={index}
-                className="w-full py-2 px-4 text-sm text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+                className="w-full py-2 px-4 text-sm text-[#3A3A3A] transition-colors duration-150 bg-pear rounded-lg focus:shadow-outline hover:bg-[#C6E600]"
                 onClick={() => {
                   setCurrentDeck(deck);
                   setFlashcards(deck.flashcards);
