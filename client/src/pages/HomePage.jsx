@@ -9,10 +9,7 @@ import {
   findRecommendedDeck,
 } from '../utils/deckProgress';
 
-import { findBestDisplayDecks } from '../utils/deckProgress';
 import OnboardingModal from '../components/layout/OnboardingModal.jsx';
-
-
 import ProgressCircle from '../components/dashboard/progressCircle';
 import DailyWord from '../components/dashboard/DailyWord';
 import MainProgress from '../components/dashboard/MainProgress';
