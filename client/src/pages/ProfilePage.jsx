@@ -37,7 +37,7 @@ const COUNTRY_DATA = {
 };
 
 export default function ProfilePage() {
-  const [userData, loading, error, updateUser] = useUserData();
+  const [userData, loading, error, updateUser] = useUserData(); // eslint-disable-line no-unused-vars
   console.log('userData', userData);
   const [selectedImg, setSelectedImg] = useState(null);
   const [displayedImg, setDisplayedImg] = useState(

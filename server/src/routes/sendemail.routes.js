@@ -3,6 +3,7 @@ import express from 'express';
 import cron from 'node-cron';
 
 import { env } from '../config/env.js';
+import logger from '../config/logger.js';
 import { User } from '../models/user.model.js';
 
 const { SG_API_KEY } = env;
@@ -31,7 +32,7 @@ sendemailRouter.post('/confirmation', async (req, res) => {
     await sgMail.send(msg);
     res.status(200).send({ message: 'Email sent successfully!' });
   } catch (error) {
-    console.log('Error sending email:', error);
+    logger.error('Error sending email:', error);
     res.status(500).send({ error: error.message });
   }
 });
@@ -61,13 +62,13 @@ sendemailRouter.post('/schedule-daily', (req, res) => {
 
         try {
           await sgMail.send(msg);
-          console.log('Daily reminder sent to:', email);
+          logger.info('Daily reminder sent to:', email);
         } catch (error) {
-          console.log('Error sending daily reminder:', error);
+          logger.error('Error sending daily reminder:', error);
         }
       })
       .catch((error) => {
-        console.log('Error fetching user:', error);
+        logger.error('Error fetching user:', error);
       });
   });
 
@@ -112,9 +113,9 @@ sendemailRouter.post('/schedule-weekly', (req, res) => {
 
     try {
       await sgMail.send(msg);
-      console.log('Weekly reminder sent to:', email);
+      logger.info('Weekly reminder sent to:', email);
     } catch (error) {
-      console.log('Error sending weekly reminder:', error);
+      logger.error('Error sending weekly reminder:', error);
     }
   });
 
@@ -161,9 +162,9 @@ sendemailRouter.post('/schedule-monthly', (req, res) => {
 
     try {
       await sgMail.send(msg);
-      console.log('Monthly progress report sent to:', email);
+      logger.info('Monthly progress report sent to:', email);
     } catch (error) {
-      console.log('Error sending monthly progress report:', error);
+      logger.error('Error sending monthly progress report:', error);
     }
   });
 
@@ -212,9 +213,9 @@ sendemailRouter.post('/schedule-promotion', (req, res) => {
 
     try {
       await sgMail.send(msg);
-      console.log('Promotion email sent to:', email);
+      logger.info('Promotion email sent to:', email);
     } catch (error) {
-      console.log('Error sending promotion email:', error);
+      logger.error('Error sending promotion email:', error);
     }
   });
 
