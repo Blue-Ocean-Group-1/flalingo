@@ -10,6 +10,7 @@ const useUserData = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeDeck, setActiveDeck] = useState(null);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -50,7 +51,7 @@ const useUserData = () => {
     }
   };
 
-  return [userData, loading, error, updateUser];
+  return [userData, loading, error, updateUser, activeDeck, setActiveDeck];
 };
 
 export default useUserData;
