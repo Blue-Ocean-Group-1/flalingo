@@ -139,3 +139,31 @@ export const getUserReportById = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+export const getDailyProgress = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const dailyProgress = getDailyProgress(user);
+    res.status(200).send(dailyProgress);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+export const addNewLanguageProgress = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    user.activeLanguages = [req.body.language];
+    user.allLanguages.push(req.body.language);
+    const languageProgress = {
+      language: req.body.language,
+      skillLevel: 'beginner',
+      decks: [],
+    };
+    user.progress.push(languageProgress);
+    await user.save();
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};

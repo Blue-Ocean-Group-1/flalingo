@@ -36,11 +36,11 @@ const formatMessage = (level, message, data = null) => {
     console.log(data);
     console.groupEnd();
   } else {
-    console.log(
-      `%c${level.toUpperCase()}:%c ${message}`,
-      style,
-      'color: inherit',
-    );
+    // console.log(
+    //   `%c${level.toUpperCase()}:%c ${message}`,
+    //   style,
+    //   'color: inherit',
+    // );
   }
 };
 

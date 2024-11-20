@@ -11,27 +11,33 @@ import flagObject from '../../../public/Flags/flagObject.js';
 import badgeObject from '../../../public/Badges/badgeObject.js';
 import greetings from '../../utils/greetings';
 
-const MainProgress = ({ user }) => {
+const MainProgress = ({ user, openAddLang }) => {
   const [currentSkill, setCurrentSkill] = useState('');
   const [nearestBadge, setNearestBadge] = useState(null);
 
   useEffect(() => {
     if (user?.progress?.length) {
+      console.log(user);
       let skill = user?.progress?.find(
         (prog) => prog.language === user.activeLanguages[0],
       );
       if (skill) {
         setCurrentSkill(skill.skillLevel);
       }
-      let badge = findNearestBadge(user);
-      if (badge.key === undefined) {
+      let decks = user.progress.find(
+        (prog) => prog.language === user.activeLanguages[0],
+      );
+      let badge;
+      if (decks?.decks?.length) {
+        badge = findNearestBadge(decks);
+      }
+      if (badge === undefined) {
         badge = {
           key: 'Family',
           skillLevel: 'Beginner',
         };
       }
       setNearestBadge(badge);
-      console.log(user);
     }
   }, [user]);
 
@@ -61,7 +67,7 @@ const MainProgress = ({ user }) => {
                   </option>
                 ))}
             </select> */}
-            <MainLanguageSelect user={user} />
+            <MainLanguageSelect user={user} openAddLang={openAddLang} />
           </div>
           <div>
             <h3 className="text-xl font-semibold text-gray-700 mb-2">

@@ -3,6 +3,7 @@ import useUserData from '../hooks/useUserData.jsx';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env';
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
+import startNewLanguage from '../utils/startNewLanguage.js';
 
 import {
   findBestDisplayDecks,
@@ -15,6 +16,7 @@ import DailyWord from '../components/dashboard/DailyWord';
 import MainProgress from '../components/dashboard/MainProgress';
 import UserReportDisplay from '../components/dashboard/UserReportDisplay';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
+import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
@@ -23,10 +25,22 @@ export default function HomePage() {
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
-  const [isModalOpen, setModalOpen] = useState(true);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [addNewLanguageModelOpen, setAddNewLanguageModelOpen] = useState(false);
+
+  useEffect(() => {
+    userData?.progress?.length === 0 ? setModalOpen(true) : setModalOpen(false);
+  }, [userData]);
+
+  useEffect(() => {
+    if (user?.progress?.length === 0 && user.activeLanguages?.length) {
+      startNewLanguage(user.activeLanguages[0], user._id);
+    }
+  });
 
   // You want data? This will give you data
   useEffect(() => {
+    console.log(userData);
     setUser(userData);
     if (userData?.progress?.length) {
       setDisplayDecks(findBestDisplayDecks(userData));
@@ -67,9 +81,9 @@ export default function HomePage() {
     }
   }, [displayDecks]);
 
-  useEffect(() => {
-    console.log(recommendedDeck);
-  }, [recommendedDeck]);
+  // useEffect(() => {
+  //   console.log(recommendedDeck);
+  // }, [recommendedDeck]);
 
   const flipWord = (index) => {
     let newDailyWords = [...dailyWords];
@@ -81,10 +95,23 @@ export default function HomePage() {
     setModalOpen(false);
   };
 
+  const openAddLanguageModal = () => {
+    setAddNewLanguageModelOpen(true);
+  };
+
+  const closeAddLanguageModal = () => {
+    setAddNewLanguageModelOpen(false);
+  };
+
   return (
     <DefaultPageLayout>
       <section className="flex content-center items-center rounded-xl w-full">
         <div className="flex bg-white mt-12 rounded-2xl w-full">
+          <AddNewLanguageModel
+            user={user}
+            closeModal={closeAddLanguageModal}
+            isOpen={addNewLanguageModelOpen}
+          />
           <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
           <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8">
             <div className="flex flex-col p-4 rounded-lg gap-4 bg-white w-2/4">
@@ -138,8 +165,13 @@ export default function HomePage() {
             </div>
           </div>
           <div className="p-8 w-1/2 flex flex-col justify-around items-center gap-8 pr-20">
-            <MainProgress user={user} />
-            {user && <UserReportDisplay user={user} />}
+            {user && (
+              <MainProgress
+                user={userData}
+                openAddLang={openAddLanguageModal}
+              />
+            )}
+            {user && <UserReportDisplay user={userData} />}
           </div>
         </div>
       </section>

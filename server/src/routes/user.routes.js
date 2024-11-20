@@ -10,6 +10,8 @@ import {
   addDeckProgress,
   updateUserData,
   getUserReportById,
+  getDailyProgress,
+  addNewLanguageProgress,
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
@@ -55,6 +57,10 @@ userRouter.get('/:id/reports', getUserReportByIdLimiter, getUserReportById);
 
 userRouter.get('/:id/dailyWords', getDailyWords);
 
+userRouter.get('/:id/dailyProgress', getDailyProgress);
+
 userRouter.post('/deckProgress', addDeckProgress);
+
+userRouter.patch('/:id/:language', addNewLanguageProgress);
 
 export default userRouter;
