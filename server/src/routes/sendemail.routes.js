@@ -46,7 +46,7 @@ sendemailRouter.post('/schedule-daily', (req, res) => {
   }
 
   const task = cron.schedule('*/2 * * * *', () => {
-    User.findOne({ email: 'user3@example.com' })
+    User.findOne({ username: 'user3' })
       .then(async (user) => {
         const msg = {
           to: email,

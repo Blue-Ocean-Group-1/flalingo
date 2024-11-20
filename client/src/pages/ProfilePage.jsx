@@ -68,8 +68,9 @@ export default function ProfilePage() {
     setProfileData({
       name: userData && userData.name,
       username: userData && `@${userData.username}`,
-      country: userData && userData.country,
+      country: userData && userData.demographics.country,
       phoneNumber: userData && userData.phoneNumber,
+      gender: userData && userData.demographics.gender,
       email: userData && userData.email,
     });
   }, [userData]);
@@ -86,7 +87,17 @@ export default function ProfilePage() {
   const handleSaveInfo = () => {
     setEditMode(false);
     console.log('userData', userData);
-    updateUser(profileData);
+    const updatedInfo = {
+      name: profileData.name,
+      username: profileData.username,
+      demographics: {
+        country: profileData.country,
+        gender: profileData.gender,
+      },
+      phoneNumber: profileData.phoneNumber,
+      email: profileData.email,
+    };
+    updateUser(updatedInfo);
   };
 
   const handleSubmit = (e) => {

@@ -10,7 +10,16 @@ import logger from './config/logger.js';
 import configurePassport from './config/passport.js';
 import { errorLogger, AppError } from './middleware/errorLogger.js';
 import { requestLogger } from './middleware/requestLogger.js';
-import { messageRouter, testRouter, userRouter, deckRouter, chatroomRouter, sendemailRouter, AuthRouter } from './routes/index.js';
+import {
+  messageRouter,
+  testRouter,
+  userRouter,
+  deckRouter,
+  chatroomRouter,
+  sendemailRouter,
+  AuthRouter,
+  languageRouter,
+} from './routes/index.js';
 
 // Validate environment variables
 validateEnv();
@@ -36,6 +45,7 @@ app.use('/api/test', testRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/decks', deckRouter);
 app.use('/api/sendemail', sendemailRouter);
+app.use('/api/languages', languageRouter);
 
 // Development settings
 if (env.isDevelopment) {
