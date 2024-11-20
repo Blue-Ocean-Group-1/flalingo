@@ -1,4 +1,5 @@
 import progressHelper from '../helpers/addDeckProgress.js';
+import { generateUserReport } from '../helpers/generateUserReport.js';
 import { getRandomDailyWords } from '../helpers/randomDailyWords.js';
 import { User } from '../models/user.model.js';
 
@@ -48,6 +49,7 @@ export const addDeckProgress = async (req, res) => {
       req.body.language,
       req.body.deckName,
       req.body.attempt,
+      req.body.skillLevel,
     );
     res.status(200).send('Successfully added timesCompleted');
   } catch (error) {
@@ -124,5 +126,16 @@ export const updateUserData = async (req, res) => {
     }
 
     res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+export const getUserReportById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    let report = generateUserReport(user);
+    res.status(200).send(report);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
   }
 };

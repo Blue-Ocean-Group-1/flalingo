@@ -1,4 +1,31 @@
+import { hashCode } from '../../utils/utils';
+import {
+  quotesByLanguage,
+  getMotivationalQuote,
+} from '../../utils/motivationalQuotes.js';
+import useUserData from '../../hooks/useUserData';
+import { useEffect, useState } from 'react';
+
 export default function ProgressSidebar() {
+  const [userData] = useUserData();
+  const [randomQuote, setRandomQuote] = useState('');
+
+  // function getQuote(date = 0) {
+  //   console.log(quotesByLanguage[0]);
+  //   const quoteIdx = Math.abs(hashCode(date) % quotesByLanguage.length);
+  //   return quotesByLanguage[quoteIdx];
+  // }
+
+  console.log(getMotivationalQuote('Spanish'));
+
+  useEffect(() => {
+    setRandomQuote(
+      userData?.allLanguages[0]
+        ? getMotivationalQuote(userData?.allLanguages[0])
+        : 'Spanish',
+    );
+  }, [userData?.allLanguages]);
+
   return (
     <div className="flex-col space-y-2 my-6 mx-auto ">
       <div className="p-4 text-black bg-white rounded-md shadow-md">
@@ -20,17 +47,14 @@ export default function ProgressSidebar() {
         </div>
       </div>
       <div className="p-4 text-black bg-white rounded-md shadow-md">
-        <h2 className="font-medium pb-2">Daily Quote</h2>
+        <h2 className="text-lg font-medium pb-2">Random Quote</h2>
         <div className="flex flex-col space-y-2">
           <p className="text-sm italic">
-            "La vida es 10% lo que me ocurre y 90% cómo reacciono ante ello."
-            {<br />}
+            {randomQuote.quote}
+            <br />
           </p>
-          <p className="text-sm italic">
-            translation: "Life is 10% what happens to me and 90% how I react to
-            it."
-          </p>
-          <p className="text-xs pb-2">– Charles R. Swindoll</p>
+          <p className="text-sm italic">{randomQuote.translation}</p>
+          <p className="text-xs pb-2"></p>
         </div>
       </div>
     </div>
