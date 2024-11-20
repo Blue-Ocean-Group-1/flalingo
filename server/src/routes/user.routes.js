@@ -54,7 +54,7 @@ const getUserReportByIdLimiter = RateLimit({
 userRouter.get('/:id/reports', getUserReportByIdLimiter, getUserReportById);
 
 userRouter.get('/:id/dailyWords', getDailyWords);
-
+// userRouter.put('/:id/dailyProgress', initDailyProgress);
 userRouter.post('/deckProgress', addDeckProgress);
 
 export default userRouter;
