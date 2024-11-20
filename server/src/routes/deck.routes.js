@@ -5,6 +5,8 @@ import RateLimit from 'express-rate-limit';
 import {
   getDecks,
   getDecksByLanguage,
+  getDecksByLanguageAndSkillLevelAndTheme,
+  deleteCardFromDeck,
 } from '../controllers/deck.controller.js';
 
 const deckRouter = express.Router();
@@ -17,6 +19,13 @@ const limiter = RateLimit({
 deckRouter.get('/', getDecks);
 
 deckRouter.get('/:language', limiter, getDecksByLanguage);
+
+deckRouter.get(
+  '/:language/:skillLevel/:theme',
+  getDecksByLanguageAndSkillLevelAndTheme,
+);
+
+deckRouter.delete('/card/:_id/:word', deleteCardFromDeck);
 
 export default deckRouter;
 /* enable-eslint */

@@ -9,6 +9,7 @@ import {
   getUserData,
   getUsers,
   updateUserData,
+  getUserReportById,
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
@@ -45,6 +46,12 @@ const getUsersLimiter = RateLimit({
 });
 userRouter.get('/', getUsersLimiter, getUsers);
 userRouter.get('/:id', getUserByIdLimiter, getUserById);
+
+const getUserReportByIdLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+userRouter.get('/:id/reports', getUserReportByIdLimiter, getUserReportById);
 
 userRouter.get('/:id/dailyWords', getDailyWords);
 
