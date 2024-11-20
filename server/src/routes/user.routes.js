@@ -9,7 +9,7 @@ import {
   getDailyWords,
   addDeckProgress,
   updateUserData,
-  getUserReportById
+  getUserReportById,
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
@@ -53,5 +53,3 @@ userRouter.get('/:id/dailyWords', getDailyWords);
 userRouter.post('/deckProgress', addDeckProgress);
 
 export default userRouter;
-
-

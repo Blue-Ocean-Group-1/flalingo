@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-import flagObject from '../../assets/Flags/flagObject';
+import CircleProgressDisplay from '../common/CircleProgressDisplay';
 
-const ProgressCircle = ({ deck, language, maxPercentage }) => {
+import flagObject from '../../../public/Flags/flagObject.js';
+import useUserData from '../../hooks/useUserData';
+
+const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
+  const navigate = useNavigate();
+  const [, , , , , setActiveDeck] = useUserData();
   const [ring, setRing] = useState(314.159);
   const [displayPercentage, setDisplayPercentage] = useState(0);
 
@@ -36,46 +42,40 @@ const ProgressCircle = ({ deck, language, maxPercentage }) => {
     return () => clearInterval(intervalId);
   }, [deck.percentage, maxPercentage]);
 
+  const handleClick = (newDeck) => {
+    setActiveDeck(newDeck);
+    navigate('/flashcards');
+  };
+
   return (
     <button
       key={deck._id}
       className="flex justify-between items-center px-1 py-4 text-xl border-solid border-jet border rounded-xl m-2 shadow-md shadow-jet relative hover:scale-105"
       type="button"
+      onClick={() => handleClick(deck)}
     >
-      <h5 className="text-jet font-bold ml-8 text-2xl mt-2">{deck.deckName}</h5>
-      <div
-        className={`text-jet text-sm font-bold capitalize border border-jet border-solid p-0.5 absolute top-2 left-4 rounded ${deck.skillLevel === 'beginner' ? 'bg-pear' : deck.skillLevel === 'proficient' ? 'bg-webViolet' : 'bg-argBlue'}`}
-      >
-        {deck.skillLevel}
-      </div>
-      <img
-        className="absolute max-w-8 top-2 p-0.5 left-24 rounded"
-        src={flagObject[language]}
-        alt={`${language} flag`}
-      />
-      <div className="relative flex justify-center items-center w-20 h-20">
-        <svg
-          className="circle-progress"
-          width="120"
-          height="120"
-          viewBox="0 0 120 120"
+      <h5 className="text-jet font-bold ml-8 text-2xl mt-2">
+        {deck.deckName.split(' ').slice(1).join(' ')}
+      </h5>
+      <div className="flex absolute gap-4 justify-start items-center top-2 left-4 p-0.5 m-0.5">
+        <div
+          className={`text-jet text-sm font-bold capitalize border border-jet border-solid p-0.5 rounded ${deck.skillLevel === 'beginner' ? 'bg-pear' : deck.skillLevel === 'proficient' ? 'bg-webViolet' : 'bg-argBlue'}`}
         >
-          <circle
-            className="fill-none stroke-[#e6e6e6] stroke-[10] "
-            cx="60"
-            cy="60"
-            r="50"
-          ></circle>
-          <circle
-            className="circle-progress-bar"
-            cx="60"
-            cy="60"
-            r="50"
-            strokeDashoffset={ring}
-          ></circle>
-        </svg>
-        <p className="font-bold absolute top-[calc(50% -.75rem)] text-jet">{`${displayPercentage}%`}</p>
+          {deck.skillLevel}
+        </div>
+        <img
+          className="max-w-8 p-0.5 rounded"
+          src={flagObject[language]}
+          alt={`${language} flag`}
+        />
+        {recommended && (
+          <div className="text-jet text-sm font-bold capitalize border border-jet border-solid p-0.5 rounded bg-argentBlue">
+            Recommended
+          </div>
+        )}
       </div>
+
+      <CircleProgressDisplay ring={ring} percentage={displayPercentage} />
     </button>
   );
 };

@@ -42,7 +42,6 @@ const generateDailyWords = async (user) => {
   return null;
 };
 
-
 const getRandomDailyWords = async (userId) => {
   const today = new Date();
   const startOfDay = new Date(today.setHours(0, 0, 0, 0));

@@ -26,7 +26,6 @@ const generateDailyData = (
     });
   }
 
-
   user.progress.forEach((cat) => {
     cat.decks.forEach((deck) => {
       let deckData = {
@@ -34,7 +33,7 @@ const generateDailyData = (
         skillLevel: deck.skillLevel,
         timesCompleted: [],
         average: 0,
-      }
+      };
       deck.timesCompleted.forEach((attempt) => {
         let testDate = new Date(attempt?.date);
         if (testDate >= startDate && testDate <= endDate) {

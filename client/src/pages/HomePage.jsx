@@ -17,7 +17,6 @@ import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
-  const [dailyMotivation, setDailyMotivation] = useState('');
   const [userData] = useUserData();
   const [user, setUser] = useState('');
   const [displayDecks, setDisplayDecks] = useState([]);
@@ -38,7 +37,6 @@ export default function HomePage() {
     };
     getRecommendedDeck();
 
-    setDailyMotivation('Do it!');
     const getRandomWords = async () => {
       const response = await axios.get(
         `${env.API_URL}/users/${userData._id}/dailyWords`,

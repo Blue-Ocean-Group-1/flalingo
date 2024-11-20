@@ -49,7 +49,7 @@ const findBestDisplayDecks = (user) => {
 };
 
 const findRecommendedDeck = async (user) => {
-  const currentDecks = (user.progress || []).find(
+  const currentDecks = (user?.progress || []).find(
     (lang) => lang.language === user.activeLanguages[0],
   );
 

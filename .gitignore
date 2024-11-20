@@ -7,7 +7,6 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-/client/src/pages/mycss.css
 
 /server/src/seedData/ignore
 

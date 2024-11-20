@@ -1,5 +1,3 @@
-import mongoose from 'mongoose';
-
 import logger from '../config/logger.js';
 import { User } from '../models/user.model.js';
 
@@ -8,7 +6,7 @@ const helper = async (userId, language, deckName, attempt, skillLevel) => {
     const sanitizedUserId = userId.replace(/[^\w\s]/gi, '');
     const sanitizedLanguage = language.replace(/[^\w\s]/gi, '');
     const sanitizedDeckName = deckName.replace(/[^\w\s]/gi, '');
-    const sanitizedAttempt = {...attempt};
+    const sanitizedAttempt = { ...attempt };
     const sanitizedSkillLevel = skillLevel;
     const user = await User.findOne({
       _id: sanitizedUserId,

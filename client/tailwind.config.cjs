@@ -42,6 +42,15 @@ module.exports = {
       rotate: {
         'x-180': 'rotateX(180deg)',
       },
+      strokeWidth: {
+        10: '10',
+      },
+      strokeDashArray: {
+        314: '314.159',
+      },
+      strokeDashoffset: {
+        100: '100',
+      },
     },
   },
 
@@ -58,6 +67,11 @@ module.exports = {
         '.backface-hidden': {
           backfaceVisibility: 'hidden',
         },
+      });
+    },
+    function ({ addUtilities }) {
+      addUtilities({
+        '.stroke-linecap-round': { 'stroke-linecap': 'round' },
       });
     },
   ],
