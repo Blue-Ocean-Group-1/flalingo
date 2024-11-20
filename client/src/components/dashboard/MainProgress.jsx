@@ -54,19 +54,6 @@ const MainProgress = ({ user, openAddLang }) => {
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
               My Current Language
             </h3>
-            {/* <select
-              className="w-full text-2xl bg-white text-jet p-3 rounded-lg shadow-sm border border-gray-300 focus:ring-2 focus:ring-argentBlue focus:outline-none transition duration-300 ease-in-out hover:bg-gray-50"
-              value={
-                user?.activeLanguages?.length ? user.activeLanguages[0] : ''
-              }
-            >
-              {user?.allLanguages?.length &&
-                user.allLanguages.map((language) => (
-                  <option className="text-lg p-2" key={language}>
-                    {language}
-                  </option>
-                ))}
-            </select> */}
             <MainLanguageSelect user={user} openAddLang={openAddLang} />
           </div>
           <div>

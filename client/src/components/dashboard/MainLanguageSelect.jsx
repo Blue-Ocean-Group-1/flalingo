@@ -3,11 +3,13 @@ import React from 'react';
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import useUserData from '../../hooks/useUserData';
 
-function MainLanguageSelect({ user, openAddLang }) {
-  const [, , , updateUser, ,] = useUserData();
+function MainLanguageSelect({ user, openAddLang, setUser }) {
+  const [userData, , , updateUser, ,] = useUserData();
   const handleClick = (language) => {
-    updateUser({ activeLanguages: [language] });
+    updateUser({ ...userData, activeLanguages: [language] });
   };
+
+  console.log(user);
 
   return (
     user && (
