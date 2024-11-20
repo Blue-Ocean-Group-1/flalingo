@@ -7,6 +7,7 @@ export default function AchievementsPage() {
   const [badges, setBadges] = useState([]);
 
   useEffect(() => {
+    console.log(userData);
     const getBadges = () => {
       let badges = [];
       for (let i = 0; i < userData.allBadges.length; i++) {
