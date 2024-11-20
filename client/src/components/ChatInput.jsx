@@ -38,7 +38,7 @@ export default function ChatInput({ onMsgSend, canSend = true }) {
   const placeholder = 'Message Agent';
 
   return (
-    <div className="relative flex items-center text-black mt-10">
+    <div className="relative flex items-center text-black mt-10 mx-1">
       <form className="" onSubmit={(e) => handleSend(e)}>
         <div
           ref={containerRef}
