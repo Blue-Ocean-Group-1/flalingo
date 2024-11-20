@@ -10,7 +10,7 @@ import {
 } from '../utils/deckProgress';
 
 import OnboardingModal from '../components/layout/OnboardingModal.jsx';
-import ProgressCircle from '../components/dashboard/progressCircle';
+import ProgressCircle from '../components/dashboard/ProgressCircle.jsx';
 import DailyWord from '../components/dashboard/DailyWord';
 import MainProgress from '../components/dashboard/MainProgress';
 import UserReportDisplay from '../components/dashboard/UserReportDisplay';
