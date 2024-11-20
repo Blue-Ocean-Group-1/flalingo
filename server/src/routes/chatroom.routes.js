@@ -6,6 +6,7 @@ import {
   getChatroom,
   getChatroomMessages,
   createChatroomMessage,
+  updateParticipantCount,
 } from '../controllers/chatroom.controller.js';
 
 const chatroomsRouter = express.Router();
@@ -21,6 +22,11 @@ chatroomsRouter.get('/', getChatrooms);
 chatroomsRouter.get('/:roomId', limiter, getChatroom);
 chatroomsRouter.get('/:roomId/messages', getChatroomMessages);
 chatroomsRouter.post('/:roomId/messages', limiter, createChatroomMessage);
+chatroomsRouter.patch(
+  '/:roomId/participantCount',
+  limiter,
+  updateParticipantCount,
+);
 
 // chatroomsRouter.get('/:roomId', limiter, getChatroom);
 

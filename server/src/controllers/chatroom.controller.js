@@ -20,6 +20,19 @@ export const getChatroom = async (req, res) => {
   }
 };
 
+export const updateParticipantCount = async (req, res) => {
+  try {
+    const roomId = req.params.roomId;
+    await Chatroom.findByIdAndUpdate(
+      { _id: roomId, balance: { $gte: 1 } },
+      { $inc: { participantCount: req.body.eventType === 'join' ? 1 : -1 } },
+    );
+    return res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export const getChatroomMessages = async (req, res) => {
   try {
     const messages = await Message.find({
