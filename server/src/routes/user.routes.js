@@ -8,6 +8,7 @@ import {
   getUserById,
   getDailyWords,
   addDeckProgress,
+  updateUserData,
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
@@ -30,6 +31,14 @@ userRouter.get(
   getUserDataLimiter,
   getUserData,
 );
+
+userRouter.put(
+  '/me',
+  passport.authenticate('jwt', { session: false }),
+  getUserDataLimiter,
+  updateUserData,
+);
+
 const getUsersLimiter = RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // max 100 requests per windowMs

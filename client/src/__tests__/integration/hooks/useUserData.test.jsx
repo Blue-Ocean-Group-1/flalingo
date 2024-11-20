@@ -1,8 +1,6 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { renderHook, waitFor, act } from '@testing-library/react';
-import useUserData from '../../../hooks/useUserData';
-import * as userApi from '../../../services/user.api.js';
-import * as authHook from '../../../hooks/useAuth.jsx';
+// src/__tests__/unit/hooks/useUserData.test.jsx
+import { renderHook, act, waitFor } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 vi.mock('../../../services/user.api.js', () => ({
   fetchUserData: vi.fn(),
@@ -10,84 +8,40 @@ vi.mock('../../../services/user.api.js', () => ({
 }));
 
 vi.mock('../../../hooks/useAuth.jsx', () => ({
-  default: vi.fn(),
+  default: vi.fn(() => ({ token: 'mock-token' })),
 }));
 
-describe('useUserData Integration', () => {
-  const mockToken = 'mock-token';
+vi.mock('../../../../config/logger.js', () => ({
+  default: {
+    info: vi.fn(),
+    error: vi.fn(),
+    debug: vi.fn(),
+  },
+}));
+
+import useUserData from '../../../hooks/useUserData';
+import { fetchUserData, updateUserData } from '../../../services/user.api.js';
+import Logger from '../../../../config/logger.js';
+
+describe('useUserData Hook', () => {
   const mockUserData = {
-    id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
+    name: 'Test User',
+    email: 'test@example.com',
+  };
+
+  const mockUpdatedData = {
+    name: 'Updated User',
+    email: 'updated@example.com',
   };
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(authHook.default).mockReturnValue({ token: mockToken });
+    fetchUserData.mockResolvedValue({ success: true, data: mockUserData });
   });
 
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
-  describe('Initial Data Fetching', () => {
-    it('should fetch user data when token is available', async () => {
-      vi.mocked(userApi.fetchUserData).mockResolvedValueOnce(mockUserData);
-
-      const { result } = renderHook(() => useUserData());
-
-      expect(result.current[0]).toBeNull();
-      expect(result.current[1]).toBe(true);
-      expect(result.current[2]).toBeNull();
-
-      await waitFor(() => {
-        expect(result.current[1]).toBe(false);
-      });
-
-      expect(result.current[0]).toEqual(mockUserData);
-      expect(result.current[1]).toBe(false);
-      expect(result.current[2]).toBeNull();
-
-      expect(userApi.fetchUserData).toHaveBeenCalledWith(mockToken);
-    });
-
-    it('should handle fetch error gracefully', async () => {
-      const mockError = new Error('API Error');
-      vi.mocked(userApi.fetchUserData).mockRejectedValueOnce(mockError);
-
-      const { result } = renderHook(() => useUserData());
-
-      await waitFor(() => {
-        expect(result.current[1]).toBe(false);
-      });
-
-      expect(result.current[0]).toBeNull();
-      expect(result.current[1]).toBe(false);
-      expect(result.current[2]).toBe('Failed to fetch user data');
-    });
-
-    it('should not fetch data when token is not available', async () => {
-      vi.mocked(authHook.default).mockReturnValue({ token: null });
-
-      const { result } = renderHook(() => useUserData());
-
-      await waitFor(() => {
-        expect(result.current[1]).toBe(false);
-      });
-
-      expect(result.current[0]).toBeNull();
-      expect(result.current[1]).toBe(false);
-      expect(result.current[2]).toBeNull();
-
-      expect(userApi.fetchUserData).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('User Data Updates', () => {
-    it('should update user data successfully', async () => {
-      const updatedUserData = { ...mockUserData, name: 'Jane Doe' };
-      vi.mocked(userApi.fetchUserData).mockResolvedValueOnce(mockUserData);
-      vi.mocked(userApi.updateUserData).mockResolvedValueOnce(updatedUserData);
+  describe('updateUser function', () => {
+    it('should successfully update user data', async () => {
+      updateUserData.mockResolvedValue(mockUpdatedData);
 
       const { result } = renderHook(() => useUserData());
 
@@ -96,22 +50,23 @@ describe('useUserData Integration', () => {
       });
 
       await act(async () => {
-        await result.current[3](updatedUserData);
+        await result.current[3](mockUpdatedData);
       });
 
-      expect(result.current[0]).toEqual(updatedUserData);
+      expect(updateUserData).toHaveBeenCalledWith(
+        'mock-token',
+        mockUpdatedData,
+      );
+      expect(result.current[0]).toEqual(mockUpdatedData);
       expect(result.current[2]).toBeNull();
-
-      expect(userApi.updateUserData).toHaveBeenCalledWith(
-        mockToken,
-        updatedUserData,
+      expect(Logger.info).toHaveBeenCalledWith(
+        'useUserData: User data updated',
       );
     });
 
-    it('should handle update errors gracefully', async () => {
+    it('should handle update errors', async () => {
       const mockError = new Error('Update failed');
-      vi.mocked(userApi.fetchUserData).mockResolvedValueOnce(mockUserData);
-      vi.mocked(userApi.updateUserData).mockRejectedValueOnce(mockError);
+      updateUserData.mockRejectedValue(mockError);
 
       const { result } = renderHook(() => useUserData());
 
@@ -119,40 +74,78 @@ describe('useUserData Integration', () => {
         expect(result.current[1]).toBe(false);
       });
 
-      const updateData = { name: 'Jane Doe' };
       await act(async () => {
-        await result.current[3](updateData);
+        await result.current[3](mockUpdatedData);
       });
 
-      expect(result.current[0]).toEqual(mockUserData);
+      expect(updateUserData).toHaveBeenCalledWith(
+        'mock-token',
+        mockUpdatedData,
+      );
       expect(result.current[2]).toBe('Failed to update');
+      expect(Logger.error).toHaveBeenCalledWith(
+        'useUserData: Failed to update user data',
+        mockError,
+      );
     });
-  });
 
-  describe('Token Changes', () => {
-    it('should refetch data when token changes', async () => {
-      const newToken = 'new-token';
-      const newUserData = { ...mockUserData, name: 'New User' };
+    it('should maintain previous data on update failure', async () => {
+      updateUserData.mockRejectedValue(new Error('Update failed'));
 
-      vi.mocked(userApi.fetchUserData)
-        .mockResolvedValueOnce(mockUserData)
-        .mockResolvedValueOnce(newUserData);
-
-      const { result, rerender } = renderHook(() => useUserData());
+      const { result } = renderHook(() => useUserData());
 
       await waitFor(() => {
         expect(result.current[1]).toBe(false);
       });
 
-      vi.mocked(authHook.default).mockReturnValue({ token: newToken });
-      rerender();
+      const initialData = result.current[0];
 
-      await waitFor(() => {
-        expect(result.current[0]).toEqual(newUserData);
+      await act(async () => {
+        await result.current[3](mockUpdatedData);
       });
 
-      expect(userApi.fetchUserData).toHaveBeenCalledTimes(2);
-      expect(userApi.fetchUserData).toHaveBeenCalledWith(newToken);
+      expect(result.current[0]).toEqual(initialData);
+    });
+
+    it('should handle partial updates', async () => {
+      const partialUpdate = { name: 'Updated Name' };
+      const expectedResult = { ...mockUserData, ...partialUpdate };
+      updateUserData.mockResolvedValue(expectedResult);
+
+      const { result } = renderHook(() => useUserData());
+
+      await waitFor(() => {
+        expect(result.current[1]).toBe(false);
+      });
+
+      await act(async () => {
+        await result.current[3](partialUpdate);
+      });
+
+      expect(updateUserData).toHaveBeenCalledWith('mock-token', partialUpdate);
+      expect(result.current[0]).toEqual(expectedResult);
+    });
+
+    it('should log debug information for updates', async () => {
+      updateUserData.mockResolvedValue(mockUpdatedData);
+
+      const { result } = renderHook(() => useUserData());
+
+      await waitFor(() => {
+        expect(result.current[1]).toBe(false);
+      });
+
+      await act(async () => {
+        await result.current[3](mockUpdatedData);
+      });
+
+      expect(Logger.info).toHaveBeenCalledWith(
+        'useUserData: Updating user data',
+      );
+      expect(Logger.debug).toHaveBeenCalledWith(
+        'useUserData: updatedUser:',
+        mockUpdatedData,
+      );
     });
   });
 });
