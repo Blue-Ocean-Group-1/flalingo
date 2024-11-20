@@ -1,4 +1,3 @@
-
 import { Flashcard } from '../models/flashcard.model.js';
 
 export const getFlashcards = async (req, res) => {
@@ -9,5 +8,3 @@ export const getFlashcards = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-

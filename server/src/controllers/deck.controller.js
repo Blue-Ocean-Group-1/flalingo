@@ -1,6 +1,3 @@
-import mongoose from 'mongoose';
-
-import Logger from '../config/logger.js';
 import { Deck } from '../models/deck.model.js';
 const getDecks = async (req, res) => {
   try {
@@ -18,20 +15,22 @@ const getDecksByLanguage = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 const getDecksByLanguageAndSkillLevelAndTheme = async (req, res) => {
   try {
-    const decks = await Deck.find({ language: req.params.language, skillLevel: req.params.skillLevel, theme: req.params.theme });
+    const decks = await Deck.find({
+      language: req.params.language,
+      skillLevel: req.params.skillLevel,
+      theme: req.params.theme,
+    });
     res.status(200).send(decks);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
-const deleteCardFromDeck =  () => {
-
-}
+const deleteCardFromDeck = () => {};
 // const deleteCardFromDeck = async (req, res) => {
 //   try {
 //     const { _id, word  } = req.params;
@@ -48,4 +47,9 @@ const deleteCardFromDeck =  () => {
 //   }
 // }
 
-export { getDecks, getDecksByLanguage, getDecksByLanguageAndSkillLevelAndTheme, deleteCardFromDeck };
+export {
+  deleteCardFromDeck,
+  getDecks,
+  getDecksByLanguage,
+  getDecksByLanguageAndSkillLevelAndTheme,
+};

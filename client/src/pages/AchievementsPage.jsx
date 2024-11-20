@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import useUserData from '../hooks/useUserData.jsx';
-import Logger from '../../config/logger.js';
 import Navbar from '../components/Navbar.jsx';
 
 export default function AchievementsPage() {
-  const [userData, loading, error, updateUser] = useUserData();
+  const [userData, loading] = useUserData();
   const [badges, setBadges] = useState([]);
 
   useEffect(() => {
+    const getBadges = () => {
+      let badges = [];
+      for (let i = 0; i < userData.allBadges.length; i++) {
+        let obj = {
+          name: userData.allBadges[i].name,
+          language: userData.allBadges[i].language,
+        };
+        badges.push(obj);
+      }
+      setBadges(badges);
+    };
+
     if (userData) {
       getBadges();
     }
@@ -34,18 +45,6 @@ export default function AchievementsPage() {
       });
     }
     return thisWeek;
-  };
-
-  const getBadges = () => {
-    let badges = [];
-    for (let i = 0; i < userData.allBadges.length; i++) {
-      let obj = {
-        name: userData.allBadges[i].name,
-        language: userData.allBadges[i].language,
-      };
-      badges.push(obj);
-    }
-    setBadges(badges);
   };
 
   if (loading)

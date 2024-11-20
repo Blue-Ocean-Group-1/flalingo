@@ -17,7 +17,6 @@ import {
   deckRouter,
   chatroomRouter,
   AuthRouter,
-  flashcardRouter
 } from './routes/index.js';
 
 // Validate environment variables
