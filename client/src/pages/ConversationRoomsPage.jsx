@@ -3,23 +3,49 @@ import { getChatrooms } from '../services/chatroom.api.js';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RoomsModal from '../components/RoomsModal.jsx';
-
-// TODO: Loads in chat log as well as high level chatroom data
+import Logger from '../../config/logger.js';
 
 export default function ConversationRoomsPage() {
   const [rooms, setRooms] = useState([]);
   const defaultLanguages = ['Spanish'];
 
+  function sortByDifficulty(rooms) {
+    const levelOrder = ['Beginner', 'Proficient', 'Advanced'];
+
+    return rooms.sort((a, b) => {
+      const [languageA, levelA, numA] = a.name.split(' ');
+      const [languageB, levelB, numB] = b.name.split(' ');
+
+      const levelIndexA = levelOrder.indexOf(levelA);
+      const levelIndexB = levelOrder.indexOf(levelB);
+
+      if (levelIndexA === levelIndexB) {
+        return parseInt(numA) - parseInt(numB);
+      }
+
+      return levelIndexA - levelIndexB;
+    });
+  }
+
   useEffect(() => {
     const fetchChatrooms = async () => {
       try {
         const chatrooms = await getChatrooms();
-        setRooms(chatrooms);
+        setRooms(sortByDifficulty(chatrooms));
       } catch (err) {
-        console.log(err);
+        Logger.error(err);
       }
     };
+
     fetchChatrooms();
+    let intervalId;
+    intervalId = setInterval(() => {
+      fetchChatrooms();
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   function getOtherRoomLanguages(rooms) {
@@ -86,6 +112,10 @@ function RoomLanguageCard({ language, roomsData }) {
           <h2 className="text-black">{language}</h2>
           <p className="text-black text-xs">
             Number of rooms: {roomsData.length}
+          </p>
+          <p className="text-black text-xs">
+            Active Participants:{' '}
+            {roomsData.reduce((acc, room) => acc + room.participantCount, 0)}
           </p>
         </div>
       </button>

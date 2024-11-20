@@ -10,7 +10,15 @@ import logger from './config/logger.js';
 import configurePassport from './config/passport.js';
 import { errorLogger, AppError } from './middleware/errorLogger.js';
 import { requestLogger } from './middleware/requestLogger.js';
-import { messageRouter, testRouter, userRouter, deckRouter, chatroomRouter, AuthRouter, flashcardRouter } from './routes/index.js';
+import {
+  messageRouter,
+  testRouter,
+  userRouter,
+  deckRouter,
+  chatroomRouter,
+  AuthRouter,
+  flashcardRouter
+} from './routes/index.js';
 
 // Validate environment variables
 validateEnv();
@@ -35,7 +43,6 @@ app.use('/api/users', userRouter);
 app.use('/api/test', testRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/decks', deckRouter);
-app.use('/api/flashcards', flashcardRouter);
 
 // Development settings
 if (env.isDevelopment) {
@@ -70,4 +77,14 @@ if (NODE_ENV !== 'test') {
     logger.info(`Visit http://${SERVER_HOST}:${PORT}`);
   });
 }
+
+// import { Chatroom } from './models/chatroom.model.js';
+// mongoose.connection.once('open', () => {
+//   Chatroom.updateMany({}, { participantCount: 0 })
+//     .then((res) => {
+//       console.log('succesfully updated chatrooms');
+//     })
+//     .catch((err) => console.log(err));
+// });
+
 export default app;

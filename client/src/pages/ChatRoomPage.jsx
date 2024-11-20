@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import ChatInput from '../components/ChatInput';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   getChatroom,
   getChatroomMessages,
   createChatMessage,
+  updateChatroomParticipantCount,
 } from '../services/chatroom.api';
 import { hashCode } from '../utils/utils';
 import useUserData from '../hooks/useUserData';
@@ -18,6 +19,7 @@ export default function ChatRoomPage() {
   let { roomId } = useParams();
   const [userData] = useUserData();
   const scrollableContainerRef = useRef(null);
+  const navigate = useNavigate();
 
   function scrollToBottom() {
     if (scrollableContainerRef.current) {
@@ -93,9 +95,62 @@ export default function ChatRoomPage() {
     return colors[colorIndex];
   }
 
+  const incrementParticipantCount = useCallback(async () => {
+    try {
+      await updateChatroomParticipantCount(roomId, 'join');
+    } catch (err) {
+      console.error(err);
+    }
+  }, [roomId]);
+
+  const decrementParticipantCount = useCallback(async () => {
+    try {
+      await updateChatroomParticipantCount(roomId, 'leave');
+    } catch (err) {
+      console.error(err);
+    }
+  }, [roomId]);
+
+  useEffect(() => {
+    async function handleVisibilityChange() {
+      try {
+        if (document.hidden) {
+          await decrementParticipantCount();
+        } else {
+          await incrementParticipantCount();
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [roomId, incrementParticipantCount, decrementParticipantCount]);
+
+  useEffect(() => {
+    incrementParticipantCount();
+    return () => {
+      decrementParticipantCount();
+    };
+  }, [navigate, roomId, incrementParticipantCount, decrementParticipantCount]);
+
   return (
     <DefaultPageLayout>
-      <h1 className="text-xl font-semibold pt-2 ">Chatroom - {details.name}</h1>
+      <div className="inline-flex justify-between w-full gap-2">
+        <button
+          onClick={() => navigate('/conversation_rooms')}
+          className="bg-wisteria h-8 px-3 sm:mt-2 mb-1 rounded-md text-black text-sm font-semibold self-center"
+        >
+          Leave
+        </button>
+        <h1 className="text-xl font-semibold pt-3">
+          Chatroom - {details.name}
+        </h1>
+      </div>
       <div
         ref={scrollableContainerRef}
         className="h-[calc(100dvh_-_9rem)] p-1 bg-white text-black overflow-y-scroll"
