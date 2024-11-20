@@ -150,7 +150,6 @@ export const updateUserData = async (req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 };
-<<<<<<< HEAD
 
 export const getUserReportById = async (req, res) => {
   try {
@@ -162,5 +161,3 @@ export const getUserReportById = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 }
-=======
->>>>>>> aee6c1806615d48970ef49ef8d3059351c1079fd
