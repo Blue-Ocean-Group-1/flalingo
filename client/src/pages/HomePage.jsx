@@ -7,10 +7,6 @@ import { addTimesCompleted } from '../utils/addDeckProgress.js';
 import { findBestDisplayDecks } from '../utils/deckProgress';
 import logger from '../../config/logger.js';
 
-const userID = '6737bd5921b1fac154eadf76';
-
-import { addTimesCompleted } from '../utils/addDeckProgress.js';
-
 import ProgressCircle from '../components/dashboard/progressCircle';
 import DailyWord from '../components/dashboard/DailyWord';
 import MainProgress from '../components/dashboard/MainProgress';
