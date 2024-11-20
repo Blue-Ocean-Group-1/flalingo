@@ -1,17 +1,15 @@
 import express from 'express';
 import RateLimit from 'express-rate-limit';
-
 import passport from 'passport';
 
 import {
-  getUsers,
-  getUserData,
-  getUserById,
-  getDailyWords,
   addDeckProgress,
+  getDailyWords,
+  getUserById,
+  getUserData,
+  getUsers,
   updateUserData,
 } from '../controllers/user.controller.js';
-
 
 const userRouter = express.Router();
 
