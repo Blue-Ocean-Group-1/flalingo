@@ -146,7 +146,6 @@ export const getUserReportById = async (req, res) => {
 };
 
 export const initDailyProgress = async (req, res) => {
-  console.log('in initDailyProgress');
   try {
     const exists = await User.exists({
       _id: req.params.id,

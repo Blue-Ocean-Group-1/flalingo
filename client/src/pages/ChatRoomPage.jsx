@@ -141,8 +141,6 @@ export default function ChatRoomPage() {
     };
   }, [navigate, roomId, incrementParticipantCount, decrementParticipantCount]);
 
-  console.log('userData', userData);
-
   useEffect(() => {
     async function updateUserProgress() {
       if (userData?.dailyGoalProgress) {
