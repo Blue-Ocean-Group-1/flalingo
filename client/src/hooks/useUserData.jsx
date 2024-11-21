@@ -75,6 +75,7 @@ export const UserDataProvider = ({ children }) => {
         updateUser,
         activeDeck,
         setActiveDeck,
+        setUserData,
       }}
     >
       {children}

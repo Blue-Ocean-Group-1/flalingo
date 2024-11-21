@@ -28,6 +28,10 @@ export default function HomePage() {
   const [addNewLanguageModelOpen, setAddNewLanguageModelOpen] = useState(false);
 
   useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
+  useEffect(() => {
     userData?.progress?.length === 0 ? setModalOpen(true) : setModalOpen(false);
   }, [userData, updateUser]);
 

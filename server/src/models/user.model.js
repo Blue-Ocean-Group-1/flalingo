@@ -63,7 +63,6 @@ const userSchema = new mongoose.Schema(
             type: [
               { word: { type: String }, translatedWord: { type: String } },
             ],
-            required: true,
             default: null,
           },
         },
