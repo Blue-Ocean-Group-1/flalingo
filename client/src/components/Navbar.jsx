@@ -30,9 +30,9 @@ export default function Navbar() {
   return (
     <Disclosure
       as="nav"
-      className="sticky top-0 z-40 w-full lex-none duration-500 lg:z-50 pt-4 px-4 pb-1 bg-platinum"
+      className="sticky top-0 z-40 w-full lex-none duration-500 lg:z-50 pt-4 pr-4 pb-1 bg-platinum"
     >
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-12">
+      <div className="mx-auto px-2">
         <div className="relative flex h-12 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
