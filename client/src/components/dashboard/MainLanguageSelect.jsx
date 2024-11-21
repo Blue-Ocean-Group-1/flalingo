@@ -6,12 +6,8 @@ import { useUserData } from '../../hooks/useUserData';
 function MainLanguageSelect({ user, openAddLang }) {
   const { userData, updateUser } = useUserData();
   const handleClick = async (language) => {
-    console.log(userData);
     await updateUser({ activeLanguages: [language] });
-    console.log(userData);
   };
-
-  console.log(user);
 
   return (
     user && (

@@ -1,4 +1,5 @@
 import './circleProgress.css';
+import '../../pages/mycss.css';
 
 const CircleProgressDisplay = ({ ring, percentage }) => {
   return (

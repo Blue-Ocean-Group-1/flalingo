@@ -153,9 +153,9 @@ export default function HomePage() {
             isOpen={addNewLanguageModelOpen}
           />
           <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
-          <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8">
-            <div className="flex flex-col p-8 rounded-xl gap-4 bg-white w-3/4">
-              <div className="flex justify-center align-center">
+          <div className="p-8 w-3/4 flex flex-col justify-between items-center gap-8 min-w-fit">
+            <div className="flex flex-col p-8 rounded-xl gap-4 w-3/4">
+              <div className="flex justify-center align-center min-w-max">
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
               </div>
               {dailyWords?.length &&
@@ -169,7 +169,7 @@ export default function HomePage() {
                   />
                 ))}
             </div>
-            <div className="bg-white rounded-xl flex w-3/4 flex-col max-w-3/4 p-8">
+            <div className="rounded-xl flex w-3/4 flex-col max-w-3/4 p-8">
               <div className="flex justify-center align-center">
                 <h3 className="text-5xl text-jet">My Decks</h3>
               </div>
@@ -205,7 +205,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="p-8 w-1/2 flex flex-col justify-around items-center gap-8 pr-20">
+          <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8 pr-20">
             {userData && (
               <MainProgress
                 user={userData}
