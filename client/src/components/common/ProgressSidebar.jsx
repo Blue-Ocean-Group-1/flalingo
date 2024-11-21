@@ -19,7 +19,6 @@ export default function ProgressSidebar() {
   const dailyProgress = userData?.dailyGoalProgress
     ? getDailyProgress(userData?.dailyGoalProgress)
     : {};
-  console.log('daily progress in sidebar', dailyProgress);
 
   return (
     <div className="flex-col space-y-2 my-6 mx-auto ">
