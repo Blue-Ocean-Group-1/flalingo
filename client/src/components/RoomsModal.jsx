@@ -31,7 +31,7 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
         transition
         className="fixed inset-0 bg-black/30 duration-300 ease-out data-[closed]:opacity-0"
       />
-      <div className="text-black fixed inset-0 flex w-screen items-center justify-center xl:ml-[9rem] p-4">
+      <div className="text-black fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel
           transition
           className="relative sm:w-2/3 h-5/6 sm:h-3/4 sm:max-h-3/4 space-y-2 bg-white rounded-2xl py-8 px-10 duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"

@@ -50,29 +50,30 @@ const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
   return (
     <button
       key={deck._id}
-      className="bg-white flex justify-between items-center px-1 py-4 text-xl rounded-xl m-2 shadow-md shadow-jet relative hover:scale-105"
+      className="bg-white flex justify-between items-center px-1 py-4 text-xl min-w-[25rem] rounded-xl m-2 shadow-md shadow-jet relative hover:scale-105"
       type="button"
       onClick={() => handleClick(deck)}
     >
-      <h5 className="text-jet font-bold ml-8 text-2xl mt-2">
+      <h5 className="text-jet font-bold ml-2 text-2xl mt-2 text-nowrap">
         {deck.deckName.split(' ').slice(1).join(' ')}
       </h5>
-      <div className="flex absolute gap-4 justify-start items-center top-2 left-4 p-0.5 m-0.5">
+      <div className="flex absolute gap-4 justify-start items-center top-2 left-2 p-0.25 m-0.25">
         <div
           className={`text-jet text-sm font-bold capitalize border border-jet border-solid p-0.5 rounded ${deck.skillLevel === 'beginner' ? 'bg-pear' : deck.skillLevel === 'proficient' ? 'bg-webViolet' : 'bg-argBlue'}`}
         >
           {deck.skillLevel}
         </div>
-        <img
-          className="max-w-8 p-0.5 rounded"
-          src={flagObject[language]}
-          alt={`${language} flag`}
-        />
+
         {recommended && (
           <div className="text-jet text-sm font-bold capitalize border border-jet border-solid p-0.5 rounded bg-argentBlue">
             Recommended
           </div>
         )}
+        <img
+          className="max-w-8 p-0.5 rounded h-[1.5rem]"
+          src={flagObject[language]}
+          alt={`${language} flag`}
+        />
       </div>
 
       <CircleProgressDisplay ring={ring} percentage={displayPercentage} />

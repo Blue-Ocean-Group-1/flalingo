@@ -10,7 +10,7 @@ export default function Brand() {
           src={PolyGlot_Globe}
           alt="placeholder"
         />
-        <h1 className="hidden sm:block text-jet text-2xl font-bold">
+        <h1 className="hidden sm:block text-jet text-3xl font-bold">
           PolyGlot
         </h1>
       </span>
