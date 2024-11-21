@@ -14,11 +14,11 @@ export default function LandingPage() {
     <div>
       <span className="inline-flex gap-2 items-center">
         <img
-          className="h-24 w-24 object-cover ml-60 mb-4 mt-10"
+          className="h-28 w-28 object-cover ml-60 mb-4 mt-10"
           src={PolyGlot_Globe}
           alt="placeholder"
         />
-        <h1 className="hidden sm:block text-jet text-4xl font-bold mt-10">
+        <h1 className="hidden sm:block text-jet text-7xl font-bold mt-10">
           PolyGlot
         </h1>
       </span>
