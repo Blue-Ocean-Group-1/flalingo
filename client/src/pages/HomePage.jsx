@@ -17,10 +17,12 @@ import MainProgress from '../components/dashboard/MainProgress.jsx';
 import UserReportDisplay from '../components/dashboard/UserReportDisplay.jsx';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
 import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx';
+import { initializeDailyProgress } from '../services/user.api.js';
+import getDailyProgress from '../utils/getDailyProgress.js';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
-  const { userData, loading, error, updateUser } = useUserData();
+  const { userData, updateUser } = useUserData();
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
@@ -39,6 +41,46 @@ export default function HomePage() {
       newLanguage();
     }
   }, [userData]);
+
+  // "dailyGoalProgress": [
+  //   {
+  //     "date": "2024-11-21T02:24:00.704Z",
+  //     "completed": true,
+  //     "loggedIn": true,
+  //     "deckCompleted": true,
+  //     "conversationRoomJoined": true,
+  //     "_id": "673e99e299c3f75836fa7923"
+  //   },
+  //   {
+  //     "date": "2024-11-15T02:24:27.860Z",
+  //     "completed": false,
+  //     "loggedIn": true,
+  //     "deckCompleted": false,
+  //     "conversationRoomJoined": false,
+  //     "_id": "673e99db99c3f75836fa791e"
+  //   }
+  // ],
+
+  useEffect(() => {
+    async function initDailyProgress() {
+      try {
+        const response = await initializeDailyProgress(userData._id);
+        if (response) {
+          updateUser({
+            ...response.data,
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (userData?.dailyGoalProgress) {
+      const dailyProgress = getDailyProgress(userData.dailyGoalProgress);
+      if (!dailyProgress) {
+        initDailyProgress();
+      }
+    }
+  }, [userData?.dailyGoalProgress, updateUser, userData?._id]);
 
   // You want data? This will give you data
   useEffect(() => {
@@ -70,7 +112,9 @@ export default function HomePage() {
 
       response.data ? setDailyWords(response.data) : null;
     };
-    getRandomWords();
+    if (userData) {
+      getRandomWords();
+    }
   }, [userData]);
 
   useEffect(() => {
@@ -80,10 +124,6 @@ export default function HomePage() {
       });
     }
   }, [displayDecks]);
-
-  useEffect(() => {
-    console.log(recommendedDeck);
-  }, [recommendedDeck]);
 
   const flipWord = (index) => {
     let newDailyWords = [...dailyWords];
@@ -119,6 +159,7 @@ export default function HomePage() {
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
               </div>
               {dailyWords?.length &&
+                userData.progress?.length > 0 &&
                 dailyWords.map((word, index) => (
                   <DailyWord
                     key={word._id}

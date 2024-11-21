@@ -145,6 +145,61 @@ export const getUserReportById = async (req, res) => {
   }
 };
 
+export const initDailyProgress = async (req, res) => {
+  try {
+    const exists = await User.exists({
+      _id: req.params.id,
+      'dailyGoalProgress.date': {
+        $gte: new Date().setHours(0, 0, 0, 0),
+      },
+    });
+
+    if (exists) throw new Error('Daily progress already initialized');
+    const progress = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          dailyGoalProgress: {
+            completed: false,
+            loggedIn: true,
+            deckCompleted: false,
+            conversationRoomJoined: false,
+          },
+        },
+      },
+      { new: true },
+    );
+
+    res.status(200).json(progress);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export const updateDailyProgress = async (req, res) => {
+  try {
+    const result = await User.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        'dailyGoalProgress.date': {
+          $gte: new Date().setHours(0, 0, 0, 0),
+          $lte: new Date().setHours(23, 59, 59, 999),
+        },
+      },
+      {
+        $set: {
+          'dailyGoalProgress.$': {
+            ...req.body,
+          },
+        },
+      },
+      { new: true },
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
 export const getDailyProgress = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -154,20 +209,46 @@ export const getDailyProgress = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
-
 export const addNewLanguageProgress = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    user.activeLanguages = [req.body.language];
-    user.allLanguages.push(req.body.language);
-    const languageProgress = {
-      language: req.body.language,
-      skillLevel: 'beginner',
-      decks: [],
-    };
-    user.progress.push(languageProgress);
-    await user.save();
-    res.status(200).send(user);
+    if (!req.body.language) {
+      return res.status(400).send({ message: 'Language is required' });
+    }
+
+    const userId = req.params.id;
+    const language = req.body.language;
+
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        $set: {
+          'activeLanguages.0': language,
+        },
+        $push: {
+          progress: {
+            language: language,
+            skillLevel: 'beginner',
+            decks: [],
+          },
+        },
+        $addToSet: {
+          allLanguages: language,
+        },
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    res.status(200).send({
+      activeLanguages: user.activeLanguages,
+      allLanguages: user.allLanguages,
+      progress: user.progress,
+    });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
