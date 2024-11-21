@@ -1,10 +1,10 @@
-import { getDeckPercentage } from './deckProgress';
+import { getDeckPercentageTwo } from './deckProgress';
 
 const checkSkillLevelCompletion = (user, language) => {
   let total = 0;
   let checking = user.progress.find((prog) => prog.language === language);
   if (checking?.decks?.length > 0) {
-    let decks = getDeckPercentage(checking.decks);
+    let decks = getDeckPercentageTwo(checking.decks);
     decks.forEach((deck) => {
       total += deck.percentage;
     });
