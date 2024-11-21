@@ -141,7 +141,6 @@ const findPriorityValue = (obj) => {
 };
 
 const findNearestBadge = (user) => {
-  console.log(user);
   let decks = splitDecksByLanguageAndTheme(user, 80);
   let badge;
   if (decks) {
