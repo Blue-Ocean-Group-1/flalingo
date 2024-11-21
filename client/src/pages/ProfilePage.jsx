@@ -57,6 +57,7 @@ export default function ProfilePage() {
     monthlyReport: false,
     promotion: false,
   });
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     importFlag(profileData.country);
@@ -89,6 +90,8 @@ export default function ProfilePage() {
   };
 
   const handleSaveInfo = () => {
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 1000);
     setEditMode(false);
     console.log('userData', userData);
     const updatedInfo = {
@@ -116,7 +119,8 @@ export default function ProfilePage() {
     e.preventDefault();
     console.log('Notification Settings:', notificationSettings);
     //TODO: MAKE A PUT REQUEST TO UPDATE USER NOTIFICATIONSETTINGS
-
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 1000);
     const msg = {
       to: profileData.email,
       subject: 'Subscription Confirmation',
@@ -277,8 +281,8 @@ export default function ProfilePage() {
       <div className="max-w-4xl mx-auto text-jet min-h-screen">
         <br />
         <br />
-        <h1 className="text-3xl -ml-5 text-3xl font-semibold mb-10">Profile</h1>
-        <div className="flex ml-0 mr-28 border-2 border-white bg-white shadow-2xl rounded-lg h-96">
+        <h1 className="text-3xl -ml-5 font-semibold mb-10">Profile</h1>
+        <div className="flex ml-0 mr-28 border-2 border-white bg-white rounded-md shadow-md shadow-jet h-96">
           <div className="relative mr-50">
             <div className="relative ml-2 mt-4">
               <img
@@ -541,6 +545,15 @@ export default function ProfilePage() {
           </form>
         </div>
       </div>
+      {showNotification && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-argentBlue p-4 rounded-md shadow-md text-center">
+            <p className="text-lg font-semibold text-jet">
+              Updated successfully
+            </p>
+          </div>
+        </div>
+      )}
     </DefaultPageLayout>
   );
 }

@@ -9,6 +9,7 @@ import badgeObject from '../../public/Badges/badgeObject.js';
 import flagObject from '../../public/Flags/flagObject.js';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
 import isEqual from 'lodash/isEqual';
+
 export default function AchievementsPage() {
   const { userData, updateUser, loading, setUserData } = useUserData();
   const [hasSameBadges, setHasSameBadges] = useState(false);
@@ -91,73 +92,77 @@ export default function AchievementsPage() {
     );
   return (
     <DefaultPageLayout>
-      <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="mb-10">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              Achievements
-            </h1>
-            <p className="text-gray-600">
-              Track your learning progress and earned badges
-            </p>
-          </div>
-          {/* Daily Progress Section */}
-          <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-              Daily Progress
-            </h2>
-            <div className="flex space-x-4 justify-between">
-              {calculateWeeklyProgress().map((day, index) => (
-                <div key={index} className="flex flex-col items-center">
-                  <h3 className="text-sm font-medium text-gray-600 mb-2">
-                    {day.dayName}
-                  </h3>
-                  <div
-                    className={`
+      <div className="mr-8 rounded-md">
+        <div className=" mx-4 mb-4 p-8 xl:pr-[19rem]">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="mb-10">
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                Achievements
+              </h1>
+              <p className="text-gray-600">
+                Track your learning progress and earned badges
+              </p>
+            </div>
+
+            {/* Daily Progress Section */}
+            <div className="bg-white rounded-xl shadow-md shadow-jet p-8 mb-8">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+                Daily Progress
+              </h2>
+              <div className="flex space-x-4 justify-between max-w-3xl mx-auto">
+                {calculateWeeklyProgress().map((day, index) => (
+                  <div key={index} className="flex flex-col items-center">
+                    <h3 className="text-sm font-medium text-gray-600 mb-2">
+                      {day.dayName}
+                    </h3>
+                    <div
+                      className={`
                       rounded-full w-14 h-14 flex items-center justify-center
                       transition-all duration-200 ease-in-out
                       ${
                         day.isCompleted
-                          ? 'bg-green-500 text-white shadow-lg scale-105'
+                          ? 'bg-pistachio text-white shadow-md font-extrabold scale-105'
                           : 'bg-gray-100 text-gray-600'
                       }
                     `}
-                  >
-                    <p className="text-lg font-semibold">{day.dayNumber}</p>
-                  </div>
-                  <p
-                    className={`text-xs mt-2 ${
-                      day.isCompleted ? 'text-green-600' : 'text-gray-400'
-                    }`}
-                  >
-                    {day.isCompleted ? 'Complete' : 'Incomplete'}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Badges Section */}
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-              Badges
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {userData?.allBadges?.map((badge, index) => {
-                const formattedBadge = formatBadge(badge);
-                if (!formattedBadge) return null;
-                return (
-                  <div key={index}>
-                    <BadgeFlag
-                      badge={badgeObject[formattedBadge.badgeName]}
-                      flag={flagObject[formattedBadge.language]}
-                    />
-                    <p className="text-sm text-gray-600">
-                      {formattedBadge.badgeName}
+                    >
+                      <p className="text-lg font-semibold">{day.dayNumber}</p>
+                    </div>
+                    <p
+                      className={`text-xs mt-2 ${
+                        day.isCompleted ? 'text-green-600' : 'text-gray-400'
+                      }`}
+                    >
+                      {day.isCompleted ? 'Complete' : 'Incomplete'}
                     </p>
                   </div>
-                );
-              })}
+                ))}
+              </div>
+            </div>
+
+            {/* Badges Section */}
+            <div className="bg-white rounded-xl shadow-md shadow-jet p-8">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+                Badges
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {userData?.allBadges?.map((badge, index) => {
+                  const formattedBadge = formatBadge(badge);
+                  if (!formattedBadge) return null;
+                  return (
+                    <div key={index}>
+                      <BadgeFlag
+                        badge={badgeObject[formattedBadge.badgeName]}
+                        flag={flagObject[formattedBadge.language]}
+                      />
+                      <p className="text-sm text-gray-600">
+                        {formattedBadge.badgeName}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

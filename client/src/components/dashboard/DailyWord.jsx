@@ -16,9 +16,11 @@ const DailyWord = ({ word, index, flipWord }) => {
   return (
     <div
       key={word.word}
-      className="flex justify-center align-center rounded-xl box-border shadow-md w-full gap-24 p-4 shadow-jet min-w-3/4 bg-white"
+      className="min-w-[25rem] flex justify-center align-center rounded-xl box-border shadow-md w-full gap-24 p-4 shadow-jet min-w-3/4 bg-white"
     >
-      <h5 className="p-1 font-bold text-xl text-jet w-1/3">{word.word}</h5>
+      <h5 className="p-1 font-bold text-xl text-jet w-1/3 text-nowrap">
+        {word.word}
+      </h5>
       <button
         className={`flip-card ${isFlipping ? 'is-flipping' : ''} w-1/3 text-jet font-bold hover:scale-105`}
         onClick={handleFlip}
