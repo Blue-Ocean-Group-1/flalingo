@@ -51,7 +51,6 @@ export const UserDataProvider = ({ children }) => {
       }));
 
       const updatedUser = await updateUserData(token, updatedData);
-      console.log(updatedData);
       setUserData({ ...userData, ...updatedUser });
       setError(null);
       Logger.info('UserDataProvider: User data updated');
@@ -75,6 +74,7 @@ export const UserDataProvider = ({ children }) => {
         updateUser,
         activeDeck,
         setActiveDeck,
+        setUserData,
       }}
     >
       {children}
