@@ -13,6 +13,7 @@ import FontAwesomeIcon from './common/Icon.jsx';
 import Brand from './common/Brand.jsx';
 
 const navigation = [
+  { name: 'Dashboard', href: '/dashboard', current: false },
   { name: 'Flashcards', href: '/flashcards', current: false },
   { name: 'Conversation Rooms', href: '/conversation_rooms', current: false },
   { name: 'Achievements', href: '/achievements', current: false },
@@ -30,9 +31,9 @@ export default function Navbar() {
   return (
     <Disclosure
       as="nav"
-      className="sticky top-0 z-40 w-full lex-none duration-500 lg:z-50 pt-4 px-4 pb-1 bg-platinum"
+      className="sticky top-0 z-40 w-full lex-none duration-500 lg:z-50 pt-4 pb-1 bg-platinum"
     >
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-12">
+      <div className="mx-auto px-2 pr-8">
         <div className="relative flex h-12 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
@@ -54,7 +55,7 @@ export default function Navbar() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 w-full items-center justify-center sm:items-stretch sm:justify-between">
-            <div className="flex sm:justify-start shrink-0 items-center">
+            <div className="sm:invisible flex sm:justify-start shrink-0 items-center">
               <Brand />
             </div>
             <div className="hidden sm:ml-6 sm:block">

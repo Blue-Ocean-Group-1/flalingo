@@ -80,7 +80,7 @@ export default function HomePage() {
         initDailyProgress();
       }
     }
-  }, [userData?.dailyGoalProgress, updateUser, userData?._id]);
+  }, [userData, updateUser]);
 
   // You want data? This will give you data
   useEffect(() => {
@@ -145,7 +145,7 @@ export default function HomePage() {
 
   return (
     <DefaultPageLayout>
-      <section className="flex content-center items-center rounded-xl w-full pr-32">
+      <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem]">
         <div className="flex mt-12 rounded-2xl w-full">
           <AddNewLanguageModel
             user={userData}
@@ -153,8 +153,8 @@ export default function HomePage() {
             isOpen={addNewLanguageModelOpen}
           />
           <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
-          <div className="p-8 w-3/4 flex flex-col justify-between items-center gap-8 min-w-fit">
-            <div className="flex flex-col p-8 rounded-xl gap-4 w-3/4">
+          <div className="w-3/4 flex flex-col justify-between items-center min-w-fit">
+            <div className="flex flex-col rounded-xl gap-4 w-3/4">
               <div className="flex justify-center align-center min-w-max">
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
               </div>
@@ -198,7 +198,7 @@ export default function HomePage() {
               <div className="flex justify-center align-center">
                 <button
                   onClick={addTimesCompleted}
-                  className="p-2 rounded-xl bg-argentBlue text-jet w-1/3 m-2 mt-6 font-bold hover:scale-105"
+                  className="p-2 rounded-xl bg-argentBlue text-jet w-1/3 min-w-fit m-2 mt-6 font-bold hover:scale-105 text-nowrap"
                 >
                   Start A New Deck
                 </button>

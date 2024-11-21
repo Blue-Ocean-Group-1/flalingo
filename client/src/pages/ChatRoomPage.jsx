@@ -174,10 +174,10 @@ export default function ChatRoomPage() {
 
   return (
     <DefaultPageLayout>
-      <div className="flex pr-justify-between items-center gap-2 mx-6 text-black mb-1 overflow-y-hidden bg-white">
+      <div className="flex items-center gap-2 mx-2 mb-1 text-black overflow-y-hidden">
         <button
           onClick={() => navigate('/conversation_rooms')}
-          className="bg-wisteria h-8 px-3 sm:mt-2 mb-1 rounded-md text-black text-sm font-semibold self-center"
+          className="bg-wisteria h-8 px-3 rounded-md text-black text-sm font-semibold self-center"
         >
           Leave
         </button>
@@ -185,7 +185,7 @@ export default function ChatRoomPage() {
       </div>
       <div
         ref={scrollableContainerRef}
-        className="h-[calc(100dvh_-_9.35rem)] px-4 text-black overflow-y-scroll mx-2 "
+        className="h-[calc(100dvh_-_9.8rem)] px-4 text-black overflow-y-scroll mx-2 bg-white"
       >
         <div className="">
           {messages.map((message) => (
@@ -200,9 +200,9 @@ export default function ChatRoomPage() {
           ))}
         </div>
       </div>
-      <div className="relative -mt-[0.01rem] px-2">
+      <div className="relative -mt-[0.01rem]">
         <ChatInput onMsgSend={handleChatSend} />
-        <div className="absolute -top-1 left-4 text-red-500 text-xs">
+        <div className="absolute -top-1 left-2 text-red-500 text-xs">
           {errMsg}
         </div>
       </div>

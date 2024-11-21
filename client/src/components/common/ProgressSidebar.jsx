@@ -2,6 +2,7 @@ import { getMotivationalQuote } from '../../utils/motivationalQuotes.js';
 import { useUserData } from '../../hooks/useUserData';
 import { useEffect, useState } from 'react';
 import CheckMark from './Checkmark.jsx';
+import Brand from './Brand.jsx';
 
 import getDailyProgress from '../../utils/getDailyProgress.js';
 
@@ -22,13 +23,14 @@ export default function ProgressSidebar() {
     : {};
 
   return (
-    <div className="flex-col space-y-2 my-6 mx-auto ">
-      <div className="p-4 text-black bg-white rounded-md shadow-md">
+    <div className="flex-col space-y-2 my-6 mx-auto">
+      <Brand />
+      <div className="p-4 text-black bg-white rounded-md shadow-md shadow-jet">
         <div className="flex flex-col space-y-3 py-2">
           <h2 className="text-lg font-medium">Daily Goals</h2>
 
           <div className="inline-flex gap-1 items-center">
-            {dailyProgress?.loggedIn ? <CheckMark /> : <XCircle />}
+            <CheckMark />
             <p className="text-sm">Login Daily</p>
           </div>
           <div className="inline-flex gap-1 items-center">
@@ -45,7 +47,7 @@ export default function ProgressSidebar() {
           </div>
         </div>
       </div>
-      <div className="p-4 text-black bg-white rounded-md shadow-md">
+      <div className="p-4 text-black bg-white rounded-md shadow-md shadow-jet">
         <h2 className="text-lg font-medium pb-2">Random Quote</h2>
         <div className="flex flex-col space-y-2">
           <p className="text-sm italic">

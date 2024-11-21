@@ -155,7 +155,7 @@ const UserReportDisplay = ({ user }) => {
                 frequency: e.target.value,
               }));
             }}
-            className="p-4 rounded bg-white text-2xl"
+            className="p-4 rounded bg-white text-2xl mb-1"
           >
             <option value="monthly">Monthly</option>
             <option value="weekly">Weekly</option>

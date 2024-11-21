@@ -53,8 +53,8 @@ const MainProgress = ({ user, openAddLang }) => {
           </h3>
         </div>
       )}
-      <div className="main-progress bg-argentBlue rounded-xl p-8">
-        <div className="main-progress-top flex flex justify-around p-6 rounded-xl gap-6">
+      <div className="main-progress bg-argentBlue rounded-xl p-8 shadow-md shadow-jet">
+        <div className="main-progress-top flex justify-around p-6 rounded-xl gap-6">
           <div>
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
               My Current Language

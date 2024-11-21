@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useUserData } from '../hooks/useUserData.jsx';
-import Navbar from '../components/Navbar.jsx';
+import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
 
 export default function AchievementsPage() {
   const { userData, loading } = useUserData();
@@ -56,9 +56,8 @@ export default function AchievementsPage() {
     );
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-gray-50 p-8">
+    <DefaultPageLayout>
+      <div className=" mx-4 mb-4 p-8 xl:pr-[19rem]">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-10">
@@ -71,7 +70,7 @@ export default function AchievementsPage() {
           </div>
 
           {/* Daily Progress Section */}
-          <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+          <div className="bg-gray-50 rounded-xl shadow-md shadow-jet p-6 mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
               Daily Progress
             </h2>
@@ -107,7 +106,7 @@ export default function AchievementsPage() {
           </div>
 
           {/* Badges Section */}
-          <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="bg-gray-50 rounded-xl shadow-md shadow-jet p-6">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
               Badges
             </h2>
@@ -131,6 +130,6 @@ export default function AchievementsPage() {
           </div>
         </div>
       </div>
-    </>
+    </DefaultPageLayout>
   );
 }

@@ -328,10 +328,10 @@ export default function FlashcardsPage() {
 
   return (
     <DefaultPageLayout>
-      <div className="min-h-screen bg-whiteSmoke">
-        <div className="flashcardDisplay w-full flex min-h-[calc(100vh-64px)]">
+      <div className="">
+        <div className="flashcardDisplay w-full flex min-h-[calc(100vh-64px)] ">
           {/* Main Content */}
-          <div className="w-3/4 p-4">
+          <div className="w-3/4 p-3">
             <div className="mx-auto">
               {/* Header */}
               <div className="bg-[#6AB9F2] rounded-lg p-4 mb-6 text-black text-center">
@@ -408,7 +408,7 @@ export default function FlashcardsPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="otherFlashcards w-1/4 bg-white rounded-lg p-4 shadow">
+          <div className="otherFlashcards h-[calc(100dvh_-_6rem)] w-1/4 bg-white rounded-lg p-4 mt-4 mx-6 shadow-md shadow-jet">
             <p className="font-semibold mb-2 text-black">Skill Level</p>
             <div className="skillProgressRing">
               <CircleProgressDisplay ring={ring} percentage={percentage} />
