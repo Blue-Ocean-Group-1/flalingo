@@ -1,6 +1,7 @@
 // src/__tests__/unit/hooks/useUserData.test.jsx
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { UserDataProvider } from '../../../context/UserDataContext'; // Adjust import as necessary
 
 vi.mock('../../../services/user.api.js', () => ({
   fetchUserData: vi.fn(),
@@ -23,7 +24,7 @@ import useUserData from '../../../hooks/useUserData';
 import { fetchUserData, updateUserData } from '../../../services/user.api.js';
 import Logger from '../../../../config/logger.js';
 
-describe('useUserData Hook', () => {
+describe('useUserData Hook with Context', () => {
   const mockUserData = {
     name: 'Test User',
     email: 'test@example.com',
@@ -39,28 +40,32 @@ describe('useUserData Hook', () => {
     fetchUserData.mockResolvedValue({ success: true, data: mockUserData });
   });
 
+  const wrapper = ({ children }) => (
+    <UserDataProvider>{children}</UserDataProvider>
+  );
+
   describe('updateUser function', () => {
     it('should successfully update user data', async () => {
       updateUserData.mockResolvedValue(mockUpdatedData);
 
-      const { result } = renderHook(() => useUserData());
+      const { result } = renderHook(() => useUserData(), { wrapper });
 
       await waitFor(() => {
-        expect(result.current[1]).toBe(false);
+        expect(result.current.loading).toBe(false);
       });
 
       await act(async () => {
-        await result.current[3](mockUpdatedData);
+        await result.current.updateUser(mockUpdatedData);
       });
 
       expect(updateUserData).toHaveBeenCalledWith(
         'mock-token',
         mockUpdatedData,
       );
-      expect(result.current[0]).toEqual(mockUpdatedData);
-      expect(result.current[2]).toBeNull();
+      expect(result.current.userData).toEqual(mockUpdatedData);
+      expect(result.current.error).toBeNull();
       expect(Logger.info).toHaveBeenCalledWith(
-        'useUserData: User data updated',
+        'UserDataProvider: User data updated',
       );
     });
 
@@ -68,23 +73,23 @@ describe('useUserData Hook', () => {
       const mockError = new Error('Update failed');
       updateUserData.mockRejectedValue(mockError);
 
-      const { result } = renderHook(() => useUserData());
+      const { result } = renderHook(() => useUserData(), { wrapper });
 
       await waitFor(() => {
-        expect(result.current[1]).toBe(false);
+        expect(result.current.loading).toBe(false);
       });
 
       await act(async () => {
-        await result.current[3](mockUpdatedData);
+        await result.current.updateUser(mockUpdatedData);
       });
 
       expect(updateUserData).toHaveBeenCalledWith(
         'mock-token',
         mockUpdatedData,
       );
-      expect(result.current[2]).toBe('Failed to update');
+      expect(result.current.error).toBe('Failed to update');
       expect(Logger.error).toHaveBeenCalledWith(
-        'useUserData: Failed to update user data',
+        'UserDataProvider: Failed to update user data',
         mockError,
       );
     });
@@ -92,19 +97,19 @@ describe('useUserData Hook', () => {
     it('should maintain previous data on update failure', async () => {
       updateUserData.mockRejectedValue(new Error('Update failed'));
 
-      const { result } = renderHook(() => useUserData());
+      const { result } = renderHook(() => useUserData(), { wrapper });
 
       await waitFor(() => {
-        expect(result.current[1]).toBe(false);
+        expect(result.current.loading).toBe(false);
       });
 
-      const initialData = result.current[0];
+      const initialData = result.current.userData;
 
       await act(async () => {
-        await result.current[3](mockUpdatedData);
+        await result.current.updateUser(mockUpdatedData);
       });
 
-      expect(result.current[0]).toEqual(initialData);
+      expect(result.current.userData).toEqual(initialData);
     });
 
     it('should handle partial updates', async () => {
@@ -112,38 +117,38 @@ describe('useUserData Hook', () => {
       const expectedResult = { ...mockUserData, ...partialUpdate };
       updateUserData.mockResolvedValue(expectedResult);
 
-      const { result } = renderHook(() => useUserData());
+      const { result } = renderHook(() => useUserData(), { wrapper });
 
       await waitFor(() => {
-        expect(result.current[1]).toBe(false);
+        expect(result.current.loading).toBe(false);
       });
 
       await act(async () => {
-        await result.current[3](partialUpdate);
+        await result.current.updateUser(partialUpdate);
       });
 
       expect(updateUserData).toHaveBeenCalledWith('mock-token', partialUpdate);
-      expect(result.current[0]).toEqual(expectedResult);
+      expect(result.current.userData).toEqual(expectedResult);
     });
 
     it('should log debug information for updates', async () => {
       updateUserData.mockResolvedValue(mockUpdatedData);
 
-      const { result } = renderHook(() => useUserData());
+      const { result } = renderHook(() => useUserData(), { wrapper });
 
       await waitFor(() => {
-        expect(result.current[1]).toBe(false);
+        expect(result.current.loading).toBe(false);
       });
 
       await act(async () => {
-        await result.current[3](mockUpdatedData);
+        await result.current.updateUser(mockUpdatedData);
       });
 
       expect(Logger.info).toHaveBeenCalledWith(
-        'useUserData: Updating user data',
+        'UserDataProvider: Updating user data',
       );
       expect(Logger.debug).toHaveBeenCalledWith(
-        'useUserData: updatedUser:',
+        'UserDataProvider: updatedUser:',
         mockUpdatedData,
       );
     });

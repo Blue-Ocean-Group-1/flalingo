@@ -1,0 +1,12 @@
+.circle-progress {
+  transform: rotate(-90deg);
+}
+
+.circle-progress-bar {
+  fill: none;
+  stroke: violet;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 314;
+  transition: stroke-dashoffset .01s ease;
+}

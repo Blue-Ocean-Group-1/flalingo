@@ -13,49 +13,51 @@ const splitDecksByLanguageAndTheme = (
   if (condition === 'lessThanOrEqual') {
     comparator = (deck) => deck?.percentage <= percentage;
   }
-  user.progress.forEach((cat) => {
-    let decks = getDeckPercentage(cat.decks.slice());
-    const lang = cat.language;
-    let beginner = {};
-    let proficient = {};
-    let advanced = {};
-    decks.forEach((deck) => {
-      if (comparator(deck)) {
-        if (deck.skillLevel === 'beginner') {
-          let theme = deck.deckName.split(' ')[0];
-          if (beginner[theme]) {
-            beginner[theme] += 1;
-          } else {
-            beginner[theme] = 1;
+  if (user?.progress) {
+    user.progress.forEach((cat) => {
+      let decks = getDeckPercentage(cat.decks.slice());
+      const lang = cat.language;
+      let beginner = {};
+      let proficient = {};
+      let advanced = {};
+      decks.forEach((deck) => {
+        if (comparator(deck)) {
+          if (deck.skillLevel === 'beginner') {
+            let theme = deck.deckName.split(' ')[0];
+            if (beginner[theme]) {
+              beginner[theme] += 1;
+            } else {
+              beginner[theme] = 1;
+            }
+          }
+          if (deck.skillLevel === 'proficient') {
+            let theme = deck.deckName.split(' ')[0];
+            if (proficient[theme]) {
+              proficient[theme] += 1;
+            } else {
+              proficient[theme] = 1;
+            }
+          }
+          if (deck.skillLevel === 'advanced') {
+            let theme = deck.deckName.split(' ')[0];
+            if (advanced[theme]) {
+              advanced[theme] += 1;
+            } else {
+              advanced[theme] = 1;
+            }
           }
         }
-        if (deck.skillLevel === 'proficient') {
-          let theme = deck.deckName.split(' ')[0];
-          if (proficient[theme]) {
-            proficient[theme] += 1;
-          } else {
-            proficient[theme] = 1;
-          }
-        }
-        if (deck.skillLevel === 'advanced') {
-          let theme = deck.deckName.split(' ')[0];
-          if (advanced[theme]) {
-            advanced[theme] += 1;
-          } else {
-            advanced[theme] = 1;
-          }
-        }
-      }
+      });
+      deckTheme.push({ lang, beginner, proficient, advanced });
     });
-    deckTheme.push({ lang, beginner, proficient, advanced });
-  });
 
-  return deckTheme;
+    return deckTheme;
+  }
 };
 
 const getBadges = (user) => {
-  let badges = user.badges.slice();
-  let startingLength = badges.length;
+  let newBadges = user.badges.slice();
+  let startingLength = newBadges.length;
 
   let deckTheme = splitDecksByLanguageAndTheme(user, 80);
 
@@ -73,8 +75,8 @@ const getBadges = (user) => {
           name: `${beginnerKeys[index]} Beginner`,
           language: entry.lang,
         };
-        if (!badges.includes(badge)) {
-          badges.push(badge);
+        if (!newBadges.includes(badge)) {
+          newBadges.push(badge);
         }
       }
     });
@@ -85,8 +87,8 @@ const getBadges = (user) => {
           name: `${proficientKeys[index]} Proficient`,
           language: entry.lang,
         };
-        if (!badges.includes(badge)) {
-          badges.push(badge);
+        if (!newBadges.includes(badge)) {
+          newBadges.push(badge);
         }
       }
     });
@@ -96,16 +98,18 @@ const getBadges = (user) => {
           name: `${advancedKeys[index]} Advanced`,
           language: entry.lang,
         };
-        if (!badges.includes(badge)) {
-          badges.push(badge);
+        if (!newBadges.includes(badge)) {
+          newBadges.push(badge);
         }
       }
     });
   });
-  console.log(badges);
-  if (badges.length > startingLength) {
+  if (newBadges.length > startingLength) {
     // logic for updating user badges
+    // or just leave it blank and let it calculate each time? (less efficient)
   }
+
+  return newBadges;
 };
 
 const findPriorityValue = (obj) => {
@@ -117,14 +121,16 @@ const findPriorityValue = (obj) => {
   const valuesToCheck = [4, 3, 2, 1];
 
   for (const skillLevel of skillLevels) {
-    const category = obj[skillLevel];
-    if (category) {
-      for (const value of valuesToCheck) {
-        for (const [key, categoryValue] of Object.entries(category)) {
-          if (categoryValue === value) {
-            let capitalizedSkillLevel =
-              skillLevel.charAt(0).toUpperCase() + skillLevel.slice(1);
-            return { skillLevel: capitalizedSkillLevel, key, value };
+    if (obj[skillLevel] !== undefined) {
+      const category = obj[skillLevel];
+      if (category?.length) {
+        for (const value of valuesToCheck) {
+          for (const [key, categoryValue] of Object.entries(category)) {
+            if (categoryValue === value) {
+              let capitalizedSkillLevel =
+                skillLevel.charAt(0).toUpperCase() + skillLevel.slice(1);
+              return { skillLevel: capitalizedSkillLevel, key, value };
+            }
           }
         }
       }
@@ -136,24 +142,27 @@ const findPriorityValue = (obj) => {
 
 const findNearestBadge = (user) => {
   let decks = splitDecksByLanguageAndTheme(user, 80);
+  let badge;
+  if (decks) {
+    const deck = decks.find((deck) => deck.lang === user.activeLanguages[0]);
 
-  const deck = decks.find((deck) => deck.lang === user.activeLanguages[0]);
+    badge = findPriorityValue(deck);
 
-  let badge = findPriorityValue(deck);
+    if (!badge) {
+      let firstDecks = user.progress.find(
+        (deck) => deck.language === user.activeLanguages[0],
+      );
+      let firstDeck = firstDecks.decks[0];
+      badge = {
+        skillLevel: firstDeck?.skillLevel,
+        key: firstDeck?.deckName.split(' ')[1],
+        value: 0,
+      };
+    }
 
-  if (!badge) {
-    let firstDecks = user.progress.find(
-      (deck) => deck.language === user.activeLanguages[0],
-    );
-    let firstDeck = firstDecks.decks[0];
-    badge = {
-      skillLevel: firstDeck.skillLevel,
-      key: firstDeck.deckName.split(' ')[1],
-      value: 0,
-    };
+    return badge;
   }
-
-  return badge;
+  return null;
 };
 
 export { findNearestBadge, getBadges };

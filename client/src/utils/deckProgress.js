@@ -1,8 +1,23 @@
+import axios from 'axios';
+
+import { env } from '../../config/env';
+
+import logger from '../../config/logger.js';
+
 const getDeckPercentage = (decks) => {
   return decks.map((deck) => {
-    let name = deck.deckName.split(' ');
-    name.splice(0, 1);
-    name.splice(1, 1);
+    let name;
+    if (deck.deckName) {
+      name = deck.deckName.split(' ');
+      name.splice(0, 1);
+      name.splice(1, 1);
+    }
+
+    if (deck.name) {
+      name = deck.name.split(' ');
+      name.splice(0, 1);
+      name.splice(1, 1);
+    }
 
     const newDeck = {
       ...deck,
@@ -10,13 +25,16 @@ const getDeckPercentage = (decks) => {
       percentage: 0,
     };
 
-    let percentage = Math.floor(
-      (deck.timesCompleted.slice(-5).reduce((acc, attempt) => {
-        return acc + (attempt?.totalCorrect || 0);
-      }, 0) /
-        (5 * 10)) *
-        100,
-    );
+    let percentage = 0;
+    if (decks?.timesCompleted?.length) {
+      percentage = Math.floor(
+        (deck.timesCompleted.slice(-5).reduce((acc, attempt) => {
+          return acc + (attempt?.totalCorrect || 0);
+        }, 0) /
+          (5 * 10)) *
+          100,
+      );
+    }
     if (percentage > 0) {
       newDeck.percentage = percentage;
     }
@@ -32,12 +50,50 @@ const findBestDisplayDecks = (user) => {
   const currentDecks = (user.progress || []).filter(
     (lang) => lang.language === user.activeLanguages[0],
   );
-  let displayDecks = currentDecks[0].decks.slice().sort((a, b) => {
-    return a?.date - b?.date || 0;
-  });
-  displayDecks = getDeckPercentage(displayDecks.slice(0, 5));
-
-  return displayDecks.slice(0, 3);
+  if (currentDecks.decks?.length) {
+    let displayDecks = getDeckPercentage(currentDecks.decks.slice(0, 5));
+    displayDecks = currentDecks[0].sort((a, b) => {
+      return a?.percentage - b?.percentage || 0;
+    });
+    return displayDecks.slice(0, 2);
+  }
+  return [];
 };
 
-export { findBestDisplayDecks, getDeckPercentage };
+const findRecommendedDeck = async (user) => {
+  const currentDecks = (user?.progress || []).find(
+    (lang) => lang.language === user.activeLanguages[0],
+  );
+  try {
+    const response = await axios.get(
+      `${env.API_URL}/decks/${user.activeLanguages[0]}`,
+    );
+    let skillLevelDecks = response.data;
+    if (currentDecks?.skillLevel) {
+      skillLevelDecks = skillLevelDecks.filter(
+        (deck) => deck.skillLevel === currentDecks.skillLevel,
+      );
+    }
+    let displayDecks = skillLevelDecks;
+    if (currentDecks?.decks?.length) {
+      let deckNames = currentDecks.decks.map((deck) => deck.deckName);
+      displayDecks = skillLevelDecks.filter((deck) => {
+        return !deckNames.includes(deck.name);
+      });
+    }
+    if (displayDecks?.length === 0) {
+      displayDecks = getDeckPercentage(skillLevelDecks);
+      displayDecks = displayDecks.sort((a, b) => {
+        return a?.percentage - b?.percentage || 0;
+      });
+      return displayDecks.slice(0, 1);
+    }
+    displayDecks = getDeckPercentage(displayDecks);
+    return displayDecks.slice(0, 1);
+  } catch (error) {
+    logger.error('Error fetching decks:', error);
+    return []; 
+  }
+};
+
+export { findBestDisplayDecks, getDeckPercentage, findRecommendedDeck };

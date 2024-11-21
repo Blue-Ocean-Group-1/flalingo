@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
+    phoneNumber: { type: String, default: null },
     password: { type: String, required: true },
     name: { type: String, required: true },
     profilePicture: { type: String, default: null },
@@ -15,36 +16,38 @@ const userSchema = new mongoose.Schema(
     },
     activeLanguages: [String],
     allLanguages: [String],
-    progress: [
-      {
-        language: { type: String, required: true },
-        skillLevel: { type: String, required: true, default: 'beginner' },
-        decks: [
-          {
-            deckName: { type: String, required: true },
-            deck_id: {
-              type: mongoose.Schema.Types.ObjectId,
-              ref: 'Deck',
-              required: true,
+    progress: {
+      type: [
+        {
+          language: { type: String, required: true },
+          skillLevel: { type: String, required: true, default: 'beginner' },
+          decks: [
+            {
+              deckName: { type: String, required: true },
+              deck_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Deck',
+              },
+              skillLevel: { type: String, required: true },
+              timesCompleted: [
+                {
+                  attemptNo: { type: Number, required: true },
+                  totalCorrect: { type: Number, required: true },
+                  date: { type: Date, required: true },
+                },
+              ],
+              perWordCorrect: [
+                {
+                  word: { type: String, required: true },
+                  correct: { type: Number, required: true },
+                },
+              ],
             },
-            skillLevel: { type: String, required: true },
-            timesCompleted: [
-              {
-                attemptNo: { type: Number, required: true },
-                totalCorrect: { type: Number, required: true },
-                date: { type: Date, required: true },
-              },
-            ],
-            perWordCorrect: [
-              {
-                word: { type: String, required: true },
-                correct: { type: Number, required: true },
-              },
-            ],
-          },
-        ],
-      },
-    ],
+          ],
+        },
+      ],
+      default: [],
+    },
     streaks: [
       {
         highestFlashcard: { type: Number, default: 0 },
@@ -59,20 +62,34 @@ const userSchema = new mongoose.Schema(
             type: [
               { word: { type: String }, translatedWord: { type: String } },
             ],
-            required: true,
+            default: null,
           },
-          deckName: { type: String, required: true },
         },
       ],
       default: [],
     },
     dailyGoalProgress: [
-      { date: { type: Date }, completed: { type: Boolean, default: false } },
+      {
+        date: { type: Date, default: new Date() },
+        completed: { type: Boolean, default: false },
+        loggedIn: { type: Boolean, default: false },
+        deckCompleted: { type: Boolean, default: false },
+        conversationRoomJoined: { type: Boolean, default: false },
+      },
     ],
-    currentLoginStreak: Number,
-    longestLoginStreak: Number,
-    loginHistory: [{ type: Date, dailyGoalsCompleted: Boolean }],
-    timeUsingApp: Number,
+    currentLoginStreak: { type: Number, default: 0 },
+    longestLoginStreak: { type: Number, default: 0 },
+    loginHistory: [
+      { type: Date, dailyGoalsCompleted: { type: Boolean, default: false } },
+    ],
+    timeUsingApp: [
+      {
+        date: { type: Date, required: true },
+        flashcards: { type: Number, required: true },
+        conversations: { type: Number, required: true },
+        loggedIn: { type: Number, required: true },
+      },
+    ],
     topBadges: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Badge' }],
     allBadges: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Badge' }],
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

@@ -20,6 +20,7 @@ import {
   chatroomRouter,
   AuthRouter,
   emailRouter,
+  languageRouter,
 } from './routes/index.js';
 
 // Validate environment variables
@@ -47,6 +48,7 @@ app.use('/api/test', testRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/decks', deckRouter);
 app.use('/api/email', emailRouter);
+app.use('/api/languages', languageRouter);
 
 // Development settings
 if (env.isDevelopment) {
@@ -83,12 +85,21 @@ if (NODE_ENV !== 'test') {
 }
 
 // import { Chatroom } from './models/chatroom.model.js';
+
 // mongoose.connection.once('open', () => {
 //   Chatroom.updateMany({}, { participantCount: 0 })
 //     .then((res) => {
 //       console.log('succesfully updated chatrooms');
 //     })
 //     .catch((err) => console.log(err));
+// });
+
+// import { User } from './models/user.model.js';
+// mongoose.connection.once('open', () => {
+//   User.updateMany(
+//     {},
+//   {dailyProgressGoals: },
+//   );
 // });
 
 export default app;

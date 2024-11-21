@@ -38,11 +38,11 @@ export default function ChatInput({ onMsgSend, canSend = true }) {
   const placeholder = 'Message Agent';
 
   return (
-    <div className="relative flex items-center text-black mt-10">
+    <div className="relative flex items-center text-black mt-10 mx-1">
       <form className="" onSubmit={(e) => handleSend(e)}>
         <div
           ref={containerRef}
-          className="flex gap-1 items-end bg-white p-1 absolute bottom-0 left-0 right-0"
+          className="flex gap-1 items-end p-1 absolute bottom-0 left-0 right-0"
         >
           <label htmlFor="message" className="sr-only">
             {placeholder}
@@ -51,7 +51,7 @@ export default function ChatInput({ onMsgSend, canSend = true }) {
             ref={textareaRef}
             rows={1}
             name="message"
-            className="h-8 p-[0.35rem] w-full resize-none bg-platinum focus:outline-none overflow-y-auto text-sm"
+            className="h-8 p-[0.35rem] w-full resize-none bg-white focus:outline-none overflow-y-auto text-sm"
             placeholder={placeholder}
             value={input}
             onKeyDown={handleKeyDown}

@@ -3,7 +3,7 @@ import { User } from '../models/user.model.js';
 
 const generateDailyWords = async (user) => {
   const decks = await Deck.find({ language: user.activeLanguages[0] });
-  if (decks.length) {
+  if (decks?.length) {
     const skillLevel = user.progress.find(
       (p) => p.language === user.activeLanguages[0],
     ).skillLevel;
@@ -12,6 +12,8 @@ const generateDailyWords = async (user) => {
     );
 
     const words = [];
+    const usedWords = new Set(); // To track words that are already added
+
     while (words.length < 5) {
       const randomDeck =
         filteredDecks[Math.floor(Math.random() * filteredDecks.length)];
@@ -19,14 +21,21 @@ const generateDailyWords = async (user) => {
         randomDeck.flashcards[
           Math.floor(Math.random() * randomDeck.flashcards.length)
         ];
-      let word = randomFlashcard.word;
-      let translatedWord = randomFlashcard.translatedWord;
-      let insert = {
-        word,
-        translatedWord,
-        deckName: randomDeck.name,
-      };
-      words.push(insert);
+
+      const word = randomFlashcard.word;
+      const translatedWord = randomFlashcard.translatedWord;
+
+      // Check if the word is already in the set
+      if (!usedWords.has(word)) {
+        const insert = {
+          word,
+          translatedWord,
+          deckName: randomDeck.name,
+        };
+
+        words.push(insert);
+        usedWords.add(word); // Mark the word as used
+      }
     }
     return words;
   }
@@ -43,7 +52,7 @@ const getRandomDailyWords = async (userId) => {
     return date.getTime() === startOfDay.getTime();
   });
 
-  if (dailyWords?.words.length) {
+  if (dailyWords?.words?.length) {
     return dailyWords.words;
   } else {
     const newWords = await generateDailyWords(user);

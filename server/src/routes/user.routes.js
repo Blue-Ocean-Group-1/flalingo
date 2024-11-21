@@ -9,6 +9,9 @@ import {
   getDailyWords,
   addDeckProgress,
   updateUserData,
+  getUserReportById,
+  getDailyProgress,
+  addNewLanguageProgress,
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
@@ -46,8 +49,16 @@ const getUsersLimiter = RateLimit({
 userRouter.get('/', getUsersLimiter, getUsers);
 userRouter.get('/:id', getUserByIdLimiter, getUserById);
 
-userRouter.get('/:id/dailyWords', getDailyWords);
+const getUserReportByIdLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+userRouter.get('/:id/reports', getUserReportByIdLimiter, getUserReportById);
 
+userRouter.get('/:id/dailyWords', getDailyWords);
+userRouter.get('/:id/dailyProgress', getDailyProgress);
 userRouter.post('/deckProgress', addDeckProgress);
+
+userRouter.patch('/:id/:language', addNewLanguageProgress);
 
 export default userRouter;
