@@ -70,7 +70,7 @@ export default function AchievementsPage() {
           </div>
 
           {/* Daily Progress Section */}
-          <div className="bg-gray-50 rounded-xl shadow-md shadow-jet p-6 mb-8">
+          <div className="bg-white rounded-xl shadow-md shadow-jet p-6 mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
               Daily Progress
             </h2>
@@ -86,7 +86,7 @@ export default function AchievementsPage() {
                       transition-all duration-200 ease-in-out
                       ${
                         day.isCompleted
-                          ? 'bg-green-500 text-white shadow-lg scale-105'
+                          ? 'bg-pistachio text-white shadow-md font-extrabold scale-105'
                           : 'bg-gray-100 text-gray-600'
                       }
                     `}
@@ -106,7 +106,7 @@ export default function AchievementsPage() {
           </div>
 
           {/* Badges Section */}
-          <div className="bg-gray-50 rounded-xl shadow-md shadow-jet p-6">
+          <div className="bg-white rounded-xl shadow-md shadow-jet p-6">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
               Badges
             </h2>

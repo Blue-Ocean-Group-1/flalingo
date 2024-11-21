@@ -56,12 +56,12 @@ const SupportPage = () => {
 
   return (
     <DefaultPageLayout>
-      <div className="flex flex-col items-center justify-center pt-48  max-w-5xl">
+      <div className="flex flex-col items-center justify-center pt-24 max-w-7xl">
         <h1 className="text-3xl text-gray-900 font-bold mb-4">Contact</h1>
         <form
           ref={form}
           onSubmit={sendEmail}
-          className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-sm"
+          className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4  w-2/3"
         >
           <input
             type="text"
