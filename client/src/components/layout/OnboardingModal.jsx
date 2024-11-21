@@ -3,8 +3,10 @@ import { fetchLanguageNames } from '../../services/language.api';
 import logger from '../../../config/logger.js';
 import useUserData from '../../hooks/useUserData.jsx';
 import PhoneNumberInput from '../common/PhoneNumberInput.jsx';
+import startNewLanguage from '../../utils/startNewLanguage.js';
 
 const countries = [
+  'USA',
   'Bangladesh',
   'China',
   'Czech Republic',
@@ -85,6 +87,9 @@ const OnboardingModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     const updatedData = formatFormData(formData);
     updateUser(updatedData);
+    let updatedUser = startNewLanguage(formData.language, userData._id);
+    console.log(userData._id);
+    updateUser(updatedUser);
     onClose();
   };
 
@@ -99,8 +104,8 @@ const OnboardingModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">
+      <div className="bg-white rounded-lg shadow-lg p-8 px-10 max-w-md w-full">
+        <h2 className="text-2xl font-bold mb-4 text-center text-jet mb-4">
           Welcome! Let&apos;s get started
         </h2>
         <form onSubmit={handleSubmit}>
@@ -175,19 +180,19 @@ const OnboardingModal = ({ isOpen, onClose }) => {
               ))}
             </select>
           </div>
-          <div className="flex justify-end space-x-2">
+          <div className="flex justify-end space-x-2 mt-8">
             <button
               type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-argentBlue hover:bg-pistachio focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Submit
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-500 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
             >
-              Cancel
+              Later...
             </button>
           </div>
         </form>

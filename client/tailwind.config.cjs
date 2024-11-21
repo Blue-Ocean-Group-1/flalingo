@@ -13,20 +13,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        pistachio: '#98D079',
         jet: '#343434',
-        pear: '#C6E600',
-        argentBlue: '#6AB9F2',
-        wisteria: '#B5A3EC',
-        webViolet: '#FF8DE6',
-        platinum: '#E6E6E6',
-        silver: '#CDCDCD',
-        battleship: '#9A9A9A',
-        whiteSmoke: '#f5f5f5',
-      },
-      textColors: {
         pistachio: '#98D079',
-        jet: '#343434',
         pear: '#C6E600',
         argentBlue: '#6AB9F2',
         wisteria: '#B5A3EC',

@@ -1,7 +1,6 @@
 import express from 'express';
 import RateLimit from 'express-rate-limit';
 
-/* disable-eslint */
 import {
   getDecks,
   getDecksByLanguage,
@@ -28,4 +27,3 @@ deckRouter.get(
 deckRouter.delete('/card/:_id/:word', deleteCardFromDeck);
 
 export default deckRouter;
-/* enable-eslint */
