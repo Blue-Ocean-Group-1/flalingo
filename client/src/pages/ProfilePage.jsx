@@ -103,6 +103,14 @@ export default function ProfilePage() {
     };
     updateUser(updatedInfo);
   };
+  const phoneNumberFormat = (phoneNumber) => {
+    const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return `(${match[1]}) ${match[2]}-${match[3]}`;
+    }
+    return null;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -264,8 +272,6 @@ export default function ProfilePage() {
       });
   };
 
-  console.log('countryflag', countryFlag);
-
   return (
     <DefaultPageLayout>
       <div className="max-w-4xl mx-auto text-jet min-h-screen">
@@ -389,7 +395,7 @@ export default function ProfilePage() {
                     name="phoneNumber"
                     type="text"
                     placeholder={profileData.phoneNumber}
-                    value={profileData.phoneNumber}
+                    value={phoneNumberFormat(profileData.phoneNumber)}
                     onChange={handleInputChange}
                     className="block w-auto bg-platinum px-1"
                   />
@@ -400,7 +406,7 @@ export default function ProfilePage() {
                     Phone Number
                   </span>
                   <span className="whitespace-nowrap">
-                    {profileData.phoneNumber}
+                    {phoneNumberFormat(profileData.phoneNumber)}
                   </span>
                 </div>
               )}
