@@ -263,36 +263,22 @@ export default function ProfilePage() {
 
   return (
     <DefaultPageLayout>
-      <div className="max-w-4xl mx-auto text-jet">
+      <div className="max-w-4xl mx-auto text-jet min-h-screen">
         <br />
         <br />
         <h1 className="text-3xl -ml-5 text-3xl font-semibold mb-10">Profile</h1>
-        <button
-          className="-ml-5 bg-argentBlue px-2 h-8 mr-1 rounded-md"
-          onClick={() => setEditMode(true)}
-        >
-          Edit
-        </button>
-        {editMode && (
-          <button
-            className="bg-argentBlue bg-argentBlue px-2 h-8 rounded-md"
-            onClick={handleSaveInfo}
-          >
-            Save
-          </button>
-        )}
-        <div className="flex ml-10">
+        <div className="flex ml-0 mr-28 border-2 border-white bg-white shadow-2xl rounded-lg h-96">
           <div className="relative mr-50">
-            <div className="relative">
+            <div className="relative ml-2 mt-4">
               <img
                 src={`${displayedImg}`}
                 alt="Profile-pic"
-                className="w-36 h-36 rounded-full object-cover mr-48"
+                className="w-42 h-42 rounded-full object-cover mr-48 ml-10 mb-4"
               />
               <img
                 src={countryFlag}
                 alt="Flag"
-                className="w-9 h-6 absolute bottom-0 left-28 border border-gray-400 rounded-sm antialiasing"
+                className="w-15 h-10 absolute bottom-2 left-64 border border-gray-400 rounded-sm antialiasing"
               />
             </div>
 
@@ -301,7 +287,7 @@ export default function ProfilePage() {
                 <input
                   type="file"
                   accept="image/*"
-                  className="block mt-2"
+                  className="block mt-4 ml-28"
                   id="profile-pic"
                   onChange={(event) => {
                     setSelectedImg(event.target.files[0]);
@@ -309,14 +295,14 @@ export default function ProfilePage() {
                 />
                 <button
                   type="submit"
-                  className="mt-2 ml-5 bg-argentBlue p-1 rounded-md px-2"
+                  className="mt-2 ml-28 mb-4 bg-argentBlue p-1 rounded-md px-2"
                 >
                   upload
                 </button>
               </form>
             )}
           </div>
-          <div className="relative ml-50">
+          <div className="relative mr-20 mt-16">
             <form>
               {editMode ? (
                 <div className="flex items-center mb-2">
@@ -458,7 +444,23 @@ export default function ProfilePage() {
             </form>
           </div>
         </div>
-        <div className="mt-16">
+        <div className="mr-28 mt-2 flex justify-end">
+          {editMode && (
+            <button
+              className="bg-argentBlue bg-argentBlue px-2 h-8 rounded-md mb-2 mr-2"
+              onClick={handleSaveInfo}
+            >
+              Save
+            </button>
+          )}
+          <button
+            className="bg-argentBlue px-2 h-8 mr-1 rounded-md mb-2"
+            onClick={() => setEditMode(true)}
+          >
+            Edit
+          </button>
+        </div>
+        <div className="mt-8">
           <h1 className="font-bold text-2xl">Notification Settings</h1>
           <form className="mt-4" onSubmit={handleSubmit}>
             <div className="mb-2">
@@ -468,6 +470,7 @@ export default function ProfilePage() {
                 name="dailyReminder"
                 checked={notificationSettings.dailyReminder}
                 onChange={handleCheckboxChange}
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:bg-pistachio"
               />
               <label htmlFor="dailyReminder" className="ml-2">
                 Receive daily reminder email alerts
@@ -480,6 +483,7 @@ export default function ProfilePage() {
                 name="weeklyReminder"
                 checked={notificationSettings.weeklyReminder}
                 onChange={handleCheckboxChange}
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:bg-pistachio"
               />
               <label htmlFor="weeklyReminder" className="ml-2">
                 Receive weekly goal reminder email alerts
@@ -492,6 +496,7 @@ export default function ProfilePage() {
                 name="monthlyReport"
                 checked={notificationSettings.monthlyReport}
                 onChange={handleCheckboxChange}
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:bg-pistachio"
               />
               <label htmlFor="monthlyReport" className="ml-2">
                 Receive monthly progress report email alerts
@@ -504,12 +509,13 @@ export default function ProfilePage() {
                 name="promotion"
                 checked={notificationSettings.promotion}
                 onChange={handleCheckboxChange}
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:bg-pistachio"
               />
               <label htmlFor="promotion" className="ml-2">
                 Receive promotion alerts
               </label>
             </div>
-            <div className="mt-10">
+            <div className="mt-6">
               <button
                 type="submit"
                 className="px-4 h-10 bg-argentBlue text-lg font-semibold rounded-md"

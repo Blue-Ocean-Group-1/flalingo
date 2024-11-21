@@ -212,7 +212,7 @@ export default function FlashcardsPage() {
         <div className="w-3/4 p-4">
           <div className="mx-auto">
             {/* Header */}
-            <div className="bg-[#6AB9F2] rounded-lg p-4 mb-6 text-black text-center">
+            <div className="bg-argentBlue/75 rounded-lg p-4 mb-6 text-black text-center">
               <h1 className="text-2xl font-bold mb-2">{currentDeck.name}</h1>
               <h2>
                 Card {currentCardIndex + 1} of {flashcards.length}
