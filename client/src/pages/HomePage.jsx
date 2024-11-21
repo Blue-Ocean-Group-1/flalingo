@@ -145,15 +145,15 @@ export default function HomePage() {
 
   return (
     <DefaultPageLayout>
-      <section className="flex justify-center items-center rounded-xl w-full">
-        <div className="flex mt-12 rounded-2xl w-full">
+      <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem]">
+        <div className="flex rounded-2xl w-full">
           <AddNewLanguageModel
             user={userData}
             closeModal={closeAddLanguageModal}
             isOpen={addNewLanguageModelOpen}
           />
           <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
-          <div className="w-3/4 flex flex-col justify-between items-center min-w-fit">
+          <div className="w-3/4 flex flex-col justify-start items-center min-w-fit">
             <div className="flex flex-col p-8 rounded-xl gap-4 w-3/4">
               <div className="flex justify-center align-center min-w-max">
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
