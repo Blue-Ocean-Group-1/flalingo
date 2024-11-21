@@ -200,7 +200,6 @@ export default function FlashcardsPage() {
     async function updateUserProgress() {
       if (userData?.dailyGoalProgress) {
         const dailyProgress = getDailyProgress(userData.dailyGoalProgress);
-        console.log('daily progress in user progress', dailyProgress);
         if (dailyProgress['deckCompleted'] !== true) {
           dailyProgress['deckCompleted'] = true;
           // this will need to be updated if more fields are added to in order to be complete
