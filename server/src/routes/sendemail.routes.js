@@ -56,7 +56,7 @@ sendemailRouter.post('/schedule-daily', (req, res) => {
   }
 
   const task = cron.schedule('*/2 * * * *', () => {
-    User.findOne({ username: email })
+    User.findOne({ email: email })
 
       .then(async (user) => {
         const dailyReport = getDailyProgress(user.dailyGoalProgress) || {

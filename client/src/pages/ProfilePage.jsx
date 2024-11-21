@@ -40,10 +40,7 @@ export default function ProfilePage() {
   const { userData, updateUser } = useUserData(); // eslint-disable-line no-unused-vars
   console.log('userData', userData);
   const [selectedImg, setSelectedImg] = useState(null);
-  const [displayedImg, setDisplayedImg] = useState(
-    // 'https://muffinman.io/img/image-resize/rickmorty-250x250.jpg',
-    '',
-  );
+  const [displayedImg, setDisplayedImg] = useState('');
   const [countryFlag, setCountryFlag] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [profileData, setProfileData] = useState({
@@ -74,8 +71,13 @@ export default function ProfilePage() {
       gender: userData && userData.demographics.gender,
       email: userData && userData.email,
     });
-    setDisplayedImg(userData && userData.profilePicture);
+    setDisplayedImg(
+      userData?.profilePicture === null
+        ? 'http://res.cloudinary.com/emmagangl/image/upload/v1732181364/Profile_avatar_placeholder_large_tjdbsz.png'
+        : userData?.profilePicture,
+    );
   }, [userData]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData({ ...profileData, [name]: value });
@@ -330,7 +332,7 @@ export default function ProfilePage() {
                 </div>
               )}
 
-              {editMode ? (
+              {/* {editMode ? (
                 <div className="flex items-center mb-2">
                   <label htmlFor="username" className="mr-2 font-bold">
                     Username
@@ -345,12 +347,11 @@ export default function ProfilePage() {
                     onChange={handleInputChange}
                   />
                 </div>
-              ) : (
-                <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Username</span>
-                  <span>{profileData.username}</span>
-                </div>
-              )}
+              ) : ( */}
+              <div className="flex items-center mb-2">
+                <span className="mr-2 font-bold">Username</span>
+                <span>{profileData.username}</span>
+              </div>
 
               {editMode ? (
                 <div className="flex items-center mb-2 relative">
@@ -395,8 +396,12 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Phone Number</span>
-                  <span>{profileData.phoneNumber}</span>
+                  <span className="mr-2 font-bold whitespace-nowrap">
+                    Phone Number
+                  </span>
+                  <span className="whitespace-nowrap">
+                    {profileData.phoneNumber}
+                  </span>
                 </div>
               )}
 
@@ -474,7 +479,7 @@ export default function ProfilePage() {
                 name="dailyReminder"
                 checked={notificationSettings.dailyReminder}
                 onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:bg-pistachio"
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold"
               />
               <label htmlFor="dailyReminder" className="ml-2">
                 Receive daily reminder email alerts
@@ -487,7 +492,7 @@ export default function ProfilePage() {
                 name="weeklyReminder"
                 checked={notificationSettings.weeklyReminder}
                 onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:bg-pistachio"
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold"
               />
               <label htmlFor="weeklyReminder" className="ml-2">
                 Receive weekly goal reminder email alerts
@@ -500,7 +505,7 @@ export default function ProfilePage() {
                 name="monthlyReport"
                 checked={notificationSettings.monthlyReport}
                 onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:bg-pistachio"
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold"
               />
               <label htmlFor="monthlyReport" className="ml-2">
                 Receive monthly progress report email alerts
@@ -513,7 +518,7 @@ export default function ProfilePage() {
                 name="promotion"
                 checked={notificationSettings.promotion}
                 onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:bg-pistachio"
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold"
               />
               <label htmlFor="promotion" className="ml-2">
                 Receive promotion alerts
