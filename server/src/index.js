@@ -1,10 +1,12 @@
 // src/index.js
+import emailjs from '@emailjs/browser';
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
 import { connectDB } from './config/database.js';
+import { emailJsConfig } from './config/emailJs.config.js';
 import { env, validateEnv } from './config/env.js';
 import logger from './config/logger.js';
 import configurePassport from './config/passport.js';
@@ -22,6 +24,7 @@ import {
 
 // Validate environment variables
 validateEnv();
+emailjs.init(emailJsConfig);
 
 // Initialize Express app
 const app = express();

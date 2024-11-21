@@ -93,6 +93,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/support" element={<SupportPage />} />
           </Routes>
         </div>
       </Router>
