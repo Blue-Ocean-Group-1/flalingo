@@ -18,6 +18,7 @@ import {
   userRouter,
   deckRouter,
   chatroomRouter,
+  sendemailRouter,
   AuthRouter,
   emailRouter,
   languageRouter,
@@ -48,6 +49,7 @@ app.use('/api/test', testRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/decks', deckRouter);
 app.use('/api/email', emailRouter);
+app.use('/api/sendemail', sendemailRouter);
 app.use('/api/languages', languageRouter);
 
 // Development settings

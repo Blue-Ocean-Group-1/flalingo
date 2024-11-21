@@ -145,6 +145,61 @@ export const getUserReportById = async (req, res) => {
   }
 };
 
+export const initDailyProgress = async (req, res) => {
+  try {
+    const exists = await User.exists({
+      _id: req.params.id,
+      'dailyGoalProgress.date': {
+        $gte: new Date().setHours(0, 0, 0, 0),
+      },
+    });
+
+    if (exists) throw new Error('Daily progress already initialized');
+    const progress = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          dailyGoalProgress: {
+            completed: false,
+            loggedIn: true,
+            deckCompleted: false,
+            conversationRoomJoined: false,
+          },
+        },
+      },
+      { new: true },
+    );
+
+    res.status(200).json(progress);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export const updateDailyProgress = async (req, res) => {
+  try {
+    const result = await User.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        'dailyGoalProgress.date': {
+          $gte: new Date().setHours(0, 0, 0, 0),
+          $lte: new Date().setHours(23, 59, 59, 999),
+        },
+      },
+      {
+        $set: {
+          'dailyGoalProgress.$': {
+            ...req.body,
+          },
+        },
+      },
+      { new: true },
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
 export const getDailyProgress = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);

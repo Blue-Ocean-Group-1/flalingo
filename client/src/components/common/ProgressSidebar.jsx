@@ -3,6 +3,8 @@ import { useUserData } from '../../hooks/useUserData';
 import { useEffect, useState } from 'react';
 import CheckMark from './Checkmark.jsx';
 
+import getDailyProgress from '../../utils/getDailyProgress.js';
+
 export default function ProgressSidebar() {
   const { userData } = useUserData();
   const [randomQuote, setRandomQuote] = useState('');
@@ -15,6 +17,10 @@ export default function ProgressSidebar() {
     );
   }, [userData?.allLanguages]);
 
+  const dailyProgress = userData?.dailyGoalProgress
+    ? getDailyProgress(userData?.dailyGoalProgress)
+    : {};
+
   return (
     <div className="flex-col space-y-2 my-6 mx-auto ">
       <div className="p-4 text-black bg-white rounded-md shadow-md">
@@ -22,15 +28,19 @@ export default function ProgressSidebar() {
           <h2 className="text-lg font-medium">Daily Goals</h2>
 
           <div className="inline-flex gap-1 items-center">
-            <CheckMark />
+            {dailyProgress?.loggedIn ? <CheckMark /> : <XCircle />}
             <p className="text-sm">Login Daily</p>
           </div>
           <div className="inline-flex gap-1 items-center">
-            <XCircle />
+            {dailyProgress?.conversationRoomJoined ? (
+              <CheckMark />
+            ) : (
+              <XCircle />
+            )}
             <p className="text-sm">Join a Conversation Room</p>
           </div>
           <div className="inline-flex gap-1 items-center">
-            <XCircle />
+            {dailyProgress?.deckCompleted ? <CheckMark /> : <XCircle />}
             <p className="text-sm">Complete a flashcard deck</p>
           </div>
         </div>

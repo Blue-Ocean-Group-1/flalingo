@@ -5,6 +5,7 @@ import emailRouter from './email.routes.js';
 import flashcardRouter from './flashcard.routes.js';
 import languageRouter from './language.routes.js';
 import messageRouter from './message.routes.js';
+import sendemailRouter from './sendemail.routes.js';
 import testRouter from './test.routes.js';
 import userRouter from './user.routes.js';
 
@@ -18,4 +19,5 @@ export {
   AuthRouter,
   chatroomRouter,
   emailRouter,
+  sendemailRouter,
 };
