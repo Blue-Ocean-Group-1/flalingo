@@ -44,3 +44,16 @@ export const initializeDailyProgress = async (userId) => {
     throw error;
   }
 };
+
+export const updateDailyProgress = async (userId, updatedData) => {
+  try {
+    const result = await api.patch(
+      `/users/${userId}/dailyProgress`,
+      updatedData,
+    );
+    return result;
+  } catch (error) {
+    Logger.error(`Error occurred updating daily progress - ${error.message}`);
+    throw error;
+  }
+};

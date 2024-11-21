@@ -179,7 +179,7 @@ export const initDailyProgress = async (req, res) => {
 
 export const updateDailyProgress = async (req, res) => {
   try {
-    await User.findOneAndUpdate(
+    const result = await User.findOneAndUpdate(
       {
         _id: req.params.id,
         'dailyGoalProgress.date': {
@@ -196,7 +196,7 @@ export const updateDailyProgress = async (req, res) => {
       },
       { new: true },
     );
-    res.status(200).send('Successfully updated daily progress');
+    res.status(200).json(result);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }

@@ -18,6 +18,7 @@ import UserReportDisplay from '../components/dashboard/UserReportDisplay.jsx';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
 import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx';
 import { initializeDailyProgress } from '../services/user.api.js';
+import getDailyProgress from '../utils/getDailyProgress.js';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
@@ -74,12 +75,7 @@ export default function HomePage() {
       }
     }
     if (userData?.dailyGoalProgress) {
-      const dailyProgress = userData.dailyGoalProgress.find((goal) => {
-        const oneDayInMs = 24 * 60 * 60 * 1000;
-        const curDate = new Date();
-        const differenceInMs = Math.abs(new Date(goal.date) - curDate);
-        return differenceInMs <= oneDayInMs;
-      });
+      const dailyProgress = getDailyProgress(userData.dailyGoalProgress);
       if (!dailyProgress) {
         console.log('No daily goal progress found for today');
         initDailyProgress();

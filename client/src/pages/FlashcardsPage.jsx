@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar.jsx';
 import api from '../services/index.js';
 import Logger from '../../config/logger.js';
 import { useUserData } from '../hooks/useUserData.jsx';
+import getDailyProgress from '../utils/getDailyProgress.js';
+import { updateDailyProgress } from '../services/user.api.js';
 
 export default function FlashcardsPage() {
   // User-related state
@@ -195,10 +197,44 @@ export default function FlashcardsPage() {
   }, [userData, currentDeck, language, numCorrect, isFinished, updateUser]);
 
   useEffect(() => {
+    async function updateUserProgress() {
+      if (userData?.dailyGoalProgress) {
+        const dailyProgress = getDailyProgress(userData.dailyGoalProgress);
+        console.log('daily progress in user progress', dailyProgress);
+        if (dailyProgress['deckCompleted'] !== true) {
+          dailyProgress['deckCompleted'] = true;
+          // this will need to be updated if more fields are added to in order to be complete
+          if (dailyProgress['conversationRoomJoined'] === true) {
+            dailyProgress['completed'] = true;
+          }
+          try {
+            const result = await updateDailyProgress(
+              userData._id,
+              dailyProgress,
+            );
+
+            if (result) {
+              updateUser({
+                ...result,
+              });
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    }
     if (isFinished) {
       updateProgress();
+      updateUserProgress();
     }
-  }, [isFinished, updateProgress]);
+  }, [
+    isFinished,
+    updateProgress,
+    updateUser,
+    userData?._id,
+    userData?.dailyGoalProgress,
+  ]);
 
   if (!currentCard) {
     return <div>Loading...</div>;
