@@ -28,10 +28,6 @@ export default function HomePage() {
   const [addNewLanguageModelOpen, setAddNewLanguageModelOpen] = useState(false);
 
   useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
-  useEffect(() => {
     userData?.progress?.length === 0 ? setModalOpen(true) : setModalOpen(false);
   }, [userData, updateUser]);
 
@@ -123,6 +119,7 @@ export default function HomePage() {
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
               </div>
               {dailyWords?.length &&
+                userData.progress?.length > 0 &&
                 dailyWords.map((word, index) => (
                   <DailyWord
                     key={word._id}

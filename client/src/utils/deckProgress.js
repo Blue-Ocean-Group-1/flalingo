@@ -90,7 +90,7 @@ const findRecommendedDeck = async (user) => {
         return !deckNames.includes(deck.name);
       });
     }
-    if (displayDecks.length === 0) {
+    if (displayDecks?.length === 0) {
       displayDecks = getDeckPercentage(skillLevelDecks);
       displayDecks = displayDecks.sort((a, b) => {
         return a?.percentage - b?.percentage || 0;

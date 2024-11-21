@@ -20,7 +20,7 @@ function MainLanguageSelect({ user, openAddLang }) {
         className="relative text-3xl text-jet font-semibold bg-gray-50 p-3 rounded-lg shadow-sm border border-gray-300"
       >
         <MenuButton className="relative flex rounded-full text-4xl">
-          {`${user.activeLanguages[0]}`}
+          {user.activeLanguages[0] === undefined ? '' : user.activeLanguages[0]}
         </MenuButton>
         <MenuItems
           transition
