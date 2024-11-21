@@ -3,7 +3,7 @@ import axios from 'axios';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import { env } from '../../config/env.js';
 import logger from '../../config/logger.js';
-import useUserData from '../hooks/useUserData.jsx';
+import { useUserData } from '../hooks/useUserData.jsx';
 
 const COUNTRY_DATA = {
   Bangladesh: 'Bengali',
@@ -37,11 +37,12 @@ const COUNTRY_DATA = {
 };
 
 export default function ProfilePage() {
-  const [userData, loading, error, updateUser] = useUserData(); // eslint-disable-line no-unused-vars
+  const { userData, updateUser } = useUserData(); // eslint-disable-line no-unused-vars
   console.log('userData', userData);
   const [selectedImg, setSelectedImg] = useState(null);
   const [displayedImg, setDisplayedImg] = useState(
-    'https://muffinman.io/img/image-resize/rickmorty-250x250.jpg',
+    // 'https://muffinman.io/img/image-resize/rickmorty-250x250.jpg',
+    '',
   );
   const [countryFlag, setCountryFlag] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -73,6 +74,7 @@ export default function ProfilePage() {
       gender: userData && userData.demographics.gender,
       email: userData && userData.email,
     });
+    setDisplayedImg(userData && userData.profilePicture);
   }, [userData]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -252,6 +254,7 @@ export default function ProfilePage() {
       .then((response) => {
         logger.debug('uploaded picture response: ', response.data);
         // TODO: make put request to api update profile
+        updateUser({ profilePicture: response.data.url });
         setDisplayedImg(response.data.url);
       })
       .catch((err) => {
@@ -274,6 +277,7 @@ export default function ProfilePage() {
                 src={`${displayedImg}`}
                 alt="Profile-pic"
                 className="w-42 h-42 rounded-full object-cover mr-48 ml-10 mb-4"
+                style={{ width: '260px', height: '260px' }}
               />
               <img
                 src={countryFlag}

@@ -1,6 +1,6 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import useUserData from '../../../hooks/useUserData';
+import { useUserData } from '../../../hooks/useUserData';
 import { fetchUserData, updateUserData } from '../../../services/user.api';
 import useAuth from '../../../hooks/useAuth';
 

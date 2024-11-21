@@ -13,44 +13,46 @@ const splitDecksByLanguageAndTheme = (
   if (condition === 'lessThanOrEqual') {
     comparator = (deck) => deck?.percentage <= percentage;
   }
-  user.progress.forEach((cat) => {
-    let decks = getDeckPercentage(cat.decks.slice());
-    const lang = cat.language;
-    let beginner = {};
-    let proficient = {};
-    let advanced = {};
-    decks.forEach((deck) => {
-      if (comparator(deck)) {
-        if (deck.skillLevel === 'beginner') {
-          let theme = deck.deckName.split(' ')[0];
-          if (beginner[theme]) {
-            beginner[theme] += 1;
-          } else {
-            beginner[theme] = 1;
+  if (user?.progress) {
+    user.progress.forEach((cat) => {
+      let decks = getDeckPercentage(cat.decks.slice());
+      const lang = cat.language;
+      let beginner = {};
+      let proficient = {};
+      let advanced = {};
+      decks.forEach((deck) => {
+        if (comparator(deck)) {
+          if (deck.skillLevel === 'beginner') {
+            let theme = deck.deckName.split(' ')[0];
+            if (beginner[theme]) {
+              beginner[theme] += 1;
+            } else {
+              beginner[theme] = 1;
+            }
+          }
+          if (deck.skillLevel === 'proficient') {
+            let theme = deck.deckName.split(' ')[0];
+            if (proficient[theme]) {
+              proficient[theme] += 1;
+            } else {
+              proficient[theme] = 1;
+            }
+          }
+          if (deck.skillLevel === 'advanced') {
+            let theme = deck.deckName.split(' ')[0];
+            if (advanced[theme]) {
+              advanced[theme] += 1;
+            } else {
+              advanced[theme] = 1;
+            }
           }
         }
-        if (deck.skillLevel === 'proficient') {
-          let theme = deck.deckName.split(' ')[0];
-          if (proficient[theme]) {
-            proficient[theme] += 1;
-          } else {
-            proficient[theme] = 1;
-          }
-        }
-        if (deck.skillLevel === 'advanced') {
-          let theme = deck.deckName.split(' ')[0];
-          if (advanced[theme]) {
-            advanced[theme] += 1;
-          } else {
-            advanced[theme] = 1;
-          }
-        }
-      }
+      });
+      deckTheme.push({ lang, beginner, proficient, advanced });
     });
-    deckTheme.push({ lang, beginner, proficient, advanced });
-  });
 
-  return deckTheme;
+    return deckTheme;
+  }
 };
 
 const getBadges = (user) => {
@@ -140,24 +142,27 @@ const findPriorityValue = (obj) => {
 
 const findNearestBadge = (user) => {
   let decks = splitDecksByLanguageAndTheme(user, 80);
+  let badge;
+  if (decks) {
+    const deck = decks.find((deck) => deck.lang === user.activeLanguages[0]);
 
-  const deck = decks.find((deck) => deck.lang === user.activeLanguages[0]);
+    badge = findPriorityValue(deck);
 
-  let badge = findPriorityValue(deck);
+    if (!badge) {
+      let firstDecks = user.progress.find(
+        (deck) => deck.language === user.activeLanguages[0],
+      );
+      let firstDeck = firstDecks.decks[0];
+      badge = {
+        skillLevel: firstDeck?.skillLevel,
+        key: firstDeck?.deckName.split(' ')[1],
+        value: 0,
+      };
+    }
 
-  if (!badge) {
-    let firstDecks = user.progress.find(
-      (deck) => deck.language === user.activeLanguages[0],
-    );
-    let firstDeck = firstDecks.decks[0];
-    badge = {
-      skillLevel: firstDeck?.skillLevel,
-      key: firstDeck?.deckName.split(' ')[1],
-      value: 0,
-    };
+    return badge;
   }
-
-  return badge;
+  return null;
 };
 
 export { findNearestBadge, getBadges };

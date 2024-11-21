@@ -37,6 +37,15 @@ sendemailRouter.post('/confirmation', async (req, res) => {
   }
 });
 
+function getDailyProgress(allProgressEntries) {
+  return allProgressEntries.find((goal) => {
+    const oneDayInMs = 24 * 60 * 60 * 1000;
+    const curDate = new Date();
+    const differenceInMs = Math.abs(new Date(goal.date) - curDate);
+    return differenceInMs <= oneDayInMs;
+  });
+}
+
 sendemailRouter.post('/schedule-daily', (req, res) => {
   const { email } = req.body;
 
@@ -47,8 +56,28 @@ sendemailRouter.post('/schedule-daily', (req, res) => {
   }
 
   const task = cron.schedule('*/2 * * * *', () => {
-    User.findOne({ username: 'user3' })
+    User.findOne({ username: email })
+
       .then(async (user) => {
+        const dailyReport = getDailyProgress(user.dailyGoalProgress) || {
+          completed: false,
+          loggedIn: false,
+          deckCompleted: false,
+          conversationRoomJoined: false,
+        };
+        let dailyGoal = 'You have ';
+        if (dailyReport.completed === true) {
+          dailyGoal = 'You have completed all your daily goals today!';
+        } else if (!dailyReport.loggedIn) {
+          dailyGoal = 'You have not logged in today!';
+        } else if (
+          dailyReport.deckCompleted ||
+          dailyReport.conversationRoomJoined
+        ) {
+          dailyGoal += dailyReport.deckCompleted
+            ? 'completed a deck'
+            : 'joined a conversation room';
+        }
         const msg = {
           to: email,
           from: {
@@ -56,8 +85,8 @@ sendemailRouter.post('/schedule-daily', (req, res) => {
             email: 'emmaemma0768@gmail.com',
           },
           subject: 'Daily Reminder',
-          text: 'This is your daily reminder:' + user.name,
-          html: `<p>This is your daily reminder: ${user.name}</p>`,
+          text: 'Here is your daily report:' + dailyGoal,
+          html: `<p>Here is your daily reminder: ${dailyGoal}</p>`,
         };
 
         try {

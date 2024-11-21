@@ -1,9 +1,9 @@
 import { getMotivationalQuote } from '../../utils/motivationalQuotes.js';
-import useUserData from '../../hooks/useUserData';
+import { useUserData } from '../../hooks/useUserData';
 import { useEffect, useState } from 'react';
 
 export default function ProgressSidebar() {
-  const [userData] = useUserData();
+  const { userData } = useUserData();
   const [randomQuote, setRandomQuote] = useState('');
 
   useEffect(() => {

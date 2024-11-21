@@ -1,12 +1,14 @@
 import React from 'react';
 
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
-import useUserData from '../../hooks/useUserData';
+import { useUserData } from '../../hooks/useUserData';
 
-function MainLanguageSelect({ user, openAddLang, setUser }) {
-  const [userData, , , updateUser, ,] = useUserData();
-  const handleClick = (language) => {
-    updateUser({ ...userData, activeLanguages: [language] });
+function MainLanguageSelect({ user, openAddLang }) {
+  const { userData, updateUser } = useUserData();
+  const handleClick = async (language) => {
+    console.log(userData);
+    await updateUser({ activeLanguages: [language] });
+    console.log(userData);
   };
 
   console.log(user);
