@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import ChatInput from '../components/ChatInput';
-import { useParams, useNavigate, useAsyncError } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   getChatroom,
   getChatroomMessages,

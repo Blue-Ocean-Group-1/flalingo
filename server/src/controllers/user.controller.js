@@ -146,6 +146,7 @@ export const getUserReportById = async (req, res) => {
 };
 
 export const initDailyProgress = async (req, res) => {
+  console.log('in initDailyProgress');
   try {
     const exists = await User.exists({
       _id: req.params.id,
@@ -155,7 +156,7 @@ export const initDailyProgress = async (req, res) => {
     });
 
     if (exists) throw new Error('Daily progress already initialized');
-    await User.findByIdAndUpdate(
+    const progress = await User.findByIdAndUpdate(
       req.params.id,
       {
         $push: {
@@ -169,7 +170,8 @@ export const initDailyProgress = async (req, res) => {
       },
       { new: true },
     );
-    res.status(200).send('Successfully initialized daily progress');
+
+    res.status(200).json(progress);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }

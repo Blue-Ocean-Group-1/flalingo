@@ -33,8 +33,14 @@ export const updateUserData = async (token, updatedData) => {
   }
 };
 
-// export const initializeDailyProgress = async (userId) => {
-//   try {
-//     await api.put(`/dailyGoalProgress/${userId}`);
-//   } catch (err) {}
-// };
+export const initializeDailyProgress = async (userId) => {
+  try {
+    const result = await api.put(`/users/${userId}/dailyProgress`);
+    return result;
+  } catch (error) {
+    Logger.error(
+      `Error occurred initializing daily progress - ${error.message}`,
+    );
+    throw error;
+  }
+};

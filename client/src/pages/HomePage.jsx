@@ -17,6 +17,7 @@ import MainProgress from '../components/dashboard/MainProgress.jsx';
 import UserReportDisplay from '../components/dashboard/UserReportDisplay.jsx';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
 import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx';
+import { initializeDailyProgress } from '../services/user.api.js';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
@@ -60,7 +61,18 @@ export default function HomePage() {
   // ],
 
   useEffect(() => {
-    console.log('in useEffect');
+    async function initDailyProgress() {
+      try {
+        const response = await initializeDailyProgress(userData._id);
+        if (response) {
+          updateUser({
+            ...response.data,
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
     if (userData?.dailyGoalProgress) {
       const dailyProgress = userData.dailyGoalProgress.find((goal) => {
         const oneDayInMs = 24 * 60 * 60 * 1000;
@@ -69,10 +81,11 @@ export default function HomePage() {
         return differenceInMs <= oneDayInMs;
       });
       if (!dailyProgress) {
-        // Logger.info('No daily goal progress found for today');
+        console.log('No daily goal progress found for today');
+        initDailyProgress();
       }
     }
-  }, [userData?.dailyGoalProgress]);
+  }, [userData?.dailyGoalProgress, updateUser, userData?._id]);
 
   // You want data? This will give you data
   useEffect(() => {
