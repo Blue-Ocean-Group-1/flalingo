@@ -1,10 +1,10 @@
-import { getDeckPercentage } from '../utils/deckProgress';
+import { getDeckPercentage } from './deckProgress.js';
 
-const splitDecksByLanguageAndTheme = (
+export const splitDecksByLanguageAndTheme = function (
   user,
   percentage,
   condition = 'greaterThanOrEqual',
-) => {
+) {
   let deckTheme = [];
   let comparator;
   if (condition === 'greaterThanOrEqual') {
@@ -13,54 +13,60 @@ const splitDecksByLanguageAndTheme = (
   if (condition === 'lessThanOrEqual') {
     comparator = (deck) => deck?.percentage <= percentage;
   }
-  if (user?.progress) {
-    user.progress.forEach((cat) => {
-      let decks = getDeckPercentage(cat.decks.slice());
-      const lang = cat.language;
-      let beginner = {};
-      let proficient = {};
-      let advanced = {};
-      decks.forEach((deck) => {
-        if (comparator(deck)) {
-          if (deck.skillLevel === 'beginner') {
-            let theme = deck.deckName.split(' ')[0];
-            if (beginner[theme]) {
-              beginner[theme] += 1;
-            } else {
-              beginner[theme] = 1;
-            }
-          }
-          if (deck.skillLevel === 'proficient') {
-            let theme = deck.deckName.split(' ')[0];
-            if (proficient[theme]) {
-              proficient[theme] += 1;
-            } else {
-              proficient[theme] = 1;
-            }
-          }
-          if (deck.skillLevel === 'advanced') {
-            let theme = deck.deckName.split(' ')[0];
-            if (advanced[theme]) {
-              advanced[theme] += 1;
-            } else {
-              advanced[theme] = 1;
-            }
+  console.log('user: in bagde logic', user);
+  user.progress.forEach((cat) => {
+    let decks = getDeckPercentage(cat.decks.slice());
+    //console.log('decks percentage:', decks);
+    const lang = cat.language;
+    let beginner = {};
+    let proficient = {};
+    let advanced = {};
+    console.log('decks:', decks);
+    decks.forEach((deck) => {
+      if (comparator(deck)) {
+        if (deck.skillLevel === 'beginner') {
+          let theme = deck.deckName.split(' ')[0];
+          console.log('theme:', theme);
+          if (beginner[theme]) {
+            beginner[theme] += 1;
+          } else {
+            beginner[theme] = 1;
           }
         }
-      });
-      deckTheme.push({ lang, beginner, proficient, advanced });
+        if (deck.skillLevel === 'proficient') {
+          let theme = deck.deckName.split(' ')[0];
+          if (proficient[theme]) {
+            proficient[theme] += 1;
+          } else {
+            proficient[theme] = 1;
+          }
+        }
+        if (deck.skillLevel === 'advanced') {
+          let theme = deck.deckName.split(' ')[0];
+          if (advanced[theme]) {
+            advanced[theme] += 1;
+          } else {
+            advanced[theme] = 1;
+          }
+        }
+      }
     });
-
-    return deckTheme;
-  }
+    deckTheme.push({ lang, beginner, proficient, advanced });
+  });
+  console.log('deckTheme after split:', deckTheme);
+  return deckTheme;
 };
 
-const getBadges = (user) => {
-  let newBadges = user.badges.slice();
+export const getBadges = (user) => {
+  console.log('Calculating badges...', user);
+  if (!user.allBadges) {
+    user.allBadges = [];
+  }
+  let newBadges = user.allBadges.slice();
   let startingLength = newBadges.length;
 
   let deckTheme = splitDecksByLanguageAndTheme(user, 80);
-
+  console.log('deckTheme:', deckTheme);
   deckTheme.forEach((entry) => {
     let beginnerValues = Object.values(entry.beginner);
     let beginnerKeys = Object.keys(entry.beginner);
@@ -108,11 +114,11 @@ const getBadges = (user) => {
     // logic for updating user badges
     // or just leave it blank and let it calculate each time? (less efficient)
   }
-
+  console.log('newBadges:', newBadges);
   return newBadges;
 };
 
-const findPriorityValue = (obj) => {
+export const findPriorityValue = (obj) => {
   // gonna iterate through active language decks to find the nearest 'almost there' badge
   // by looking first through advanced, then proficient, then beginner
   // and looking for deck completion counts of 4, 3, 2, 1 (a deck is considered complete when
@@ -140,7 +146,8 @@ const findPriorityValue = (obj) => {
   return null;
 };
 
-const findNearestBadge = (user) => {
+export const findNearestBadge = (user) => {
+  console.log('Finding nearest badge...', user);
   let decks = splitDecksByLanguageAndTheme(user, 80);
   let badge;
   if (decks) {
@@ -165,4 +172,4 @@ const findNearestBadge = (user) => {
   return null;
 };
 
-export { findNearestBadge, getBadges };
+//export default { findNearestBadge, getBadges };

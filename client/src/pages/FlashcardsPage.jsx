@@ -31,6 +31,7 @@ export default function FlashcardsPage() {
   // Initialize user preferences from userData
   useEffect(() => {
     if (userData?.activeLanguages?.[0]) {
+      console.log('set active deck:', userData.activeDeck);
       setLanguage(userData.activeLanguages[0]);
       setCurrentTheme(userData.progress[0]?.theme);
       setSkillLevel(userData.progress[0]?.skillLevel);
@@ -214,13 +215,13 @@ export default function FlashcardsPage() {
             {/* Header */}
             <div className="bg-[#6AB9F2] rounded-lg p-4 mb-6 text-black text-center">
               <h1 className="text-2xl font-bold mb-2">{currentDeck.name}</h1>
-              <h2>
+              <h3>
                 Card {currentCardIndex + 1} of {flashcards.length}
-              </h2>
+              </h3>
               {currentStreak > 1 ? (
-                <h2>Current Streak {currentStreak + 1} in a row!</h2>
+                <h3>Current Streak {currentStreak + 1} in a row!</h3>
               ) : (
-                <h2>Start A Streak!</h2>
+                <h3>Start A Streak!</h3>
               )}
             </div>
 

@@ -93,7 +93,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
     topBadges: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Badge' }],
-    allBadges: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Badge' }],
+    allBadges: [{ type: String }],
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     gems: { type: Number, default: 0 },
   },

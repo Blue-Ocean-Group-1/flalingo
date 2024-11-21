@@ -33,13 +33,13 @@ async function addTimesCompleted(
     });
 }
 const seedUserProgress = async () => {
-  const id = '673ce87e7960dbdd5019305d';
+  const id = '673c0d334831b6796751d2fe';
   const language = 'Spanish';
   const deckName = 'Beginner Food Vocabulary Deck 2';
   const skillLevel = 'beginner';
   const today = new Date();
 
-  for (let i = 1; i < 10; i++) {
+  for (let i = 1; i < 2; i++) {
     const attempt = {
       attemptNo: i,
       totalCorrect: Math.floor(Math.random() * 10),

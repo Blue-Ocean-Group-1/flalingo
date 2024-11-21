@@ -7,9 +7,10 @@ import logger from '../../config/logger.js';
 const getDeckPercentage = (decks) => {
   return decks.map((deck) => {
     let name = deck.deckName.split(' ');
-    name.splice(0, 1);
+    //console.log('name in deck percentage:', name);
+    //name.splice(0, 1);
     name.splice(1, 1);
-
+    //console.log('name after splice:', name);
     const newDeck = {
       ...deck,
       deckName: name.join(' '),
