@@ -38,14 +38,25 @@ const useUserData = () => {
 
   const updateUser = async (updatedData) => {
     Logger.info('useUserData: Updating user data');
+
+    const previousData = userData;
+
     try {
+      setUserData((current) => ({
+        ...current,
+        ...updatedData,
+      }));
+
       const updatedUser = await updateUserData(token, updatedData);
       console.log(updatedData);
       setUserData({ ...userData, ...updatedUser });
       setError(null);
       Logger.info('useUserData: User data updated');
       Logger.debug('useUserData: updatedUser:', updatedUser);
+
+      return updatedUser;
     } catch (err) {
+      setUserData(previousData);
       setError('Failed to update');
       Logger.error('useUserData: Failed to update user data', err);
       Logger.debug('useUserData: updatedData:', updatedData);
@@ -55,4 +66,5 @@ const useUserData = () => {
   return [userData, loading, error, updateUser, activeDeck, setActiveDeck];
 };
 
-export default useUserData;
+export default useUserData; 
+
