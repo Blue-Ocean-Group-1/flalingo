@@ -614,9 +614,9 @@ const quotesByLanguage = {
   ],
 };
 
-const getMotivaltionalQuote = (language) => {
+const getMotivationalQuote = (language) => {
   const quotes = quotesByLanguage[language];
   return quotes[Math.floor(Math.random() * quotes.length)];
 };
 
-export { quotesByLanguage, getMotivaltionalQuote };
+export { quotesByLanguage, getMotivationalQuote };

@@ -11,12 +11,12 @@ import {
 } from '../utils/deckProgress';
 
 import OnboardingModal from '../components/layout/OnboardingModal.jsx';
-import ProgressCircle from '../components/dashboard/ProgressCircle';
-import DailyWord from '../components/dashboard/DailyWord';
-import MainProgress from '../components/dashboard/MainProgress';
-import UserReportDisplay from '../components/dashboard/UserReportDisplay';
-import DefaultPageLayout from '../components/layout/DefaultPageLayout';
-import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal';
+import ProgressCircle from '../components/dashboard/ProgressCircle.jsx';
+import DailyWord from '../components/dashboard/DailyWord.jsx';
+import MainProgress from '../components/dashboard/MainProgress.jsx';
+import UserReportDisplay from '../components/dashboard/UserReportDisplay.jsx';
+import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
+import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
@@ -105,7 +105,7 @@ export default function HomePage() {
 
   return (
     <DefaultPageLayout>
-      <section className="flex content-center items-center rounded-xl w-full">
+      <section className="flex content-center items-center rounded-xl w-full pr-32">
         <div className="flex mt-12 rounded-2xl w-full">
           <AddNewLanguageModel
             user={userData}
