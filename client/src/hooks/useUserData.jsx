@@ -64,3 +64,6 @@ const useUserData = () => {
 
   return [userData, loading, error, updateUser, activeDeck, setActiveDeck];
 };
+
+export default useUserData; 
+
