@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { env } from '../../../config/env.js';
 import axios from 'axios';
 import { createChartDecksData } from '../../utils/createChartData.js';
+import { useNavigate } from 'react-router-dom';
 
 const UserReportDisplay = ({ user }) => {
+  const navigate = useNavigate();
   const chartRef = useRef(null); // Ref to store the Chart.js instance
   const [userStats, setUserStats] = useState({});
   const [renderStats, setRenderStats] = useState(true);
@@ -172,7 +174,12 @@ const UserReportDisplay = ({ user }) => {
         {renderStats === false && (
           <div className="w-full h-96 flex flex-col justify-center items-center border rounded border-jet">
             <p className="px-80 text-center">No data to show!</p>
-            <button className="p-2 rounded-xl bg-argentBlue text-jet w-1/3 m-2 mt-6 font-bold hover:scale-105">
+            <button
+              className="p-2 rounded-xl bg-argentBlue text-jet w-1/3 m-2 mt-6 font-bold hover:scale-105"
+              onClick={() => {
+                navigate('/flashcards');
+              }}
+            >
               Start A New Deck
             </button>
           </div>

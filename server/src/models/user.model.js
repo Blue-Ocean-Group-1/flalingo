@@ -65,7 +65,6 @@ const userSchema = new mongoose.Schema(
             ],
             required: true,
           },
-          deckName: { type: String, required: true },
         },
       ],
       default: [],

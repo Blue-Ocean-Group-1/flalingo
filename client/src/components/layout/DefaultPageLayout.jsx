@@ -5,12 +5,16 @@ import ProgressSidebar from '../common/ProgressSidebar';
 export default function DefaultPageLayout({ children }) {
   return (
     <div>
-      <Navbar />
-      <main className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
-        <section className="hidden lg:block fixed z-20 inset-0 top-[3rem] right-auto w-[19rem] pb-10 pl-8 pr-6 overflow-y-auto bg-slate-700">
+      <main className="max-w-8xl mx-auto">
+        <section className="hidden lg:block fixed z-20 inset-0 right-auto w-[19rem] pb-10 px-6 overflow-y-auto ">
           <ProgressSidebar />
         </section>
-        <section className="lg:pl-[19.5rem]">{children}</section>
+        <section>
+          <div className="lg:pl-[19rem]">
+            <Navbar />
+            {children}
+          </div>
+        </section>
       </main>
     </div>
   );

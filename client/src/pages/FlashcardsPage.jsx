@@ -205,7 +205,7 @@ export default function FlashcardsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-whiteSmoke">
       <Navbar />
       <div className="flashcardDisplay w-full flex min-h-[calc(100vh-64px)]">
         {/* Main Content */}
