@@ -103,19 +103,24 @@ export const updateUserData = async (req, res) => {
       }
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
+    // First update the user
+    await User.findByIdAndUpdate(
       req.user.id,
       { $set: updateData },
       {
-        new: true,
         runValidators: true,
-        select: '-password',
       },
     );
+
+    // Then fetch the complete user object
+    const updatedUser = await User.findById(req.user.id)
+      .select('-password')
+      .lean();
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
+
     res.json(updatedUser);
   } catch (error) {
     if (error.name === 'ValidationError') {
