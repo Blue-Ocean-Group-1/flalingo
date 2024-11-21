@@ -1,7 +1,7 @@
 @import url('tailwindcss/base');
 @import url('tailwindcss/components');
 @import url('tailwindcss/utilities');
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Lilita+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Lilita+One&family=Quicksand:wght@300..700&display=swap');
 
 :root {
   line-height: 1.5;
@@ -15,18 +15,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  /* font-family: DynaPuff, sans-serif; */
+#logo {
+  font-family: DynaPuff, sans-serif; 
+  font-weight: 400;
+}
 
+h1, h2 {
   font-family: "Lilita One", sans-serif;
   font-weight: 400;
 }
 
-body {
-  /* font-family: "Funnel Sans", sans-serif; */
-
-  /* font-family: quicksand, sans-serif; */
-  font-family: Montserrat, sans-serif;
-  font-weight: 600;
-
+body, h3, h4, h5, h6 {
+  font-family: quicksand, sans-serif;
+  font-weight: 700;
 }
