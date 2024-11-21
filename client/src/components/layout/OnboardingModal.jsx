@@ -86,9 +86,8 @@ const OnboardingModal = ({ isOpen, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedData = formatFormData(formData);
-    updateUser(updatedData);
     let updatedUser = startNewLanguage(formData.language, userData._id);
-    console.log(userData._id);
+    updateUser(updatedData);
     updateUser(updatedUser);
     onClose();
   };

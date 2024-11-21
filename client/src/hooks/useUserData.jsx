@@ -40,7 +40,8 @@ const useUserData = () => {
     Logger.info('useUserData: Updating user data');
     try {
       const updatedUser = await updateUserData(token, updatedData);
-      setUserData(updatedUser);
+      console.log(updatedData);
+      setUserData({ ...userData, ...updatedUser });
       setError(null);
       Logger.info('useUserData: User data updated');
       Logger.debug('useUserData: updatedUser:', updatedUser);

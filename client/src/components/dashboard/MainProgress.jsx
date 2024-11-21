@@ -16,28 +16,30 @@ const MainProgress = ({ user, openAddLang }) => {
   const [nearestBadge, setNearestBadge] = useState(null);
 
   useEffect(() => {
-    if (user?.progress?.length) {
-      console.log(user);
-      let skill = user?.progress?.find(
-        (prog) => prog.language === user.activeLanguages[0],
-      );
-      if (skill) {
-        setCurrentSkill(skill.skillLevel);
+    if (user) {
+      if (user?.progress?.length) {
+        console.log(user);
+        let skill = user?.progress?.find(
+          (prog) => prog.language === user.activeLanguages[0],
+        );
+        if (skill) {
+          setCurrentSkill(skill.skillLevel);
+        }
+        let decks = user.progress.find(
+          (prog) => prog.language === user.activeLanguages[0],
+        );
+        let badge;
+        if (decks?.decks?.length) {
+          badge = findNearestBadge(decks);
+        }
+        if (badge === null) {
+          badge = {
+            key: 'Family',
+            skillLevel: 'Beginner',
+          };
+        }
+        setNearestBadge(badge);
       }
-      let decks = user.progress.find(
-        (prog) => prog.language === user.activeLanguages[0],
-      );
-      let badge;
-      if (decks?.decks?.length) {
-        badge = findNearestBadge(decks);
-      }
-      if (badge === undefined) {
-        badge = {
-          key: 'Family',
-          skillLevel: 'Beginner',
-        };
-      }
-      setNearestBadge(badge);
     }
   }, [user]);
 
