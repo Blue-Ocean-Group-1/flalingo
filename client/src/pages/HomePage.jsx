@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useUserData from '../hooks/useUserData.jsx';
+import { useUserData } from '../hooks/useUserData.jsx';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env';
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
@@ -20,7 +20,7 @@ import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
-  const [userData, , , updateUser, , setActiveDeck] = useUserData();
+  const { userData, loading, error, updateUser } = useUserData();
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);

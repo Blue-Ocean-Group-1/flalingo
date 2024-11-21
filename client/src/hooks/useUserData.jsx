@@ -1,11 +1,14 @@
-// src/hooks/useUserData.js
-import { useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { fetchUserData, updateUserData } from '../services/user.api.js';
 import useAuth from './useAuth.jsx';
 import Logger from '../../config/logger.js';
 
-const useUserData = () => {
-  Logger.info('useUserData: Initializing');
+// Create a Context for userData
+const UserDataContext = createContext();
+
+// UserDataProvider to wrap the app and provide user data
+export const UserDataProvider = ({ children }) => {
+  Logger.info('UserDataProvider: Initializing');
   const { token } = useAuth();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,16 +17,16 @@ const useUserData = () => {
 
   useEffect(() => {
     const getUserData = async () => {
-      Logger.info('useUserData: Fetching user data');
+      Logger.info('UserDataProvider: Fetching user data');
       try {
         const data = await fetchUserData(token);
         setUserData(data);
         setError(null);
-        Logger.info('useUserData: User data fetched');
+        Logger.info('UserDataProvider: User data fetched');
       } catch (err) {
         setError('Failed to fetch user data');
-        Logger.error('useUserData: Failed to fetch user data', err);
-        Logger.debug('useUserData: token:', token);
+        Logger.error('UserDataProvider: Failed to fetch user data', err);
+        Logger.debug('UserDataProvider: token:', token);
       } finally {
         setLoading(false);
       }
@@ -37,7 +40,7 @@ const useUserData = () => {
   }, [token]);
 
   const updateUser = async (updatedData) => {
-    Logger.info('useUserData: Updating user data');
+    Logger.info('UserDataProvider: Updating user data');
 
     const previousData = userData;
 
@@ -51,20 +54,41 @@ const useUserData = () => {
       console.log(updatedData);
       setUserData({ ...userData, ...updatedUser });
       setError(null);
-      Logger.info('useUserData: User data updated');
-      Logger.debug('useUserData: updatedUser:', updatedUser);
+      Logger.info('UserDataProvider: User data updated');
+      Logger.debug('UserDataProvider: updatedUser:', updatedUser);
 
       return updatedUser;
     } catch (err) {
       setUserData(previousData);
       setError('Failed to update');
-      Logger.error('useUserData: Failed to update user data', err);
-      Logger.debug('useUserData: updatedData:', updatedData);
+      Logger.error('UserDataProvider: Failed to update user data', err);
+      Logger.debug('UserDataProvider: updatedData:', updatedData);
     }
   };
 
-  return [userData, loading, error, updateUser, activeDeck, setActiveDeck];
+  return (
+    <UserDataContext.Provider
+      value={{
+        userData,
+        loading,
+        error,
+        updateUser,
+        activeDeck,
+        setActiveDeck,
+      }}
+    >
+      {children}
+    </UserDataContext.Provider>
+  );
 };
 
-export default useUserData; 
+// Custom hook to use userData context
+export const useUserData = () => {
+  const context = useContext(UserDataContext);
 
+  if (!context) {
+    throw new Error('useUserData must be used within a UserDataProvider');
+  }
+
+  return context;
+};

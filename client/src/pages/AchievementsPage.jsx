@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import useUserData from '../hooks/useUserData.jsx';
+import { useUserData } from '../hooks/useUserData.jsx';
 import Navbar from '../components/Navbar.jsx';
 
 export default function AchievementsPage() {
-  const [userData, loading] = useUserData();
+  const { userData, loading } = useUserData();
   const [badges, setBadges] = useState([]);
 
   useEffect(() => {

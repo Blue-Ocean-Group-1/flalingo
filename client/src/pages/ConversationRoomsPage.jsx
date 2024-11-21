@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RoomsModal from '../components/RoomsModal.jsx';
 import Logger from '../../config/logger.js';
-import useUserData from '../hooks/useUserData.jsx';
+import { useUserData } from '../hooks/useUserData.jsx';
 
 export default function ConversationRoomsPage() {
   const [rooms, setRooms] = useState([]);
-  const [userData] = useUserData();
+  const { userData } = useUserData();
 
   function sortByDifficulty(rooms) {
     const levelOrder = ['Beginner', 'Proficient', 'Advanced'];

@@ -3,11 +3,11 @@ import { Button } from '@headlessui/react';
 import Navbar from '../components/Navbar.jsx';
 import api from '../services/index.js';
 import Logger from '../../config/logger.js';
-import useUserData from '../hooks/useUserData.jsx';
+import { useUserData } from '../hooks/useUserData.jsx';
 
 export default function FlashcardsPage() {
   // User-related state
-  const [userData, updateUser] = useUserData();
+  const { userData, updateUser } = useUserData();
   const [language, setLanguage] = useState('Spanish');
   const [skillLevel, setSkillLevel] = useState('beginner');
   const [currentTheme, setCurrentTheme] = useState('family');

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchLanguageNames } from '../../services/language.api';
 import logger from '../../../config/logger.js';
-import useUserData from '../../hooks/useUserData.jsx';
+import { useUserData } from '../../hooks/useUserData.jsx';
 import PhoneNumberInput from '../common/PhoneNumberInput.jsx';
 import startNewLanguage from '../../utils/startNewLanguage.js';
 
@@ -38,7 +38,7 @@ const countries = [
 ];
 
 const OnboardingModal = ({ isOpen, onClose }) => {
-  const [userData, loading, error, updateUser] = useUserData(); // eslint-disable-line no-unused-vars
+  const { userData, loading, error, updateUser } = useUserData(); // eslint-disable-line no-unused-vars
   const [languageOptions, setLanguageOptions] = useState([]);
   const [formData, setFormData] = useState({
     nativeCountry: '',
