@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema(
               deck_id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Deck',
-                required: true,
               },
               skillLevel: { type: String, required: true },
               timesCompleted: [
@@ -63,7 +62,6 @@ const userSchema = new mongoose.Schema(
             type: [
               { word: { type: String }, translatedWord: { type: String } },
             ],
-            required: true,
             default: null,
           },
         },

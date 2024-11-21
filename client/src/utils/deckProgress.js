@@ -7,23 +7,37 @@ import logger from '../../config/logger.js';
 const getDeckPercentage = (decks) => {
   return decks.map((deck) => {
     let name = deck.deckName.split(' ');
-    //console.log('name in deck percentage:', name);
-    //name.splice(0, 1);
     name.splice(1, 1);
-    //console.log('name after splice:', name);
+    // if (deck.deckName) {
+    //   console.log('about to split', deck.deckName);
+    //   name = deck.deckName.split(' ');
+    //   name.splice(0, 1);
+    //   name.splice(1, 1);
+    //   console.log('after split', name);
+    // }
+
+    // if (deck.name) {
+    //   name = deck.name.split(' ');
+    //   name.splice(0, 1);
+    //   name.splice(1, 1);
+    // }
+
     const newDeck = {
       ...deck,
       deckName: name.join(' '),
       percentage: 0,
     };
 
-    let percentage = Math.floor(
-      (deck.timesCompleted.slice(-5).reduce((acc, attempt) => {
-        return acc + (attempt?.totalCorrect || 0);
-      }, 0) /
-        (5 * 10)) *
-        100,
-    );
+    let percentage = 0;
+    if (deck?.timesCompleted?.length) {
+      percentage = Math.floor(
+        (deck.timesCompleted.slice(-5).reduce((acc, attempt) => {
+          return acc + (attempt?.totalCorrect || 0);
+        }, 0) /
+          (5 * 10)) *
+          100,
+      );
+    }
     if (percentage > 0) {
       newDeck.percentage = percentage;
     }
@@ -53,43 +67,35 @@ const findRecommendedDeck = async (user) => {
   const currentDecks = (user?.progress || []).find(
     (lang) => lang.language === user.activeLanguages[0],
   );
-
-  let displayDecks = [];
-
-  if (currentDecks?.decks?.length) {
-    try {
-      const response = await axios.get(
-        `${env.API_URL}/decks/${user.activeLanguages[0]}`,
-      );
-      const skillLevelDecks = response.data.filter(
+  try {
+    const response = await axios.get(
+      `${env.API_URL}/decks/${user.activeLanguages[0]}`,
+    );
+    let skillLevelDecks = response.data;
+    if (currentDecks?.skillLevel) {
+      skillLevelDecks = skillLevelDecks.filter(
         (deck) => deck.skillLevel === currentDecks.skillLevel,
       );
-
+    }
+    let displayDecks = skillLevelDecks;
+    if (currentDecks?.decks?.length) {
+      let deckNames = currentDecks.decks.map((deck) => deck.deckName);
       displayDecks = skillLevelDecks.filter((deck) => {
-        return !currentDecks.decks.some(
-          (aDeck) => aDeck.deckName === deck.deckName,
-        );
+        return !deckNames.includes(deck.name);
       });
-
-      return displayDecks.slice(0, 1); // Explicitly return the result
-    } catch (error) {
-      logger.error('Error fetching decks:', error);
-      return []; // Return an empty array on error
     }
-  } else {
-    try {
-      const response = await axios.get(
-        `${env.API_URL}/decks/${user.activeLanguages[0]}`,
-      );
-      const skillLevelDecks = response.data.filter(
-        (deck) => deck.skillLevel === currentDecks?.skillLevel,
-      );
-
-      return skillLevelDecks.slice(0, 1); // Explicitly return the result
-    } catch (error) {
-      logger.error('Error fetching decks:', error);
-      return []; // Return an empty array on error
+    if (displayDecks?.length === 0) {
+      displayDecks = getDeckPercentage(skillLevelDecks);
+      displayDecks = displayDecks.sort((a, b) => {
+        return a?.percentage - b?.percentage || 0;
+      });
+      return displayDecks.slice(0, 1);
     }
+    displayDecks = getDeckPercentage(displayDecks);
+    return displayDecks.slice(0, 1);
+  } catch (error) {
+    logger.error('Error fetching decks:', error);
+    return [];
   }
 };
 

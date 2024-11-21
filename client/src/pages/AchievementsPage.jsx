@@ -14,8 +14,8 @@ export default function AchievementsPage() {
   useEffect(() => {
     const determineBadge = () => {
       let deckData = splitDecksByLanguageAndTheme(userData, 80); //array
-      const badges = [];
 
+      const badges = [];
       deckData.forEach((deck) => {
         const checkSkillLevel = (skillLevel) => {
           let deckThemes = Object.keys(deck[skillLevel]);

@@ -615,7 +615,16 @@ const quotesByLanguage = {
 };
 
 const getMotivationalQuote = (language) => {
-  const quotes = quotesByLanguage[language];
+  let quotes = quotesByLanguage[language];
+  if (quotes === undefined) {
+    quotes =
+      quotesByLanguage.English[
+        Math.floor(Math.random() * quotesByLanguage.English.length)
+      ];
+
+    quotes.translation = '';
+    return quotes;
+  }
   return quotes[Math.floor(Math.random() * quotes.length)];
 };
 

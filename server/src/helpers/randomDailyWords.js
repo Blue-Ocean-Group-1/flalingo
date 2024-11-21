@@ -3,7 +3,7 @@ import { User } from '../models/user.model.js';
 
 const generateDailyWords = async (user) => {
   const decks = await Deck.find({ language: user.activeLanguages[0] });
-  if (decks.length) {
+  if (decks?.length) {
     const skillLevel = user.progress.find(
       (p) => p.language === user.activeLanguages[0],
     ).skillLevel;
@@ -52,7 +52,7 @@ const getRandomDailyWords = async (userId) => {
     return date.getTime() === startOfDay.getTime();
   });
 
-  if (dailyWords?.words.length) {
+  if (dailyWords?.words?.length) {
     return dailyWords.words;
   } else {
     const newWords = await generateDailyWords(user);

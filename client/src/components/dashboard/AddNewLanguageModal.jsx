@@ -1,33 +1,38 @@
 import React, { useEffect, useState } from 'react';
 
 import startNewLanguage from '../../utils/startNewLanguage';
+import { useUserData } from '../../hooks/useUserData';
 
 import flagObject from '../../../public/Flags/flagObject';
 
-const AddNewLanguageModel = ({ user, closeModal, isOpen }) => {
+const AddNewLanguageModel = ({ closeModal, isOpen }) => {
+  const { userData, setUserData } = useUserData();
   const [languages, setLanguages] = useState([]);
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    let languageList = Object.keys(flagObject);
-    languageList.filter((lang) => {
-      if (user?.allLanguages?.includes(lang)) {
-        return false;
-      } else {
-        return true;
-      }
-    });
-    languageList.shift();
-    languageList.unshift('Please Select A Language');
-    setLanguages(languageList);
-  }, [user]);
+    if (userData) {
+      let languageList = Object.keys(flagObject);
+      languageList.filter((lang) => {
+        if (userData.allLanguages.includes(lang)) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      languageList.shift();
+      languageList.unshift('Please Select A Language');
+      setLanguages(languageList);
+    }
+  }, [userData]);
 
-  const handleLearn = (e) => {
+  const handleLearn = async (e) => {
     e.preventDefault();
     if (selected === null) {
       return;
     } else {
-      startNewLanguage(selected, user._id);
+      const newUser = await startNewLanguage(selected, userData._id);
+      setUserData(newUser);
       closeModal();
     }
   };

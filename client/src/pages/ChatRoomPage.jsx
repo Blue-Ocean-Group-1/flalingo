@@ -11,13 +11,15 @@ import {
 import { hashCode } from '../utils/utils';
 import { useUserData } from '../hooks/useUserData';
 import Logger from '../../config/logger.js';
+import getDailyProgress from '../utils/getDailyProgress.js';
+import { updateUserData, updateDailyProgress } from '../services/user.api.js';
 
 export default function ChatRoomPage() {
   const [messages, setMessages] = useState([]);
   const [details, setDetails] = useState({ name: '', language: '' });
   const [errMsg, setErrMsg] = useState('');
   let { roomId } = useParams();
-  const { userData } = useUserData();
+  const { userData, updateUser } = useUserData();
   const scrollableContainerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -133,10 +135,42 @@ export default function ChatRoomPage() {
 
   useEffect(() => {
     incrementParticipantCount();
+
     return () => {
       decrementParticipantCount();
     };
   }, [navigate, roomId, incrementParticipantCount, decrementParticipantCount]);
+
+  useEffect(() => {
+    async function updateUserProgress() {
+      if (userData?.dailyGoalProgress) {
+        const dailyProgress = getDailyProgress(userData.dailyGoalProgress);
+        console.log('daily progress in user progress', dailyProgress);
+        if (dailyProgress['conversationRoomJoined'] !== true) {
+          dailyProgress['conversationRoomJoined'] = true;
+          // this will need to be updated if more fields are added to in order to be
+          if (dailyProgress['deckCompleted'] === true) {
+            dailyProgress['completed'] = true;
+          }
+          try {
+            const result = await updateDailyProgress(
+              userData._id,
+              dailyProgress,
+            );
+
+            if (result) {
+              updateUser({
+                ...result,
+              });
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    }
+    updateUserProgress();
+  }, [userData?.dailyGoalProgress, updateUser, userData?._id]);
 
   return (
     <DefaultPageLayout>
