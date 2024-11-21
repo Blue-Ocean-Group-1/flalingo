@@ -4,11 +4,15 @@ import Navbar from '../components/Navbar.jsx';
 import api from '../services/index.js';
 import Logger from '../../config/logger.js';
 import { useUserData } from '../hooks/useUserData.jsx';
+import { checkSkillLevelCompletion } from '../utils/checkSkillLevelCompletion.js';
+import CircleProgressDisplay from '../components/common/CircleProgressDisplay.jsx';
+
+const themes = ['family', 'food', 'travel', 'household'];
 
 export default function FlashcardsPage() {
   // User-related state
-  const { userData, updateUser } = useUserData();
-  const [language, setLanguage] = useState('Spanish');
+  const { userData, updateUser, activeDeck, setActiveDeck } = useUserData();
+  const [language, setLanguage] = useState(userData?.activeLanguages?.[0]);
   const [skillLevel, setSkillLevel] = useState('beginner');
   const [currentTheme, setCurrentTheme] = useState('family');
 
@@ -28,14 +32,54 @@ export default function FlashcardsPage() {
   const [isCorrect, setIsCorrect] = useState(null); //eslint-disable-line no-unused-vars
   const [isFinished, setIsFinished] = useState(false);
 
+  // for progress ring
+  const [ring, setRing] = useState(314.159);
+  const [percentage, setPercentage] = useState(0);
+
+  const sortedDecks = (decks) => {
+    return decks.sort((a, b) => {
+      const getNumber = (deck) => {
+        const name = deck.name;
+        if (typeof name !== 'string') return 0;
+        const match = name.match(/\d+$/);
+        return match ? parseInt(match[0], 10) : 0;
+      };
+      return getNumber(a) - getNumber(b);
+    });
+  };
+
+  // get the percentage of the progress ring and set states
+  useEffect(() => {
+    if (userData) {
+      let percent = checkSkillLevelCompletion(
+        userData,
+        userData.activeLanguages[0],
+      );
+      if (percent > 100) percent = 100;
+      setPercentage(percent);
+      setRing(314.159 - (percent / 100) * 314.159);
+    }
+  }, [userData]);
+
   // Initialize user preferences from userData
   useEffect(() => {
     if (userData?.activeLanguages?.[0]) {
       setLanguage(userData.activeLanguages[0]);
-      setCurrentTheme(userData.progress[0]?.theme);
-      setSkillLevel(userData.progress[0]?.skillLevel);
+      let metaData = userData.progress.find(
+        (prog) => prog.language === userData.activeLanguages[0],
+      );
+      if (metaData?.decks?.length) {
+        setCurrentTheme(metaData.decks[0].theme);
+        setSkillLevel(metaData.skillLevel);
+      } else if (activeDeck) {
+        setCurrentTheme(activeDeck.theme);
+        setSkillLevel(activeDeck.skillLevel);
+      } else {
+        setCurrentTheme('family');
+        setSkillLevel(metaData?.skillLevel || 'beginner');
+      }
     }
-  }, [userData]);
+  }, [userData, activeDeck]);
 
   // Filter flashcards based on discarded status
   const filterByDiscard = useCallback(
@@ -63,8 +107,8 @@ export default function FlashcardsPage() {
         );
 
         if (response.data?.length > 0) {
-          setThemeDecks(response.data);
-          const firstDeck = response.data[0];
+          setThemeDecks(sortedDecks(response.data));
+          const firstDeck = activeDeck || response.data[0];
           setCurrentDeck(firstDeck);
 
           const filteredCards = filterByDiscard(firstDeck.flashcards);
@@ -81,7 +125,7 @@ export default function FlashcardsPage() {
     };
 
     fetchDecks();
-  }, [language, skillLevel, currentTheme, filterByDiscard]);
+  }, [language, skillLevel, currentTheme, filterByDiscard, activeDeck]);
 
   // Update current card when index changes or cards are filtered
   useEffect(() => {
@@ -141,6 +185,7 @@ export default function FlashcardsPage() {
   };
 
   const handleDeckChange = (deck) => {
+    setActiveDeck(deck);
     setCurrentDeck(deck);
     const filteredCards = filterByDiscard(deck.flashcards);
     setFlashcards(filteredCards);
@@ -289,7 +334,7 @@ export default function FlashcardsPage() {
         <div className="otherFlashcards w-1/4 bg-white rounded-lg p-4 shadow">
           <p className="font-semibold mb-2 text-black">Skill Level</p>
           <div className="skillProgressRing">
-            <p className="text-black">Circle</p>
+            <CircleProgressDisplay ring={ring} percentage={percentage} />
           </div>
           <p className="font-semibold mb-4 text-black">Other Flashcards</p>
           <div className="flex flex-col gap-2">
@@ -302,6 +347,20 @@ export default function FlashcardsPage() {
                 {deck.name}
               </Button>
             ))}
+          </div>
+          <div className="flex items-center gap-2 justify-center mt-2 shadow-md p-0.5 rounded-xl">
+            <p className="font-semibold mb-4 text-black mb-0">Change Theme:</p>
+            <select
+              className="bg-white rounded-lg p-2 text-jet"
+              value={currentTheme}
+              onChange={(e) => setCurrentTheme(e.target.value)}
+            >
+              {themes.map((mappedTheme) => (
+                <option key={mappedTheme} value={mappedTheme}>
+                  {mappedTheme}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>

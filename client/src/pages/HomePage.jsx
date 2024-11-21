@@ -20,7 +20,7 @@ import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
-  const { userData, loading, error, updateUser } = useUserData();
+  const { userData, updateUser } = useUserData();
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
