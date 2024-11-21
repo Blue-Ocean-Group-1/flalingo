@@ -3,8 +3,10 @@ import { fetchLanguageNames } from '../../services/language.api';
 import logger from '../../../config/logger.js';
 import useUserData from '../../hooks/useUserData.jsx';
 import PhoneNumberInput from '../common/PhoneNumberInput.jsx';
+import startNewLanguage from '../../utils/startNewLanguage.js';
 
 const countries = [
+  'USA',
   'Bangladesh',
   'China',
   'Czech Republic',
@@ -85,6 +87,9 @@ const OnboardingModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     const updatedData = formatFormData(formData);
     updateUser(updatedData);
+    let updatedUser = startNewLanguage(formData.language, userData._id);
+    console.log(userData._id);
+    updateUser(updatedUser);
     onClose();
   };
 

@@ -119,14 +119,16 @@ const findPriorityValue = (obj) => {
   const valuesToCheck = [4, 3, 2, 1];
 
   for (const skillLevel of skillLevels) {
-    const category = obj[skillLevel];
-    if (category) {
-      for (const value of valuesToCheck) {
-        for (const [key, categoryValue] of Object.entries(category)) {
-          if (categoryValue === value) {
-            let capitalizedSkillLevel =
-              skillLevel.charAt(0).toUpperCase() + skillLevel.slice(1);
-            return { skillLevel: capitalizedSkillLevel, key, value };
+    if (obj[skillLevel] !== undefined) {
+      const category = obj[skillLevel];
+      if (category?.length) {
+        for (const value of valuesToCheck) {
+          for (const [key, categoryValue] of Object.entries(category)) {
+            if (categoryValue === value) {
+              let capitalizedSkillLevel =
+                skillLevel.charAt(0).toUpperCase() + skillLevel.slice(1);
+              return { skillLevel: capitalizedSkillLevel, key, value };
+            }
           }
         }
       }
