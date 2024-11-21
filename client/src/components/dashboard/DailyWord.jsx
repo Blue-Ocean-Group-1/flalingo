@@ -15,8 +15,8 @@ const DailyWord = ({ word, index, flipWord }) => {
 
   return (
     <div
-      key={word._id}
-      className="flex justify-center align-center rounded-xl box-border shadow-md w-full gap-24 p-4 border-solid border-jet border shadow-jet"
+      key={word.word}
+      className="flex justify-center align-center rounded-xl box-border shadow-md w-full gap-24 p-4 shadow-jet min-w-3/4 bg-white"
     >
       <h5 className="p-1 font-bold text-xl text-jet w-1/3">{word.word}</h5>
       <button

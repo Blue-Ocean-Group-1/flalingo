@@ -17,7 +17,7 @@ const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
     if (deck.percentage <= 0 || maxPercentage <= 0) return;
 
     const numberOfSteps = 100;
-    const intervalDuration = 10;
+    const intervalDuration = 1;
     const exactPercentageIncrement = deck.percentage / numberOfSteps;
     const offsetIncrement = (314.159 * deck.percentage) / (100 * numberOfSteps);
 
@@ -50,7 +50,7 @@ const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
   return (
     <button
       key={deck._id}
-      className="flex justify-between items-center px-1 py-4 text-xl border-solid border-jet border rounded-xl m-2 shadow-md shadow-jet relative hover:scale-105"
+      className="bg-white flex justify-between items-center px-1 py-4 text-xl rounded-xl m-2 shadow-md shadow-jet relative hover:scale-105"
       type="button"
       onClick={() => handleClick(deck)}
     >
