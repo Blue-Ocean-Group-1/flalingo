@@ -10,6 +10,8 @@ import {
   addDeckProgress,
   updateUserData,
   getUserReportById,
+  initDailyProgress,
+  updateDailyProgress,
   getDailyProgress,
   addNewLanguageProgress,
 } from '../controllers/user.controller.js';
@@ -57,6 +59,8 @@ userRouter.get('/:id/reports', getUserReportByIdLimiter, getUserReportById);
 
 userRouter.get('/:id/dailyWords', getDailyWords);
 userRouter.get('/:id/dailyProgress', getDailyProgress);
+userRouter.put('/:id/dailyProgress', initDailyProgress);
+userRouter.patch('/:id/dailyProgress', updateDailyProgress);
 userRouter.post('/deckProgress', addDeckProgress);
 
 userRouter.patch('/:id/:language', addNewLanguageProgress);
