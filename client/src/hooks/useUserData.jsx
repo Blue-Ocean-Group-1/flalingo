@@ -16,18 +16,9 @@ export const UserDataProvider = ({ children }) => {
   const [activeDeck, setActiveDeck] = useState(null);
 
   useEffect(() => {
-    if (!authInitialized) {
-      return;
-    }
-
     const getUserData = async () => {
       Logger.info('UserDataProvider: Fetching user data');
       try {
-        if (!token) {
-          setLoading(false);
-          return;
-        }
-
         const data = await fetchUserData(token);
         setUserData(data);
         setError(null);
