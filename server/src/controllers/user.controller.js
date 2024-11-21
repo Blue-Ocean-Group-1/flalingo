@@ -154,7 +154,6 @@ export const getDailyProgress = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
-
 export const addNewLanguageProgress = async (req, res) => {
   try {
     if (!req.body.language) {

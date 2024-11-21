@@ -70,7 +70,9 @@ export default function HomePage() {
 
       response.data ? setDailyWords(response.data) : null;
     };
-    getRandomWords();
+    if (userData) {
+      getRandomWords();
+    }
   }, [userData]);
 
   useEffect(() => {
@@ -80,10 +82,6 @@ export default function HomePage() {
       });
     }
   }, [displayDecks]);
-
-  useEffect(() => {
-    console.log(recommendedDeck);
-  }, [recommendedDeck]);
 
   const flipWord = (index) => {
     let newDailyWords = [...dailyWords];
