@@ -3,11 +3,11 @@ import RateLimit from 'express-rate-limit';
 import passport from 'passport';
 
 import {
-  addDeckProgress,
-  getDailyWords,
-  getUserById,
-  getUserData,
   getUsers,
+  getUserData,
+  getUserById,
+  getDailyWords,
+  addDeckProgress,
   updateUserData,
   getUserReportById,
   getDailyProgress,

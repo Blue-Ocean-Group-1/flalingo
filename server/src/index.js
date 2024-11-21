@@ -16,7 +16,6 @@ import {
   userRouter,
   deckRouter,
   chatroomRouter,
-  sendemailRouter,
   AuthRouter,
   languageRouter,
 } from './routes/index.js';
@@ -44,7 +43,6 @@ app.use('/api/users', userRouter);
 app.use('/api/test', testRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/decks', deckRouter);
-app.use('/api/sendemail', sendemailRouter);
 app.use('/api/languages', languageRouter);
 
 // Development settings
