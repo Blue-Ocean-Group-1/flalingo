@@ -20,7 +20,7 @@ import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
-  const { userData, loading, error, updateUser } = useUserData();
+  const { userData, updateUser } = useUserData();
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
@@ -70,7 +70,9 @@ export default function HomePage() {
 
       response.data ? setDailyWords(response.data) : null;
     };
-    getRandomWords();
+    if (userData) {
+      getRandomWords();
+    }
   }, [userData]);
 
   useEffect(() => {
@@ -80,10 +82,6 @@ export default function HomePage() {
       });
     }
   }, [displayDecks]);
-
-  useEffect(() => {
-    console.log(recommendedDeck);
-  }, [recommendedDeck]);
 
   const flipWord = (index) => {
     let newDailyWords = [...dailyWords];

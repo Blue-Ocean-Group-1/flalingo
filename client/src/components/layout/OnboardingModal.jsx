@@ -38,7 +38,7 @@ const countries = [
 ];
 
 const OnboardingModal = ({ isOpen, onClose }) => {
-  const { userData, loading, error, updateUser } = useUserData(); // eslint-disable-line no-unused-vars
+  const { userData, updateUser, setUserData } = useUserData(); // eslint-disable-line no-unused-vars
   const [languageOptions, setLanguageOptions] = useState([]);
   const [formData, setFormData] = useState({
     nativeCountry: '',
@@ -83,12 +83,12 @@ const OnboardingModal = ({ isOpen, onClose }) => {
     return updatedData;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedData = formatFormData(formData);
-    let updatedUser = startNewLanguage(formData.language, userData._id);
-    updateUser(updatedData);
-    updateUser(updatedUser);
+    await updateUser(updatedData);
+    let updatedUser = await startNewLanguage(formData.language, userData._id);
+    setUserData(updatedUser);
     onClose();
   };
 
