@@ -31,7 +31,7 @@ export default function Navbar() {
   return (
     <Disclosure
       as="nav"
-      className="sticky top-0 z-40 w-full lex-none duration-500 lg:z-50 pt-4 pb-1 bg-platinum"
+      className="sticky top-0 z-40 w-full lex-none duration-500 lg:z-50 pt-4 pb-1 bg-platinum/95 border-b-silver border-2"
     >
       <div className="mx-auto px-2 pr-8">
         <div className="relative flex h-12 items-center justify-between">
