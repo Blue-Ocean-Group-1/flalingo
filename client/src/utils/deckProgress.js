@@ -57,19 +57,16 @@ const getDeckPercentageTwo = (decks) => {
       name.splice(0, 1);
       name.splice(1, 1);
     }
-
     if (deck.name) {
       name = deck.name.split(' ');
       name.splice(0, 1);
       name.splice(1, 1);
     }
-
     const newDeck = {
       ...deck,
       deckName: name.join(' '),
       percentage: 0,
     };
-
     let percentage = 0;
     if (deck?.timesCompleted?.length) {
       percentage = Math.floor(
@@ -83,10 +80,8 @@ const getDeckPercentageTwo = (decks) => {
     if (percentage > 0) {
       newDeck.percentage = percentage;
     }
-
     //then.... this calculates how full the circle is
     newDeck.offset = 314.159 - 314.159 * (newDeck.percentage / 100);
-
     return newDeck;
   });
 };
@@ -108,7 +103,6 @@ const findBestDisplayDecks = (user) => {
   }
   return [];
 };
-
 const findRecommendedDeck = async (user) => {
   const currentDecks = (user?.progress || []).find(
     (lang) => lang.language === user.activeLanguages[0],

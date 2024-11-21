@@ -5,7 +5,7 @@ import { checkSkillLevelCompletion } from '../../utils/checkSkillLevelCompletion
 import MainLanguageSelect from './MainLanguageSelect';
 import BadgeFlag from '../common/BadgeFlag';
 
-import { findNearestBadge } from '../../utils/badgeLogic';
+import { findNearestBadge } from '../../utils/badgeLogic.js';
 
 import flagObject from '../../../public/Flags/flagObject.js';
 import badgeObject from '../../../public/Badges/badgeObject.js';

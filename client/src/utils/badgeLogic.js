@@ -13,48 +13,49 @@ export const splitDecksByLanguageAndTheme = function (
   if (condition === 'lessThanOrEqual') {
     comparator = (deck) => deck?.percentage <= percentage;
   }
-  console.log('user: in bagde logic', user);
-  user.progress.forEach((cat) => {
-    let decks = getDeckPercentage(cat.decks.slice());
-    //console.log('decks percentage:', decks);
-    const lang = cat.language;
-    let beginner = {};
-    let proficient = {};
-    let advanced = {};
-    console.log('decks:', decks);
-    decks.forEach((deck) => {
-      if (comparator(deck)) {
-        if (deck.skillLevel === 'beginner') {
-          let theme = deck.deckName.split(' ')[0];
-          console.log('theme:', theme);
-          if (beginner[theme]) {
-            beginner[theme] += 1;
-          } else {
-            beginner[theme] = 1;
+  if (user?.progress) {
+    user.progress.forEach((cat) => {
+      let decks = getDeckPercentage(cat.decks.slice());
+      //console.log('decks percentage:', decks);
+      const lang = cat.language;
+      let beginner = {};
+      let proficient = {};
+      let advanced = {};
+      console.log('decks:', decks);
+      decks.forEach((deck) => {
+        if (comparator(deck)) {
+          if (deck.skillLevel === 'beginner') {
+            let theme = deck.deckName.split(' ')[0];
+            console.log('theme:', theme);
+            if (beginner[theme]) {
+              beginner[theme] += 1;
+            } else {
+              beginner[theme] = 1;
+            }
+          }
+          if (deck.skillLevel === 'proficient') {
+            let theme = deck.deckName.split(' ')[0];
+            if (proficient[theme]) {
+              proficient[theme] += 1;
+            } else {
+              proficient[theme] = 1;
+            }
+          }
+          if (deck.skillLevel === 'advanced') {
+            let theme = deck.deckName.split(' ')[0];
+            if (advanced[theme]) {
+              advanced[theme] += 1;
+            } else {
+              advanced[theme] = 1;
+            }
           }
         }
-        if (deck.skillLevel === 'proficient') {
-          let theme = deck.deckName.split(' ')[0];
-          if (proficient[theme]) {
-            proficient[theme] += 1;
-          } else {
-            proficient[theme] = 1;
-          }
-        }
-        if (deck.skillLevel === 'advanced') {
-          let theme = deck.deckName.split(' ')[0];
-          if (advanced[theme]) {
-            advanced[theme] += 1;
-          } else {
-            advanced[theme] = 1;
-          }
-        }
-      }
+      });
+      deckTheme.push({ lang, beginner, proficient, advanced });
     });
-    deckTheme.push({ lang, beginner, proficient, advanced });
-  });
-  console.log('deckTheme after split:', deckTheme);
-  return deckTheme;
+    console.log('deckTheme after split:', deckTheme);
+    return deckTheme;
+  }
 };
 
 export const getBadges = (user) => {
@@ -147,14 +148,11 @@ export const findPriorityValue = (obj) => {
 };
 
 export const findNearestBadge = (user) => {
-  console.log('Finding nearest badge...', user);
   let decks = splitDecksByLanguageAndTheme(user, 80);
   let badge;
   if (decks) {
     const deck = decks.find((deck) => deck.lang === user.activeLanguages[0]);
-
     badge = findPriorityValue(deck);
-
     if (!badge) {
       let firstDecks = user.progress.find(
         (deck) => deck.language === user.activeLanguages[0],
@@ -166,7 +164,6 @@ export const findNearestBadge = (user) => {
         value: 0,
       };
     }
-
     return badge;
   }
   return null;
