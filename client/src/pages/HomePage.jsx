@@ -77,7 +77,6 @@ export default function HomePage() {
     if (userData?.dailyGoalProgress) {
       const dailyProgress = getDailyProgress(userData.dailyGoalProgress);
       if (!dailyProgress) {
-        console.log('No daily goal progress found for today');
         initDailyProgress();
       }
     }
@@ -123,10 +122,6 @@ export default function HomePage() {
       });
     }
   }, [displayDecks]);
-
-  useEffect(() => {
-    console.log(recommendedDeck);
-  }, [recommendedDeck]);
 
   const flipWord = (index) => {
     let newDailyWords = [...dailyWords];
