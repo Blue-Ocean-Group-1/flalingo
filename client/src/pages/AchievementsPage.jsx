@@ -143,15 +143,19 @@ export default function AchievementsPage() {
               Badges
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {badges.map((badge, index) => {
+              {userData?.allBadges?.map((badge, index) => {
                 const formattedBadge = formatBadge(badge);
                 if (!formattedBadge) return null;
                 return (
-                  <BadgeFlag
-                    badge={badgeObject[formattedBadge.badgeName]}
-                    flag={flagObject[formattedBadge.language]}
-                    key={index}
-                  />
+                  <div key={index}>
+                    <BadgeFlag
+                      badge={badgeObject[formattedBadge.badgeName]}
+                      flag={flagObject[formattedBadge.language]}
+                    />
+                    <p className="text-sm text-gray-600">
+                      {formattedBadge.badgeName}
+                    </p>
+                  </div>
                 );
               })}
             </div>
