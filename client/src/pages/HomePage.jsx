@@ -16,6 +16,7 @@ import DailyWord from '../components/dashboard/DailyWord.jsx';
 import MainProgress from '../components/dashboard/MainProgress.jsx';
 import UserReportDisplay from '../components/dashboard/UserReportDisplay.jsx';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
+import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);

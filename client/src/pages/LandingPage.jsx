@@ -1,13 +1,8 @@
-import { LoginButton, SignupButton } from '../imports';
+import React, { useState } from 'react';
 import world_landmarks_main from '../../public/world_landmarks_main.png';
-import Navbar from '../components/Navbar.jsx';
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth.jsx';
-import Icon from '../components/common/Icon.jsx';
-import Logger from '../../config/logger.js';
-import Signup from '../components/Signup.jsx';
 import Login from '../components/Login.jsx';
+import Navbar from '../components/Navbar.jsx';
+import Signup from '../components/Signup.jsx';
 
 // TODO: Make mobile compatible
 
