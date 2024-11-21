@@ -45,7 +45,7 @@ const MainProgress = ({ user, openAddLang }) => {
   return (
     <div className="w-full p-8 min-w-fit">
       {user && (
-        <div className="flex justify-center pb-8">
+        <div className="flex justify-center pb-4">
           <h3 className="text-5xl text-bold italic text-jet">
             {greetings[user.activeLanguages[0]] === undefined
               ? `Hello, ${user.name}`
