@@ -62,7 +62,7 @@ export default function ConversationRoomsPage() {
 
   return (
     <DefaultPageLayout>
-      <section className="max-4xl sm:mx-auto pt-6 px-4 text-black xl:pr-[19rem]">
+      <section className="max-4xl sm:mx-auto pt-6 px-4 text-black">
         <h1 className="text-3xl font-semibold">Conversation Rooms</h1>
         <p className="py-2 text-md">
           Join a room to practice your conversation skills with others!
