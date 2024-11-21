@@ -64,25 +64,16 @@ const findRecommendedDeck = async (user) => {
   const currentDecks = (user?.progress || []).find(
     (lang) => lang.language === user.activeLanguages[0],
   );
-
-  console.log('currenDecks', currentDecks);
-  console.log('user', user);
-
   try {
-    // Fetch all decks for the user's active language
     const response = await axios.get(
       `${env.API_URL}/decks/${user.activeLanguages[0]}`,
     );
-
-    // Filter decks by the user's skill level if available
     let skillLevelDecks = response.data;
     if (currentDecks?.skillLevel) {
       skillLevelDecks = skillLevelDecks.filter(
         (deck) => deck.skillLevel === currentDecks.skillLevel,
       );
     }
-
-    // Filter out decks that the user already has in their progress
     let displayDecks = skillLevelDecks;
     if (currentDecks?.decks?.length) {
       let deckNames = currentDecks.decks.map((deck) => deck.deckName);
@@ -97,12 +88,11 @@ const findRecommendedDeck = async (user) => {
       });
       return displayDecks.slice(0, 1);
     }
-    // Return the first deck from the filtered list
     displayDecks = getDeckPercentage(displayDecks);
     return displayDecks.slice(0, 1);
   } catch (error) {
     logger.error('Error fetching decks:', error);
-    return []; // Return an empty array on error
+    return []; 
   }
 };
 
