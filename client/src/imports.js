@@ -17,6 +17,7 @@ export { Dialog } from '@headlessui/react';
 // Components
 export { default as LoginButton } from './components/layout/LoginButton.jsx';
 export { default as LogoutButton } from './components/layout/LogoutButton.jsx';
+export { default as SignupButton } from './components/layout/SignupButton.jsx';
 export { default as FontAwesomeIcon } from './components/common/Icon.jsx';
 export { default as ServerTest } from './components/common/ServerTest.jsx';
 // export { default as LoadingOverlay } from './components/common/LoadingOverlay.jsx';

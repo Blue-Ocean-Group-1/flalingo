@@ -5,18 +5,19 @@
 
 :root {
   line-height: 1.5;
-  color-scheme: dark;
+  font-weight: 400;
   font-size: 16px;
   color: rgb(255 255 255 / 87%);
   background-color: #e6e6e6;
   font-synthesis: none;
+  color-scheme: dark;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #logo {
-  font-family: DynaPuff, sans-serif; 
+  font-family: DynaPuff, sans-serif;
   font-weight: 400;
 }
 
