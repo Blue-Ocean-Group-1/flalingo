@@ -95,6 +95,10 @@ export const env = {
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV === 'production',
   isTest: process.env.NODE_ENV === 'test',
+
+  // Email
+  EMAIL_JS_PUBLIC_KEY: requireEnvVar('EMAIL_JS_PUBLIC_KEY'),
+  SG_API_KEY: process.env.SG_API_KEY,
 };
 
 if (env.isDevelopment) {

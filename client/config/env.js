@@ -40,6 +40,9 @@ export const validateEnv = () => {
 };
 
 export const env = {
+  // cloudinary
+  CLOUDINARY_API_LINK: import.meta.env.VITE_CLOUDINARY_API_LINK,
+
   // API
   API_URL:
     validateApiUrl(requireEnvVar('VITE_API_URL')) ??
@@ -48,7 +51,8 @@ export const env = {
 
   // App Settings
   APP_NAME: import.meta.env.VITE_APP_NAME || 'PolyGlot',
-
+  EMAIL_JS_PUBLIC_KEY:
+    import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY',
   // Logging
   LOG_LEVEL: validateLogLevel(import.meta.env.VITE_LOG_LEVEL) ?? 'info',
   DEBUG_MODE: import.meta.env.DEV || import.meta.env.VITE_DEBUG_MODE === 'true',
