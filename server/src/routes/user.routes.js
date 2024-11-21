@@ -12,6 +12,8 @@ import {
   getUserReportById,
   initDailyProgress,
   updateDailyProgress,
+  getDailyProgress,
+  addNewLanguageProgress,
 } from '../controllers/user.controller.js';
 
 const userRouter = express.Router();
@@ -56,8 +58,11 @@ const getUserReportByIdLimiter = RateLimit({
 userRouter.get('/:id/reports', getUserReportByIdLimiter, getUserReportById);
 
 userRouter.get('/:id/dailyWords', getDailyWords);
+userRouter.get('/:id/dailyProgress', getDailyProgress);
 userRouter.put('/:id/dailyProgress', initDailyProgress);
 userRouter.patch('/:id/dailyProgress', updateDailyProgress);
 userRouter.post('/deckProgress', addDeckProgress);
+
+userRouter.patch('/:id/:language', addNewLanguageProgress);
 
 export default userRouter;

@@ -1,8 +1,9 @@
 import axios from 'axios';
-import useUserData from '../hooks/useUserData.jsx';
+import { useUserData } from '../hooks/useUserData.jsx';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env';
 import { addTimesCompleted } from '../utils/addDeckProgress.js';
+import startNewLanguage from '../utils/startNewLanguage.js';
 
 import {
   findBestDisplayDecks,
@@ -15,16 +16,29 @@ import DailyWord from '../components/dashboard/DailyWord.jsx';
 import MainProgress from '../components/dashboard/MainProgress.jsx';
 import UserReportDisplay from '../components/dashboard/UserReportDisplay.jsx';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
-import logger from '../../config/logger.js';
+import AddNewLanguageModel from '../components/dashboard/AddNewLanguageModal.jsx';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
-  const [userData] = useUserData();
-  const [user, setUser] = useState('');
+  const { userData, loading, error, updateUser } = useUserData();
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
-  const [isModalOpen, setModalOpen] = useState(true);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [addNewLanguageModelOpen, setAddNewLanguageModelOpen] = useState(false);
+
+  useEffect(() => {
+    userData?.progress?.length === 0 ? setModalOpen(true) : setModalOpen(false);
+  }, [userData, updateUser]);
+
+  useEffect(() => {
+    if (userData?.progress?.length === 0 && userData.activeLanguages?.length) {
+      const newLanguage = async () => {
+        await startNewLanguage(userData.activeLanguages[0], userData._id);
+      };
+      newLanguage();
+    }
+  }, [userData]);
 
   // "dailyGoalProgress": [
   //   {
@@ -55,14 +69,13 @@ export default function HomePage() {
         return differenceInMs <= oneDayInMs;
       });
       if (!dailyProgress) {
-        logger.info('No daily goal progress found for today');
+        // Logger.info('No daily goal progress found for today');
       }
     }
   }, [userData?.dailyGoalProgress]);
 
   // You want data? This will give you data
   useEffect(() => {
-    setUser(userData);
     if (userData?.progress?.length) {
       setDisplayDecks(findBestDisplayDecks(userData));
     }
@@ -116,13 +129,26 @@ export default function HomePage() {
     setModalOpen(false);
   };
 
+  const openAddLanguageModal = () => {
+    setAddNewLanguageModelOpen(true);
+  };
+
+  const closeAddLanguageModal = () => {
+    setAddNewLanguageModelOpen(false);
+  };
+
   return (
     <DefaultPageLayout>
-      <section className="flex content-center items-center rounded-xl w-full">
-        <div className="flex bg-white mt-12 rounded-2xl w-full">
+      <section className="flex content-center items-center rounded-xl w-full pr-32">
+        <div className="flex mt-12 rounded-2xl w-full">
+          <AddNewLanguageModel
+            user={userData}
+            closeModal={closeAddLanguageModal}
+            isOpen={addNewLanguageModelOpen}
+          />
           <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
           <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8">
-            <div className="flex flex-col p-4 rounded-lg gap-4 bg-white w-2/4">
+            <div className="flex flex-col p-8 rounded-xl gap-4 bg-white w-3/4">
               <div className="flex justify-center align-center">
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
               </div>
@@ -136,7 +162,7 @@ export default function HomePage() {
                   />
                 ))}
             </div>
-            <div className="bg-transparent rounded-lg flex w-1/2 flex-col max-w-2/4 px-2">
+            <div className="bg-white rounded-xl flex w-3/4 flex-col max-w-3/4 p-8">
               <div className="flex justify-center align-center">
                 <h3 className="text-5xl text-jet">My Decks</h3>
               </div>
@@ -145,7 +171,7 @@ export default function HomePage() {
                   <ProgressCircle
                     key={deck._id}
                     deck={deck}
-                    language={user.activeLanguages[0]}
+                    language={userData.activeLanguages[0]}
                     maxPercentage={maxPercentage}
                     recommended={false}
                   />
@@ -157,7 +183,7 @@ export default function HomePage() {
                     percentage: 0,
                     deckName: recommendedDeck.name,
                   }}
-                  language={user.activeLanguages[0]}
+                  language={userData.activeLanguages[0]}
                   maxPercentage={0}
                   recommended={true}
                 />
@@ -173,8 +199,13 @@ export default function HomePage() {
             </div>
           </div>
           <div className="p-8 w-1/2 flex flex-col justify-around items-center gap-8 pr-20">
-            <MainProgress user={user} />
-            {user && <UserReportDisplay user={user} />}
+            {userData && (
+              <MainProgress
+                user={userData}
+                openAddLang={openAddLanguageModal}
+              />
+            )}
+            {userData && <UserReportDisplay user={userData} />}
           </div>
         </div>
       </section>

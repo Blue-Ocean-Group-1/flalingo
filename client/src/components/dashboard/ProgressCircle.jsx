@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import CircleProgressDisplay from '../common/CircleProgressDisplay';
 
 import flagObject from '../../../public/Flags/flagObject.js';
-import useUserData from '../../hooks/useUserData';
+import { useUserData } from '../../hooks/useUserData';
 
 const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
   const navigate = useNavigate();
-  const [, , , , , setActiveDeck] = useUserData();
+  const { setActiveDeck } = useUserData();
   const [ring, setRing] = useState(314.159);
   const [displayPercentage, setDisplayPercentage] = useState(0);
 

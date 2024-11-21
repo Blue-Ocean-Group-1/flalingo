@@ -1,13 +1,17 @@
 import React from 'react';
 
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
-import useUserData from '../../hooks/useUserData';
+import { useUserData } from '../../hooks/useUserData';
 
-function MainLanguageSelect({ user }) {
-  const [, , , updateUser, ,] = useUserData();
-  const handleClick = (language) => {
-    updateUser({ activeLanguages: [language] });
+function MainLanguageSelect({ user, openAddLang }) {
+  const { userData, updateUser } = useUserData();
+  const handleClick = async (language) => {
+    console.log(userData);
+    await updateUser({ activeLanguages: [language] });
+    console.log(userData);
   };
+
+  console.log(user);
 
   return (
     user && (
@@ -36,7 +40,12 @@ function MainLanguageSelect({ user }) {
                 ),
             )}
           <div className="p-4">
-            <button className=" rounded-xl bg-argentBlue text-jet m-2 font-bold hover:scale-105 text-base">
+            <button
+              className=" rounded-xl bg-argentBlue text-jet m-2 font-bold hover:scale-105 text-base"
+              onClick={() => {
+                openAddLang();
+              }}
+            >
               Start New Language
             </button>
           </div>

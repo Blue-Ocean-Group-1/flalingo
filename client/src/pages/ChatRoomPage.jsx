@@ -9,7 +9,7 @@ import {
   updateChatroomParticipantCount,
 } from '../services/chatroom.api';
 import { hashCode } from '../utils/utils';
-import useUserData from '../hooks/useUserData';
+import { useUserData } from '../hooks/useUserData';
 import Logger from '../../config/logger.js';
 
 export default function ChatRoomPage() {
@@ -17,7 +17,7 @@ export default function ChatRoomPage() {
   const [details, setDetails] = useState({ name: '', language: '' });
   const [errMsg, setErrMsg] = useState('');
   let { roomId } = useParams();
-  const [userData, loading, error, updateUser] = useUserData();
+  const { userData } = useUserData();
   const scrollableContainerRef = useRef(null);
   const navigate = useNavigate();
 

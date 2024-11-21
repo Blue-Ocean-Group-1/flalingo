@@ -103,19 +103,24 @@ export const updateUserData = async (req, res) => {
       }
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
+    // First update the user
+    await User.findByIdAndUpdate(
       req.user.id,
       { $set: updateData },
       {
-        new: true,
         runValidators: true,
-        select: '-password',
       },
     );
+
+    // Then fetch the complete user object
+    const updatedUser = await User.findById(req.user.id)
+      .select('-password')
+      .lean();
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
+
     res.json(updatedUser);
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -192,5 +197,32 @@ export const updateDailyProgress = async (req, res) => {
     res.status(200).send('Successfully updated daily progress');
   } catch (err) {
     res.status(500).send({ message: err.message });
+  }
+};
+export const getDailyProgress = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const dailyProgress = getDailyProgress(user);
+    res.status(200).send(dailyProgress);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+export const addNewLanguageProgress = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    user.activeLanguages = [req.body.language];
+    user.allLanguages.push(req.body.language);
+    const languageProgress = {
+      language: req.body.language,
+      skillLevel: 'beginner',
+      decks: [],
+    };
+    user.progress.push(languageProgress);
+    await user.save();
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
   }
 };
