@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import ChatInput from '../components/ChatInput';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useAsyncError } from 'react-router-dom';
 import {
   getChatroom,
   getChatroomMessages,
@@ -17,7 +17,7 @@ export default function ChatRoomPage() {
   const [details, setDetails] = useState({ name: '', language: '' });
   const [errMsg, setErrMsg] = useState('');
   let { roomId } = useParams();
-  const [userData] = useUserData();
+  const [userData, loading, error, updateUser] = useUserData();
   const scrollableContainerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -133,10 +133,15 @@ export default function ChatRoomPage() {
 
   useEffect(() => {
     incrementParticipantCount();
+
     return () => {
       decrementParticipantCount();
     };
   }, [navigate, roomId, incrementParticipantCount, decrementParticipantCount]);
+
+  console.log('userData', userData);
+
+  useEffect(() => {}, []);
 
   return (
     <DefaultPageLayout>

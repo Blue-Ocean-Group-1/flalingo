@@ -32,3 +32,9 @@ export const updateUserData = async (token, updatedData) => {
     throw error;
   }
 };
+
+// export const initializeDailyProgress = async (userId) => {
+//   try {
+//     await api.put(`/dailyGoalProgress/${userId}`);
+//   } catch (err) {}
+// };

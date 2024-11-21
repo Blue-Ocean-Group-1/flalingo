@@ -15,6 +15,7 @@ import DailyWord from '../components/dashboard/DailyWord.jsx';
 import MainProgress from '../components/dashboard/MainProgress.jsx';
 import UserReportDisplay from '../components/dashboard/UserReportDisplay.jsx';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
+import logger from '../../config/logger.js';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
@@ -24,6 +25,40 @@ export default function HomePage() {
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
   const [isModalOpen, setModalOpen] = useState(true);
+
+  // "dailyGoalProgress": [
+  //   {
+  //     "date": "2024-11-21T02:24:00.704Z",
+  //     "completed": true,
+  //     "loggedIn": true,
+  //     "deckCompleted": true,
+  //     "conversationRoomJoined": true,
+  //     "_id": "673e99e299c3f75836fa7923"
+  //   },
+  //   {
+  //     "date": "2024-11-15T02:24:27.860Z",
+  //     "completed": false,
+  //     "loggedIn": true,
+  //     "deckCompleted": false,
+  //     "conversationRoomJoined": false,
+  //     "_id": "673e99db99c3f75836fa791e"
+  //   }
+  // ],
+
+  useEffect(() => {
+    console.log('in useEffect');
+    if (userData?.dailyGoalProgress) {
+      const dailyProgress = userData.dailyGoalProgress.find((goal) => {
+        const oneDayInMs = 24 * 60 * 60 * 1000;
+        const curDate = new Date();
+        const differenceInMs = Math.abs(new Date(goal.date) - curDate);
+        return differenceInMs <= oneDayInMs;
+      });
+      if (!dailyProgress) {
+        logger.info('No daily goal progress found for today');
+      }
+    }
+  }, [userData?.dailyGoalProgress]);
 
   // You want data? This will give you data
   useEffect(() => {
