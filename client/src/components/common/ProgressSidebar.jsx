@@ -25,7 +25,7 @@ export default function ProgressSidebar() {
   console.log(randomQuote);
 
   return (
-    <div className="flex-col space-y-2 my-6 mx-auto">
+    <div className="flex-col space-y-2 my-6 mx-auto text-jet">
       <Brand />
       <div className="p-4 text-black bg-white rounded-md shadow-md shadow-jet">
         <div className="flex flex-col space-y-3 py-2">
