@@ -1,10 +1,12 @@
 // src/index.js
+import emailjs from '@emailjs/browser';
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
 import { connectDB } from './config/database.js';
+import { emailJsConfig } from './config/emailJs.config.js';
 import { env, validateEnv } from './config/env.js';
 import logger from './config/logger.js';
 import configurePassport from './config/passport.js';
@@ -18,11 +20,13 @@ import {
   chatroomRouter,
   sendemailRouter,
   AuthRouter,
+  emailRouter,
   languageRouter,
 } from './routes/index.js';
 
 // Validate environment variables
 validateEnv();
+emailjs.init(emailJsConfig);
 
 // Initialize Express app
 const app = express();
@@ -44,6 +48,7 @@ app.use('/api/users', userRouter);
 app.use('/api/test', testRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/decks', deckRouter);
+app.use('/api/email', emailRouter);
 app.use('/api/sendemail', sendemailRouter);
 app.use('/api/languages', languageRouter);
 

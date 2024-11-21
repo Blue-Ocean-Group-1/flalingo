@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children }) => {
       location.pathname,
     );
     sessionStorage.setItem('intendedDestination', location.pathname);
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   Logger.debug(
