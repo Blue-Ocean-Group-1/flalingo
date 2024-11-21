@@ -1,37 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import { useUserData } from '../hooks/useUserData.jsx';
-import Navbar from '../components/Navbar.jsx';
-
+import BadgeFlag from '../components/common/BadgeFlag.jsx';
+import {
+  splitDecksByLanguageAndThemeTwo,
+  getBadges,
+} from '../utils/badgeLogic.js';
+import badgeObject from '../../public/Badges/badgeObject.js';
+import flagObject from '../../public/Flags/flagObject.js';
+import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
+import isEqual from 'lodash/isEqual';
 export default function AchievementsPage() {
-  const { userData, loading } = useUserData();
+  const { userData, updateUser, loading, setUserData } = useUserData();
+  const [hasSameBadges, setHasSameBadges] = useState(false);
   const [badges, setBadges] = useState([]);
 
+  console.log(userData);
   useEffect(() => {
-    console.log(userData);
-    const getBadges = () => {
-      let badges = [];
-      for (let i = 0; i < userData.allBadges.length; i++) {
-        let obj = {
-          name: userData.allBadges[i].name,
-          language: userData.allBadges[i].language,
+    const determineBadge = () => {
+      let deckData = splitDecksByLanguageAndThemeTwo(userData, 80); //array
+      const badges = [];
+      deckData.forEach((deck) => {
+        const checkSkillLevel = (skillLevel) => {
+          let deckThemes = Object.keys(deck[skillLevel]);
+          deckThemes.forEach((theme) => {
+            if (deck[skillLevel][theme] === 5) {
+              badges.push(`${deck.lang} ${theme} ${skillLevel}`);
+            }
+          });
         };
-        badges.push(obj);
-      }
-      setBadges(badges);
+        checkSkillLevel('beginner');
+        checkSkillLevel('proficient');
+        checkSkillLevel('advanced');
+      });
+      return badges;
     };
-
     if (userData) {
-      getBadges();
-    }
-  }, [userData]);
+      const badges = determineBadge();
 
+      const updateBadges = async (newBadges) => {
+        if (!hasSameBadges && !isEqual(badges, userData.allBadges)) {
+          setHasSameBadges(true);
+          await updateUser({ allBadges: newBadges });
+          await setUserData({ ...userData, allBadges: newBadges });
+          setBadges(newBadges);
+        }
+      };
+
+      updateBadges(badges);
+    }
+  }, [userData, updateUser, hasSameBadges]);
+  if (loading || !userData || !badgeObject) {
+    return <div>Loading...</div>;
+  }
+  const formatBadge = (badge) => {
+    if (!badge) return null;
+    let [language, theme, level] = badge.split(' ');
+    if (!language || !theme || !level) return null;
+    level = level.charAt(0).toUpperCase() + level.slice(1);
+    return {
+      language: language,
+      badgeName: `${theme}${level}`,
+    };
+  };
   const calculateWeeklyProgress = () => {
     let currentDate = new Date();
     let currentDay = currentDate.getDay();
     let lastSunday = new Date();
     lastSunday.setDate(currentDate.getDate() - currentDay);
     let thisWeek = [];
-
     for (let i = 0; i < 7; i++) {
       let date = new Date(lastSunday);
       date.setDate(lastSunday.getDate() + i);
@@ -47,17 +83,14 @@ export default function AchievementsPage() {
     }
     return thisWeek;
   };
-
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl">Loading...</div>
       </div>
     );
-
   return (
-    <>
-      <Navbar />
+    <DefaultPageLayout>
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -69,7 +102,6 @@ export default function AchievementsPage() {
               Track your learning progress and earned badges
             </p>
           </div>
-
           {/* Daily Progress Section */}
           <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
@@ -105,32 +137,27 @@ export default function AchievementsPage() {
               ))}
             </div>
           </div>
-
           {/* Badges Section */}
           <div className="bg-white rounded-xl shadow-sm p-6">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
               Badges
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {badges.map((badge, index) => (
-                <div
-                  key={index}
-                  className="p-4 rounded-lg border border-gray-100 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex flex-col items-center text-center">
-                    {/* Placeholder for badge icon */}
-                    <div className="w-16 h-16 bg-gray-100 rounded-full mb-3 flex items-center justify-center">
-                      <span className="text-2xl">🏆</span>
-                    </div>
-                    <h3 className="font-medium text-gray-800">{badge.name}</h3>
-                    <p className="text-sm text-gray-500">{badge.language}</p>
-                  </div>
-                </div>
-              ))}
+              {badges.map((badge, index) => {
+                const formattedBadge = formatBadge(badge);
+                if (!formattedBadge) return null;
+                return (
+                  <BadgeFlag
+                    badge={badgeObject[formattedBadge.badgeName]}
+                    flag={flagObject[formattedBadge.language]}
+                    key={index}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </DefaultPageLayout>
   );
 }
