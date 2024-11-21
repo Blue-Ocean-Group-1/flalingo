@@ -1,6 +1,7 @@
 {
   "files.autoSave": "onFocusChange",
   "task.allowAutomaticTasks": "on",
+  "files.autoSave": "onFocusChange",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.fixAll.stylelint": "always",

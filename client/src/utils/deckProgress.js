@@ -92,7 +92,7 @@ const findRecommendedDeck = async (user) => {
     return displayDecks.slice(0, 1);
   } catch (error) {
     logger.error('Error fetching decks:', error);
-    return []; 
+    return [];
   }
 };
 

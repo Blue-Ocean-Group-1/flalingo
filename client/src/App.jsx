@@ -16,6 +16,7 @@ import {
   ProfilePage,
   NotFoundPage,
   ChatRoomPage,
+  LandingPage,
 } from './imports';
 
 import { UserDataProvider } from './hooks/useUserData'; // Import the UserDataProvider
@@ -27,7 +28,8 @@ function App() {
         <Router>
           <div className="App">
             <Routes>
-              <Route path="/" element={<Login />} />
+              {/* <Route path="/" element={<Login />} /> */}
+              <Route path="/" element={<LandingPage />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route
