@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { env } from '../../config/env';
 
-const startNewLanguage = (language, userId) => {
+const startNewLanguage = async (language, userId) => {
   let newUser;
-  axios
+  await axios
     .patch(`${env.API_URL}/users/${userId}/${language}`, {
       id: userId,
       language,

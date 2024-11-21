@@ -22,7 +22,7 @@ import getDailyProgress from '../utils/getDailyProgress.js';
 
 export default function HomePage() {
   const [dailyWords, setDailyWords] = useState([]);
-  const { userData, loading, error, updateUser } = useUserData();
+  const { userData, updateUser } = useUserData();
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
@@ -112,7 +112,9 @@ export default function HomePage() {
 
       response.data ? setDailyWords(response.data) : null;
     };
-    getRandomWords();
+    if (userData) {
+      getRandomWords();
+    }
   }, [userData]);
 
   useEffect(() => {
@@ -157,6 +159,7 @@ export default function HomePage() {
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
               </div>
               {dailyWords?.length &&
+                userData.progress?.length > 0 &&
                 dailyWords.map((word, index) => (
                   <DailyWord
                     key={word._id}

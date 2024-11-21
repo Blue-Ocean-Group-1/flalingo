@@ -18,7 +18,6 @@ const MainProgress = ({ user, openAddLang }) => {
   useEffect(() => {
     if (user) {
       if (user?.progress?.length) {
-        console.log(user);
         let skill = user?.progress?.find(
           (prog) => prog.language === user.activeLanguages[0],
         );
@@ -47,7 +46,11 @@ const MainProgress = ({ user, openAddLang }) => {
     <div className="w-full p-8 ">
       {user && (
         <div className="flex justify-center pb-8">
-          <h3 className="text-4xl text-bold italic text-jet">{`${greetings[user.activeLanguages[0]]}, ${user.name}!`}</h3>
+          <h3 className="text-4xl text-bold italic text-jet">
+            {greetings[user.activeLanguages[0]] === undefined
+              ? `Hello, ${user.name}`
+              : `${greetings[user.activeLanguages[0]]}, ${user.name}`}
+          </h3>
         </div>
       )}
       <div className="main-progress bg-argentBlue rounded-xl p-8">
