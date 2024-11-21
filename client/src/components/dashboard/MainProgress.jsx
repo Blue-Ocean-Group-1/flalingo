@@ -62,7 +62,7 @@ const MainProgress = ({ user, openAddLang }) => {
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
               My Current Skill Level
             </h3>
-            <div className="text-3xl text-jet font-semibold bg-gray-50 p-3 rounded-lg shadow-sm border border-gray-300">
+            <div className="text-4xl text-jet font-semibold bg-gray-50 p-3 rounded-lg shadow-sm border border-gray-300">
               {currentSkill.charAt(0).toUpperCase() + currentSkill.slice(1)}
             </div>
           </div>
