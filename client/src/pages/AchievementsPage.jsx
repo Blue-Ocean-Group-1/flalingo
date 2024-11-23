@@ -147,7 +147,7 @@ export default function AchievementsPage() {
                 Badges
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {userData?.allBadges?.map((badge, index) => {
+                {badges.map((badge, index) => {
                   const formattedBadge = formatBadge(badge);
                   if (!formattedBadge) return null;
                   return (
