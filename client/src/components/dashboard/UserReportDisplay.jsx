@@ -78,6 +78,7 @@ const UserReportDisplay = ({ user }) => {
                   userStats?.monthly,
                   'myStatistics',
                 );
+                setRenderStats(true);
               } else {
                 setRenderStats(false);
               }
@@ -101,6 +102,7 @@ const UserReportDisplay = ({ user }) => {
                   userStats?.weekly,
                   'myStatistics',
                 );
+                setRenderStats(true);
               } else {
                 setRenderStats(false);
               }
@@ -124,6 +126,7 @@ const UserReportDisplay = ({ user }) => {
                   userStats?.daily,
                   'myStatistics',
                 );
+                setRenderStats(true);
               } else {
                 setRenderStats(false);
               }
@@ -147,7 +150,6 @@ const UserReportDisplay = ({ user }) => {
           <select
             value={reportParams.frequency}
             onChange={(e) => {
-              setRenderStats(true);
               setReportParams((prev) => ({
                 ...prev,
                 individualDeck: null,
