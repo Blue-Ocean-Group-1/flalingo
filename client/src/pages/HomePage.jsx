@@ -23,6 +23,7 @@ import getDailyProgress from '../utils/getDailyProgress.js';
 export default function HomePage() {
   const navigate = useNavigate();
   const [dailyWords, setDailyWords] = useState([]);
+
   const { userData, updateUser, setActiveDeck } = useUserData();
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
@@ -149,6 +150,8 @@ export default function HomePage() {
     setAddNewLanguageModelOpen(false);
   };
 
+  // if (loading) return <div>loading</div>;
+
   return (
     <DefaultPageLayout>
       <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem]">
@@ -214,7 +217,8 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="w-1/2 flex flex-col justify-between items-center gap-8">
+
+          <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8 mt-2">
             {userData && (
               <MainProgress
                 user={userData}

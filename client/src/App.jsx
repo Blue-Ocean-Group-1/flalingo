@@ -6,8 +6,6 @@ import {
   ServerTest,
   AuthProvider,
   ProtectedRoute,
-  Login,
-  Signup,
   Homepage,
   FlashcardsPage,
   ConversationRoomsPage,
@@ -30,8 +28,6 @@ function App() {
             <Routes>
               {/* <Route path="/" element={<Login />} /> */}
               <Route path="/" element={<LandingPage />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
               <Route
                 path="/dashboard"
                 element={

@@ -108,7 +108,7 @@ function RoomLanguageCard({ language, roomsData }) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex p-3 gap-4 w-full bg-white hover:bg-silver hover:shadow-none active:shadow-inner rounded-md shadow-md shadow-jet"
+        className="flex p-3 gap-4 w-full bg-white hover:bg-silver active:shadow-inner rounded-md shadow-md shadow-jet"
       >
         <img
           className="min-h-16 max-w-20 bg-slate-300 rounded-md object-cover"

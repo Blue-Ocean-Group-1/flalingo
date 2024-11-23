@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { useUserData } from '../../hooks/useUserData';
+import FontAwesomeIcon from '../common/Icon.jsx';
 
 function MainLanguageSelect({ user, openAddLang }) {
   const { userData, updateUser } = useUserData();
@@ -15,12 +16,17 @@ function MainLanguageSelect({ user, openAddLang }) {
         as="div"
         className="relative text-3xl text-jet font-semibold bg-gray-50 p-3 rounded-lg shadow-sm border border-gray-300"
       >
-        <MenuButton className="relative flex rounded-full text-4xl">
+        <MenuButton className="relative flex text-4xl w-full justify-between items-center pr-2">
           {user.activeLanguages[0] === undefined ? '' : user.activeLanguages[0]}
+          <FontAwesomeIcon
+            icon="fa-solid fa-chevron-down"
+            className="text-jet size-7"
+          />
         </MenuButton>
         <MenuItems
           transition
-          className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-jet py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+          modal={false}
+          className="absolute left-0 w-full z-10 mt-2 origin-top-right rounded-md bg-jet p-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in flex flex-col justify-center gap-1"
         >
           {user &&
             user.allLanguages.map(
@@ -35,16 +41,14 @@ function MainLanguageSelect({ user, openAddLang }) {
                   </button>
                 ),
             )}
-          <div className="p-4">
-            <button
-              className=" rounded-xl bg-argentBlue text-jet m-2 font-bold hover:scale-105 text-base"
-              onClick={() => {
-                openAddLang();
-              }}
-            >
-              Start New Language
-            </button>
-          </div>
+          <button
+            className="rounded-md bg-argentBlue text-jet p-2 font-bold text-base"
+            onClick={() => {
+              openAddLang();
+            }}
+          >
+            Start New Language
+          </button>
         </MenuItems>
       </Menu>
     )
