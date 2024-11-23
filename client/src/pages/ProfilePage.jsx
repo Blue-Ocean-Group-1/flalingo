@@ -546,7 +546,7 @@ export default function ProfilePage() {
         </div>
       </div>
       {showNotification && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
           <div className="bg-argentBlue p-4 rounded-md shadow-md text-center">
             <p className="text-lg font-semibold text-jet">
               Updated successfully

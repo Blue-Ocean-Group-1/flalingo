@@ -11,7 +11,7 @@ export default function LandingPage() {
   const [signup, setSignup] = useState(false);
 
   return (
-    <div>
+    <div className="min-h-screen bg-white">
       <span className="inline-flex gap-2 items-center">
         <img
           className="h-20 w-20 object-cover ml-60 mb-4 mt-10"
