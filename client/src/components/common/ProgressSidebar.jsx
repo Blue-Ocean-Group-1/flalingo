@@ -22,8 +22,6 @@ export default function ProgressSidebar() {
     ? getDailyProgress(userData?.dailyGoalProgress)
     : {};
 
-  console.log(randomQuote);
-
   return (
     <div className="flex flex-col">
       <div className="h-16 pt-4 pb-1">

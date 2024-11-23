@@ -310,8 +310,10 @@ export default function FlashcardsPage() {
       }
     }
     if (isFinished) {
-      updateProgress();
-      updateUserProgress();
+      setTimeout(() => {
+        updateProgress();
+        updateUserProgress();
+      }, 10000);
     }
   }, [
     isFinished,
