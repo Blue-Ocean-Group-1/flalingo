@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@headlessui/react';
-import Navbar from '../components/Navbar.jsx';
 import api from '../services/index.js';
 import Logger from '../../config/logger.js';
 import { useUserData } from '../hooks/useUserData.jsx';

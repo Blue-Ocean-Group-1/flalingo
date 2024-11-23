@@ -24,7 +24,7 @@ const CircleProgressDisplay = ({ ring, percentage }) => {
           strokeDashoffset={ring}
         ></circle>
       </svg>
-      <p className="font-bold absolute top-[calc(50% -.75rem)] text-jet">{`${percentage}%`}</p>
+      <p className="font-bold absolute top-[calc(50% -.75rem)] text-jet">{`${parseInt(percentage)}%`}</p>
     </div>
   );
 };
