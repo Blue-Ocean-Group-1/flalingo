@@ -42,14 +42,27 @@ const MainProgress = ({ user, openAddLang }) => {
     }
   }, [user]);
 
+  const makeGreeting = () => {
+    let name = user.name;
+    let greeting = greetings[user.activeLanguages[0]];
+    if (name === undefined && greeting) {
+      return greeting;
+    }
+    if (greeting === undefined && name) {
+      return `Hello, ${name}`;
+    }
+    if (greeting && name) {
+      return `${greeting}, ${name}`;
+    }
+    return 'Hello!';
+  };
+
   return (
     <div className="w-full min-w-fit">
       {user && (
         <div className="flex justify-center pb-2">
           <h3 className="text-5xl text-bold italic text-jet">
-            {greetings[user.activeLanguages[0]] === undefined
-              ? `Hello, ${user.name}`
-              : `${greetings[user.activeLanguages[0]]}, ${user.name}`}
+            {makeGreeting()}
           </h3>
         </div>
       )}
