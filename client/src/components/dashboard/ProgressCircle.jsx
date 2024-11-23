@@ -43,7 +43,7 @@ const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
   }, [deck.percentage, maxPercentage]);
 
   const handleClick = (newDeck) => {
-    setActiveDeck(newDeck);
+    setActiveDeck(newDeck.name);
     navigate('/flashcards');
   };
 

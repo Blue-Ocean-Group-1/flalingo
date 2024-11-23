@@ -209,7 +209,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8">
+          <div className="w-1/2 flex flex-col justify-between items-center gap-8">
             {userData && (
               <MainProgress
                 user={userData}

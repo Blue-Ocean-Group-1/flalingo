@@ -140,9 +140,9 @@ const UserReportDisplay = ({ user }) => {
   }, [userStats, reportParams]);
 
   return (
-    <div className="text-jet w-full mb-16">
+    <div className="text-jet w-full mb-16 pt-8">
       <div>
-        <h2 className="text-jet text-center text-4xl m-4">My Statistics</h2>
+        <h3 className="text-jet text-center text-5xl m-4">My Statistics</h3>
         <div className="flex justify-center">
           <select
             value={reportParams.frequency}
@@ -165,11 +165,8 @@ const UserReportDisplay = ({ user }) => {
           {/* Here's the magic graph. It's magic!  */}
           <canvas
             id="myStatistics"
-            height={renderStats === false ? '0' : '400'}
-            width={renderStats === false ? '0' : '800'}
-            className={
-              renderStats === false ? 'hidden' : 'min-w-3/4 min-h-full'
-            }
+            style={{ minHeight: '400px', minWidth: '600px' }}
+            className={renderStats === false ? 'hidden' : 'min-w-3/4 min-h-max'}
           ></canvas>
         </div>
         {renderStats === false && (

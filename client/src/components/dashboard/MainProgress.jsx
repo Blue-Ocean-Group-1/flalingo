@@ -58,7 +58,7 @@ const MainProgress = ({ user, openAddLang }) => {
   };
 
   return (
-    <div className="w-full min-w-fit">
+    <div className="w-full min-w-fit p-8">
       {user && (
         <div className="flex justify-center pb-2">
           <h3 className="text-5xl text-bold italic text-jet">
