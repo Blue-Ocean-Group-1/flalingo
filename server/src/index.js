@@ -1,4 +1,6 @@
 // src/index.js
+import path from 'path';
+
 import emailjs from '@emailjs/browser';
 import cors from 'cors';
 import express from 'express';
@@ -36,6 +38,8 @@ app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
 app.use(passport.initialize());
+
+app.use(express.static(path.join(path.resolve(), 'client', 'dist')));
 
 // Configure Passport
 configurePassport(passport);
