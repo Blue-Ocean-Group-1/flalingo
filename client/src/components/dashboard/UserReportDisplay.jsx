@@ -26,7 +26,6 @@ const UserReportDisplay = ({ user }) => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setUserStats(response.data);
         if (
           response.data.weekly ||

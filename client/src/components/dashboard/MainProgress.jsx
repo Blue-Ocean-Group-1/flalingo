@@ -27,10 +27,9 @@ const MainProgress = ({ user, openAddLang }) => {
         let decks = user.progress.find(
           (prog) => prog.language === user.activeLanguages[0],
         );
-        let badge;
-
-        if (decks?.decks?.length) {
-          badge = findNearestBadge(decks);
+        let badge = null;
+        if (decks.decks?.length) {
+          badge = findNearestBadge(user);
         }
         if (badge === null) {
           badge = {

@@ -88,7 +88,6 @@ const findBestDisplayDecks = (user) => {
   const currentDecks = (user.progress || []).filter(
     (lang) => lang.language === user.activeLanguages[0],
   )[0];
-  console.log('decks', currentDecks.decks);
   if (currentDecks.decks?.length) {
     let displayDecks = getDeckPercentageTwo(currentDecks.decks.slice(0, 5));
     displayDecks.map((deck, index) => {

@@ -87,8 +87,6 @@ const OnboardingModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     const updatedData = formatFormData(formData);
     await updateUser(updatedData);
-    let updatedUser = await startNewLanguage(formData.language, userData._id);
-    setUserData(updatedUser);
     onClose();
   };
 
