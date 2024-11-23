@@ -166,7 +166,7 @@ const UserReportDisplay = ({ user }) => {
           <canvas
             id="myStatistics"
             style={{ minHeight: '400px', minWidth: '600px' }}
-            className={renderStats === false ? 'hidden' : 'min-w-3/4 min-h-max'}
+            className={renderStats === false ? 'hidden' : 'max-w-3/4 max-h-max'}
           ></canvas>
         </div>
         {renderStats === false && (

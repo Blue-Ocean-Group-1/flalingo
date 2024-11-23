@@ -137,9 +137,22 @@ const findRecommendedDeck = async (user) => {
   }
 };
 
+const passFullDeck = async (deckName, language) => {
+  console.log(deckName, 'deckName');
+  try {
+    const response = await axios.get(`${env.API_URL}/decks/${language}`);
+    let passedDeck = response.data.filter((deck) => deck.name === deckName);
+    return passedDeck;
+  } catch (error) {
+    logger.error('Error fetching decks:', error);
+    return [];
+  }
+};
+
 export {
   findBestDisplayDecks,
   getDeckPercentage,
   findRecommendedDeck,
   getDeckPercentageTwo,
+  passFullDeck,
 };

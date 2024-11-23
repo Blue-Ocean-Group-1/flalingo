@@ -30,6 +30,11 @@ export default function HomePage() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [addNewLanguageModelOpen, setAddNewLanguageModelOpen] = useState(false);
 
+  // useful for tracking information changes!!!! :)
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
+
   useEffect(() => {
     userData?.progress?.length === 0 ? setModalOpen(true) : setModalOpen(false);
   }, [userData, updateUser]);
@@ -147,7 +152,7 @@ export default function HomePage() {
   return (
     <DefaultPageLayout>
       <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem]">
-        <div className="flex rounded-2xl w-full">
+        <div className="flex rounded-2xl w-full" style={{ minWidth: '70rem' }}>
           <AddNewLanguageModel
             user={userData}
             closeModal={closeAddLanguageModal}
