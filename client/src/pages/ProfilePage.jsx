@@ -337,8 +337,8 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Name</span>
-                  <span>{profileData.name}</span>
+                  <span className="mr-2 font-[900]">Name</span>
+                  <span className="font-light">{profileData.name}</span>
                 </div>
               )}
 
