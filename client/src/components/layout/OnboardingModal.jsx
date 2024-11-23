@@ -52,7 +52,7 @@ const OnboardingModal = ({ isOpen, onClose }) => {
       try {
         const languages = await fetchLanguageNames();
         logger.debug('OnboardingModal.jsx: Fetched languages:', languages);
-        setLanguageOptions(languages);
+        setLanguageOptions(['Spanish', 'French', 'German']);
       } catch (error) {
         logger.error(error);
       }

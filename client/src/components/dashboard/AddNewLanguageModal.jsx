@@ -12,15 +12,7 @@ const AddNewLanguageModel = ({ closeModal, isOpen }) => {
 
   useEffect(() => {
     if (userData) {
-      let languageList = Object.keys(flagObject);
-      languageList.filter((lang) => {
-        if (userData.allLanguages.includes(lang)) {
-          return false;
-        } else {
-          return true;
-        }
-      });
-      languageList.shift();
+      let languageList = ['Spanish', 'French', 'German'];
       languageList.unshift('Please Select A Language');
       setLanguages(languageList);
     }
