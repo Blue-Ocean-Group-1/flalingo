@@ -27,8 +27,6 @@ export { default as getHealth } from './services/test.api.js';
 export { default as logger } from '../config/logger.js';
 
 // Pages
-export { default as Login } from './pages/Login.jsx';
-export { default as Signup } from './pages/Signup.jsx';
 export { default as LandingPage } from './pages/LandingPage.jsx'; // eslint-disable-line
 export { default as Homepage } from './pages/HomePage.jsx';
 export { default as FlashcardsPage } from './pages/FlashcardsPage.jsx';

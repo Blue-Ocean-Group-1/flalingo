@@ -88,7 +88,6 @@ const findBestDisplayDecks = (user) => {
   const currentDecks = (user.progress || []).filter(
     (lang) => lang.language === user.activeLanguages[0],
   )[0];
-  console.log('decks', currentDecks.decks);
   if (currentDecks.decks?.length) {
     let displayDecks = getDeckPercentageTwo(currentDecks.decks.slice(0, 5));
     displayDecks.map((deck, index) => {
@@ -138,9 +137,22 @@ const findRecommendedDeck = async (user) => {
   }
 };
 
+const passFullDeck = async (deckName, language) => {
+  console.log(deckName, 'deckName');
+  try {
+    const response = await axios.get(`${env.API_URL}/decks/${language}`);
+    let passedDeck = response.data.filter((deck) => deck.name === deckName);
+    return passedDeck;
+  } catch (error) {
+    logger.error('Error fetching decks:', error);
+    return [];
+  }
+};
+
 export {
   findBestDisplayDecks,
   getDeckPercentage,
   findRecommendedDeck,
   getDeckPercentageTwo,
+  passFullDeck,
 };

@@ -310,8 +310,10 @@ export default function FlashcardsPage() {
       }
     }
     if (isFinished) {
-      updateProgress();
-      updateUserProgress();
+      setTimeout(() => {
+        updateProgress();
+        updateUserProgress();
+      }, 10000);
     }
   }, [
     isFinished,
@@ -327,119 +329,115 @@ export default function FlashcardsPage() {
 
   return (
     <DefaultPageLayout>
-      <div className="">
-        <div className="flashcardDisplay w-full flex min-h-[calc(100vh-64px)] ">
-          {/* Main Content */}
-          <div className="w-3/4 p-3">
-            <div className="mx-auto">
-              {/* Header */}
-              <div className="bg-[#6AB9F2] rounded-lg p-4 mb-6 text-black text-center">
-                <h1 className="text-2xl font-bold mb-2">{currentDeck.name}</h1>
+      <div className="flashcardDisplay w-full flex pl-6 lg:pl-0">
+        {/* Main Content */}
+        <div className="w-3/4">
+          <div className="mx-auto">
+            {/* Header */}
+            <div className="bg-[#6AB9F2] rounded-lg p-4 mb-6 text-black text-center">
+              <h1 className="text-2xl font-bold mb-2">{currentDeck.name}</h1>
+              <h2>
+                Card {currentCardIndex + 1} of {flashcards.length}
+              </h2>
+              {currentStreak > 1 ? (
+                <h2>Current Streak {currentStreak + 1} in a row!</h2>
+              ) : (
+                <h2>Start A Streak!</h2>
+              )}
+            </div>
+
+            {isFinished && (
+              <div className="bg-[#C6E600] rounded-lg p-4 mb-6 text-[#3A3A3A] text-center">
+                <h1 className="text-2xl font-bold mb-2">Quiz Finished!</h1>
                 <h2>
-                  Card {currentCardIndex + 1} of {flashcards.length}
+                  You got {numCorrect} out of {flashcards.length} correct!
                 </h2>
-                {currentStreak > 1 ? (
-                  <h2>Current Streak {currentStreak + 1} in a row!</h2>
-                ) : (
-                  <h2>Start A Streak!</h2>
+              </div>
+            )}
+
+            {/* Flashcard Area */}
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <Button
+                  className="px-6 py-2 text-[#3A3A3A] transition-colors duration-150 bg-[#6AB9F2] rounded-lg focus:shadow-outline"
+                  onClick={handleDiscard}
+                >
+                  Discard
+                </Button>
+              </div>
+
+              {/* Pop-up Messages */}
+              <div className="relative">
+                {correctPopUp && (
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-[#C6E600] text-[#3A3A3A] px-4 py-2 rounded">
+                    Correct!
+                  </div>
+                )}
+                {incorrectPopUp && (
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-[#FF8DE6] text-[#3A3A3A] px-4 py-2 rounded">
+                    Incorrect!
+                  </div>
                 )}
               </div>
 
-              {isFinished && (
-                <div className="bg-[#C6E600] rounded-lg p-4 mb-6 text-[#3A3A3A] text-center">
-                  <h1 className="text-2xl font-bold mb-2">Quiz Finished!</h1>
-                  <h2>
-                    You got {numCorrect} out of {flashcards.length} correct!
-                  </h2>
-                </div>
-              )}
+              {/* Flashcard */}
+              <div
+                className={`aspect-[2/1] max-w-2xl mx-auto bg-white rounded-xl shadow-lg flex items-center justify-center p-8 ${
+                  incorrectPopUp ? 'animate-heartbeat' : 'animate-wiggle'
+                }`}
+              >
+                <p className="text-4xl font-bold text-gray-800">
+                  {currentCard.word}
+                </p>
+              </div>
 
-              {/* Flashcard Area */}
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
+              {/* Answer Choices */}
+              <div className="grid grid-cols-2 gap-4 mt-6">
+                {currentChoices.map((choice, index) => (
                   <Button
-                    className="px-6 py-2 text-[#3A3A3A] transition-colors duration-150 bg-[#6AB9F2] rounded-lg focus:shadow-outline"
-                    onClick={handleDiscard}
+                    key={index}
+                    className="py-3 px-6 text-lg text-black transition-colors duration-150 bg-[#6AB9F2] rounded-lg focus:shadow-outline hover:bg-[#C6E600] hover:text-[#3A3A3A]"
+                    onClick={() => handleAnswerClick(choice)}
                   >
-                    Discard
+                    {choice}
                   </Button>
-                </div>
-
-                {/* Pop-up Messages */}
-                <div className="relative">
-                  {correctPopUp && (
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-[#C6E600] text-[#3A3A3A] px-4 py-2 rounded">
-                      Correct!
-                    </div>
-                  )}
-                  {incorrectPopUp && (
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full bg-[#FF8DE6] text-[#3A3A3A] px-4 py-2 rounded">
-                      Incorrect!
-                    </div>
-                  )}
-                </div>
-
-                {/* Flashcard */}
-                <div
-                  className={`aspect-[2/1] max-w-2xl mx-auto bg-white rounded-xl shadow-lg flex items-center justify-center p-8 ${
-                    incorrectPopUp ? 'animate-heartbeat' : 'animate-wiggle'
-                  }`}
-                >
-                  <p className="text-4xl font-bold text-gray-800">
-                    {currentCard.word}
-                  </p>
-                </div>
-
-                {/* Answer Choices */}
-                <div className="grid grid-cols-2 gap-4 mt-6">
-                  {currentChoices.map((choice, index) => (
-                    <Button
-                      key={index}
-                      className="py-3 px-6 text-lg text-black transition-colors duration-150 bg-[#6AB9F2] rounded-lg focus:shadow-outline hover:bg-[#C6E600] hover:text-[#3A3A3A]"
-                      onClick={() => handleAnswerClick(choice)}
-                    >
-                      {choice}
-                    </Button>
-                  ))}
-                </div>
+                ))}
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Sidebar */}
-          <div className="otherFlashcards h-[calc(100dvh_-_6rem)] w-1/4 bg-white rounded-lg p-4 mt-4 mx-6 shadow-md shadow-jet">
-            <p className="font-semibold mb-2 text-black">Skill Level</p>
-            <div className="skillProgressRing">
-              <CircleProgressDisplay ring={ring} percentage={percentage} />
-            </div>
-            <p className="font-semibold mb-4 text-black">Other Flashcards</p>
-            <div className="flex flex-col gap-2">
-              {themeDecks?.map((deck, index) => (
-                <Button
-                  key={index}
-                  className="w-full py-2 px-4 text-sm text-[#3A3A3A] transition-colors duration-150 bg-pear rounded-lg focus:shadow-outline hover:bg-[#C6E600]"
-                  onClick={() => handleDeckChange(deck)}
-                >
-                  {deck.name}
-                </Button>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 justify-center mt-2 shadow-md p-0.5 rounded-xl">
-              <p className="font-semibold mb-4 text-black mb-0">
-                Change Theme:
-              </p>
-              <select
-                className="bg-white rounded-lg p-2 text-jet"
-                value={currentTheme}
-                onChange={(e) => setCurrentTheme(e.target.value)}
+        {/* Sidebar */}
+        <div className="otherFlashcards h-[calc(100dvh_-_6rem)] w-1/4 bg-white rounded-lg p-4  mx-6 shadow-md shadow-jet">
+          <p className="font-semibold mb-2 text-black">Skill Level</p>
+          <div className="skillProgressRing">
+            <CircleProgressDisplay ring={ring} percentage={percentage} />
+          </div>
+          <p className="font-semibold mb-4 text-black">Other Flashcards</p>
+          <div className="flex flex-col gap-2">
+            {themeDecks?.map((deck, index) => (
+              <Button
+                key={index}
+                className="w-full py-2 px-4 text-sm text-[#3A3A3A] transition-colors duration-150 bg-pear rounded-lg focus:shadow-outline hover:bg-[#C6E600]"
+                onClick={() => handleDeckChange(deck)}
               >
-                {themes.map((mappedTheme) => (
-                  <option key={mappedTheme} value={mappedTheme}>
-                    {mappedTheme}
-                  </option>
-                ))}
-              </select>
-            </div>
+                {deck.name}
+              </Button>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 justify-center mt-2 p-0.5 rounded-md shadow-md bg-gray-50">
+            <p className="font-semibold text-black mb-0">Change Theme:</p>
+            <select
+              className="bg-white rounded-lg p-2 text-jet"
+              value={currentTheme}
+              onChange={(e) => setCurrentTheme(e.target.value)}
+            >
+              {themes.map((mappedTheme) => (
+                <option key={mappedTheme} value={mappedTheme}>
+                  {mappedTheme}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>

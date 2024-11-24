@@ -39,7 +39,6 @@ const splitDecksByLanguageAndTheme = (user, percentage) => {
       });
       deckTheme.push({ lang, beginner, proficient, advanced });
     });
-    console.log(deckTheme, 'deckTheme');
 
     return deckTheme;
   }
@@ -92,8 +91,6 @@ const getBadges = (user) => {
 
   let deckTheme = splitDecksByLanguageAndTheme(user, 80);
 
-  console.log(deckTheme, 'deckTheme');
-
   deckTheme.forEach((entry) => {
     let beginnerValues = Object.values(entry.beginner);
     let beginnerKeys = Object.keys(entry.beginner);
@@ -145,22 +142,17 @@ const getBadges = (user) => {
 };
 
 const findPriorityValue = (obj) => {
-  // gonna iterate through active language decks to find the nearest 'almost there' badge
-  // by looking first through advanced, then proficient, then beginner
-  // and looking for deck completion counts of 4, 3, 2, 1 (a deck is considered complete when
-  // its percentage is greater than or equal to 80)
-  console.log('fpv');
   const skillLevels = ['advanced', 'proficient', 'beginner'];
   const valuesToCheck = [4, 3, 2, 1];
 
   for (const skillLevel of skillLevels) {
     if (obj[skillLevel] !== undefined) {
       const category = obj[skillLevel];
-      if (category?.length) {
+      if (category && typeof category === 'object') {
         for (const value of valuesToCheck) {
           for (const [key, categoryValue] of Object.entries(category)) {
             if (categoryValue === value) {
-              let capitalizedSkillLevel =
+              const capitalizedSkillLevel =
                 skillLevel.charAt(0).toUpperCase() + skillLevel.slice(1);
               return { skillLevel: capitalizedSkillLevel, key, value };
             }
@@ -176,11 +168,9 @@ const findPriorityValue = (obj) => {
 const findNearestBadge = (user) => {
   let decks = splitDecksByLanguageAndTheme(user, 80);
   let badge;
-  if (decks) {
+  if (decks?.length) {
     const deck = decks.find((deck) => deck.lang === user.activeLanguages[0]);
     badge = findPriorityValue(deck);
-    console.log(badge, 'fpv');
-
     if (!badge) {
       let firstDecks = user.progress.find(
         (deck) => deck.language === user.activeLanguages[0],
@@ -188,7 +178,6 @@ const findNearestBadge = (user) => {
       let firstDeck = firstDecks.decks[0];
       badge = `${deck.language} ${firstDeck.deckName.split(' ')[0]} ${firstDeck.skillLevel}`;
     }
-    console.log(badge, 'badge');
     return badge;
   }
   return null;
