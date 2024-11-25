@@ -54,8 +54,8 @@ export default function Navbar() {
               </div>
             </DisclosureButton>
           </div>
-          <div className="flex flex-1 w-full items-center justify-center sm:items-stretch sm:justify-between">
-            <div className="lg:invisible flex sm:justify-start shrink-0 items-center pl-4">
+          <div className="flex flex-1 w-full items-center justify-center sm:items-stretch  md:justify-between lg:justify-end ">
+            <div className="md:block lg:hidden flex sm:justify-start shrink-0 items-center pl-4">
               <Brand />
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -79,7 +79,7 @@ export default function Navbar() {
             {/* Profile dropdown */}
             <Menu as="div" className="relative">
               <div>
-                <MenuButton className="relative flex rounded-full text-sm pb-[0.55rem]">
+                <MenuButton className="relative flex rounded-full text-sm md:pb-[0.55rem] lg:pb-0">
                   <p className="font-bold text-jet">Account</p>
                 </MenuButton>
               </div>
