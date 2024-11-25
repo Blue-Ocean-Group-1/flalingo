@@ -40,7 +40,7 @@ export default function ProgressSidebar() {
       </div>
       <div className="flex-col space-y-3 mx-auto text-jet pt-[0.25rem]">
         <div className="p-4 text-black bg-white rounded-md shadow-md shadow-jet">
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-3 pb-2">
             <h2 className="text-lg font-medium">Daily Goals</h2>
 
             <div className="inline-flex gap-1 items-center">
@@ -63,7 +63,7 @@ export default function ProgressSidebar() {
         </div>
         <div className="px-4 py-4 text-black bg-white rounded-md shadow-md shadow-jet">
           <h2 className="text-lg font-medium pb-2">Random Quote</h2>
-          <div className="flex flex-col space-y-1 text-sm">
+          <div className="flex flex-col space-y-1 text-sm pb-1">
             <p className="">{randomQuote.quote}</p>
             <p className="text-xs">– {randomQuote.author}</p>
             <p className="pt-2">{randomQuote.translation}</p>

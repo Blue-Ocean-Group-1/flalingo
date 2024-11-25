@@ -466,7 +466,7 @@ export default function ProfilePage() {
         <div className="mr-28 mt-2 flex justify-end">
           {editMode && (
             <button
-              className="bg-argentBlue bg-argentBlue px-2 h-8 rounded-md mb-2 mr-2"
+              className="bg-argentBlue px-2 h-8 rounded-md mb-2 mr-2"
               onClick={handleSaveInfo}
             >
               Save

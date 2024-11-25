@@ -1,9 +1,9 @@
-const CheckMark = () => (
+const CheckMark = ({ color }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    className="size-8 text-pistachio"
+    className={`size-8 ${color ? 'text-' + color : 'text-pistachio'}`}
   >
     <path
       fillRule="evenodd"
