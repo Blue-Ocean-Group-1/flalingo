@@ -102,7 +102,7 @@ const SupportPage = () => {
           />
           <button
             type="submit"
-            className={`w-full h-12 flex items-center justify-center bg-argentBlue active:shadow-inner ${!didSubmitSuccessfully && 'cursor-auto'} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+            className={`w-full h-12 flex items-center justify-center bg-argentBlue active:shadow-inner ${didSubmitSuccessfully && 'cursor-auto'} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
           >
             {didSubmitSuccessfully ? (
               <CheckMark color={'white'} />
