@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import startNewLanguage from '../../utils/startNewLanguage';
 import { useUserData } from '../../hooks/useUserData';
 
-import flagObject from '../../../public/Flags/flagObject';
-
 const AddNewLanguageModel = ({ closeModal, isOpen }) => {
   const { userData, setUserData } = useUserData();
   const [languages, setLanguages] = useState([]);

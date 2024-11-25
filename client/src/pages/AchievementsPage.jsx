@@ -5,8 +5,8 @@ import {
   splitDecksByLanguageAndThemeTwo,
   getBadges,
 } from '../utils/badgeLogic.js';
-import badgeObject from '../../public/Badges/badgeObject.js';
-import flagObject from '../../public/Flags/flagObject.js';
+import badgeObject from '../assets/Badges/badgeObject.js';
+import flagObject from '../assets/Flags/flagObject.js';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
 import isEqual from 'lodash/isEqual';
 

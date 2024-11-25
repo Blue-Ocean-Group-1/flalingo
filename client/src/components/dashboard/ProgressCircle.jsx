@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import CircleProgressDisplay from '../common/CircleProgressDisplay';
 
-import flagObject from '../../../public/Flags/flagObject.js';
+import flagObject from '../../assets/Flags/flagObject.js';
 import { useUserData } from '../../hooks/useUserData';
 
 const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {

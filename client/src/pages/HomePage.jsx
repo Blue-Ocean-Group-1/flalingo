@@ -128,7 +128,7 @@ export default function HomePage() {
 
   return (
     <DefaultPageLayout>
-      <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem]">
+      <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem] pb-8">
         <div className="flex rounded-2xl w-full">
           <AddNewLanguageModel
             user={userData}

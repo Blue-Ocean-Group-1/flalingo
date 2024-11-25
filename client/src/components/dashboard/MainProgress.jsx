@@ -7,8 +7,8 @@ import BadgeFlag from '../common/BadgeFlag';
 
 import { findNearestBadge } from '../../utils/badgeLogic';
 
-import flagObject from '../../../public/Flags/flagObject.js';
-import badgeObject from '../../../public/Badges/badgeObject.js';
+import flagObject from '../../assets/Flags/flagObject.js';
+import badgeObject from '../../assets/Badges/badgeObject.js';
 import greetings from '../../utils/greetings';
 
 const MainProgress = ({ user, openAddLang }) => {

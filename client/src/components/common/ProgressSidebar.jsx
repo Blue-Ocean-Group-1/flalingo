@@ -8,21 +8,30 @@ import getDailyProgress from '../../utils/getDailyProgress.js';
 
 export default function ProgressSidebar() {
   const { userData } = useUserData();
-  const [randomQuote, setRandomQuote] = useState('');
+  const [randomQuote, setRandomQuote] = useState({
+    translation: '',
+    translatedAuthor: '',
+    author: '',
+    quote: '',
+  });
 
   useEffect(() => {
-    setRandomQuote(
-      userData?.allLanguages[0]
-        ? getMotivationalQuote(userData?.allLanguages[0])
-        : 'Spanish',
-    );
+    const language = userData?.allLanguages[0] || 'Spanish';
+    const randomQuote = getMotivationalQuote(language);
+    const quoteAndAuthor = randomQuote.quote.split(' – ');
+    console.log(quoteAndAuthor);
+    const translatedQuoteAndAuthor = randomQuote.translation.split(' – ');
+    setRandomQuote({
+      quote: quoteAndAuthor[0],
+      author: quoteAndAuthor[1],
+      translation: translatedQuoteAndAuthor[0],
+      translatedAuthor: translatedQuoteAndAuthor[1],
+    });
   }, [userData?.allLanguages]);
 
   const dailyProgress = userData?.dailyGoalProgress
-    ? getDailyProgress(userData?.dailyGoalProgress)
+    ? getDailyProgress(userData.dailyGoalProgress)
     : {};
-
-  console.log(randomQuote);
 
   return (
     <div className="flex flex-col">
@@ -54,13 +63,11 @@ export default function ProgressSidebar() {
         </div>
         <div className="px-4 py-4 text-black bg-white rounded-md shadow-md shadow-jet">
           <h2 className="text-lg font-medium pb-2">Random Quote</h2>
-          <div className="flex flex-col space-y-2">
-            <p className="text-sm italic">
-              {randomQuote.quote}
-              <br />
-            </p>
-            <p className="text-sm italic">{randomQuote.translation}</p>
-            <p className="text-xs"></p>
+          <div className="flex flex-col space-y-1 text-sm">
+            <p className="">{randomQuote.quote}</p>
+            <p className="text-xs">– {randomQuote.author}</p>
+            <p className="pt-2">{randomQuote.translation}</p>
+            <p className="text-xs">– {randomQuote.translatedAuthor}</p>
           </div>
         </div>
       </div>
