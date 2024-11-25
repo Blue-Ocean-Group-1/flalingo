@@ -32,9 +32,9 @@ export default function HomePage() {
   const [addNewLanguageModelOpen, setAddNewLanguageModelOpen] = useState(false);
 
   // useful for tracking information changes!!!! :)
-  // useEffect(() => {
-  //   console.log(userData);
-  // }, [userData]);
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
   useEffect(() => {
     userData?.progress?.length === 0 ? setModalOpen(true) : setModalOpen(false);
