@@ -70,6 +70,8 @@ const createChartDecksData = (data, canvasId) => {
       ],
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       indexAxis: 'y', // Switch X and Y axes for a horizontal bar chart
       plugins: {
         legend: {

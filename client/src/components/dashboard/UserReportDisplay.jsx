@@ -26,7 +26,6 @@ const UserReportDisplay = ({ user }) => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setUserStats(response.data);
         if (
           response.data.weekly ||
@@ -79,6 +78,7 @@ const UserReportDisplay = ({ user }) => {
                   userStats?.monthly,
                   'myStatistics',
                 );
+                setRenderStats(true);
               } else {
                 setRenderStats(false);
               }
@@ -102,6 +102,7 @@ const UserReportDisplay = ({ user }) => {
                   userStats?.weekly,
                   'myStatistics',
                 );
+                setRenderStats(true);
               } else {
                 setRenderStats(false);
               }
@@ -125,6 +126,7 @@ const UserReportDisplay = ({ user }) => {
                   userStats?.daily,
                   'myStatistics',
                 );
+                setRenderStats(true);
               } else {
                 setRenderStats(false);
               }
@@ -158,7 +160,7 @@ const UserReportDisplay = ({ user }) => {
                   frequency: e.target.value,
                 }));
               }}
-              className="p-2 rounded bg-white text-2xl mb-1"
+              className="px-2 rounded bg-white text-2xl mb-1"
             >
               <option value="monthly">Monthly</option>
               <option value="weekly">Weekly</option>
@@ -170,11 +172,8 @@ const UserReportDisplay = ({ user }) => {
           {/* Here's the magic graph. It's magic!  */}
           <canvas
             id="myStatistics"
-            height={renderStats === false ? '0' : '400'}
-            width={renderStats === false ? '0' : '800'}
-            className={
-              renderStats === false ? 'hidden' : 'min-w-3/4 min-h-full'
-            }
+            style={{ minHeight: '400px', minWidth: '600px' }}
+            className={renderStats === false ? 'hidden' : 'max-w-3/4 max-h-max'}
           ></canvas>
         </div>
         {renderStats === false && (

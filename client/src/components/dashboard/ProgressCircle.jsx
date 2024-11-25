@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 import CircleProgressDisplay from '../common/CircleProgressDisplay';
+import { passFullDeck } from '../../utils/deckProgress';
 
 import flagObject from '../../assets/Flags/flagObject.js';
 import { useUserData } from '../../hooks/useUserData';
@@ -42,8 +43,16 @@ const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
     return () => clearInterval(intervalId);
   }, [deck.percentage, maxPercentage]);
 
-  const handleClick = (newDeck) => {
-    setActiveDeck(newDeck);
+  const handleClick = async (newDeck) => {
+    if (newDeck.flashcards !== undefined) {
+      setActiveDeck(newDeck);
+    } else {
+      // somewhere I screwed the logic of naming conventions and
+      // how information is passed. This is a functional band-aid,
+      // but realistically logic should be improved elsewhere.
+      let fullDeck = await passFullDeck(newDeck.deckName, language);
+      setActiveDeck(fullDeck[0]);
+    }
     navigate('/flashcards');
   };
 
