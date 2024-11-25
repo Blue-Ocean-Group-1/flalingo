@@ -32,6 +32,7 @@ const COUNTRY_DATA = {
   Sweden: 'Swedish',
   Thailand: 'Thai',
   Turkey: 'Turkish',
+  'United States': 'USA',
   Ukraine: 'Ukrainian',
   Vietnam: 'Vietnamese',
 };
