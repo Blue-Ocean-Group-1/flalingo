@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import RoomsModal from '../components/RoomsModal.jsx';
 import Logger from '../../config/logger.js';
 import { useUserData } from '../hooks/useUserData.jsx';
+import flagObject from '../assets/Flags/flagObject.js';
 
 export default function ConversationRoomsPage() {
   const [rooms, setRooms] = useState([]);
@@ -112,7 +113,7 @@ function RoomLanguageCard({ language, roomsData }) {
       >
         <img
           className="min-h-16 max-w-20 bg-slate-300 rounded-md object-cover"
-          src={`/Flags/${language}.png`}
+          src={flagObject[language]}
           alt="flag-img"
         />
         <div className="text-left">

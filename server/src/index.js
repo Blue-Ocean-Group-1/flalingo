@@ -96,12 +96,4 @@ if (NODE_ENV !== 'test') {
 //     .catch((err) => console.log(err));
 // });
 
-// import { User } from './models/user.model.js';
-// mongoose.connection.once('open', () => {
-//   User.updateMany(
-//     {},
-//   {dailyProgressGoals: },
-//   );
-// });
-
 export default app;
