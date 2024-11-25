@@ -29,7 +29,7 @@ export default function ProgressSidebar() {
       <div className="h-16 pt-4 pb-1">
         <Brand />
       </div>
-      <div className="flex-col space-y-2 mx-auto text-jet pt-[0.25rem]">
+      <div className="flex-col space-y-3 mx-auto text-jet pt-[0.25rem]">
         <div className="p-4 text-black bg-white rounded-md shadow-md shadow-jet">
           <div className="flex flex-col space-y-3">
             <h2 className="text-lg font-medium">Daily Goals</h2>

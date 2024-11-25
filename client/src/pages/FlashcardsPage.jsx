@@ -406,7 +406,7 @@ export default function FlashcardsPage() {
         </div>
 
         {/* Sidebar */}
-        <div className="otherFlashcards h-[calc(100dvh_-_6rem)] w-1/4 bg-white rounded-lg p-4  mx-6 shadow-md shadow-jet">
+        <div className="otherFlashcards min-h-[calc(100dvh_-_6rem)] w-1/4 bg-white rounded-lg p-4  mx-6 shadow-md shadow-jet">
           <p className="font-semibold mb-2 text-black">Skill Level</p>
           <div className="skillProgressRing">
             <CircleProgressDisplay ring={ring} percentage={percentage} />

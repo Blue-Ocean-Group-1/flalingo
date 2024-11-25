@@ -34,7 +34,7 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
       <div className="text-black fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel
           transition
-          className="relative sm:w-2/3 h-5/6 sm:h-3/4 sm:max-h-3/4 space-y-2 bg-white rounded-2xl py-8 px-10 duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
+          className="relative sm:w-2/3 h-5/6 sm:h-3/4 sm:max-h-3/4 space-y-2 bg-white rounded-2xl pt-8 px-10 duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
         >
           <button
             className="absolute h-4 w-4 right-4 top-2"
@@ -47,15 +47,15 @@ export default function RoomsModal({ isOpen, setIsOpen, roomsData }) {
             Select a room and join by clicking the join room button to start
             chatting!
           </Description>
-          <div className="bg-gray-200 h-2/3 flex flex-col overflow-y-auto">
-            {roomsData.map((room, idx) => (
+          <div className="bg-gray-200 h-[70%] flex flex-col overflow-y-auto">
+            {roomsData.map((room) => (
               <button
-                className={`text-left inline-flex p-1 gap-2 ${selectedRoomId === room._id && 'bg-argentBlue'}`}
+                className={`text-left inline-flex px-3 p-2 gap-2 ${selectedRoomId === room._id && 'bg-argentBlue'}`}
                 key={room._id}
                 onClick={() => setSelectedRoomId(room._id)}
               >
                 <p>{room.name}</p>
-                <p className="text-gray-400 font-light">
+                <p className="text-gray-600 font-light">
                   ({room.participantCount})
                 </p>
               </button>

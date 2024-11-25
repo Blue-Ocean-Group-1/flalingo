@@ -11,10 +11,10 @@ export default function LandingPage() {
   const [signup, setSignup] = useState(false);
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen max-xl pr-12">
       <span className="inline-flex gap-2 items-center">
         <img
-          className="h-20 w-20 object-cover ml-60 mb-4 mt-10"
+          className="h-20 w-20 object-cover ml-6 xl:ml-60 mb-4 mt-10"
           src={PolyGlot_Globe}
           alt="placeholder"
         />
@@ -22,14 +22,12 @@ export default function LandingPage() {
           PolyGlot
         </h1>
       </span>
-      <div className="flex flex-col justify-center items-center relative">
-        <div className="size-[95%] xl:size-[72%] mx-auto sm:px-2 lg:px-10 ">
-          <img
-            className="rounded-full"
-            src={world_landmarks_main}
-            alt="world landmarks"
-          />
-        </div>
+      <div className="flex flex-col justify-center items-center relative size-[95%] xl:size-[72%] mx-auto sm:px-2">
+        <img
+          className="rounded-full"
+          src={world_landmarks_main}
+          alt="world landmarks"
+        />
         {signup ? (
           <Signup handleLoginClick={() => setSignup(false)} />
         ) : (
