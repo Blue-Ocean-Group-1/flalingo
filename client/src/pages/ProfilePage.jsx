@@ -343,22 +343,6 @@ export default function ProfilePage() {
                 </div>
               )}
 
-              {/* {editMode ? (
-                <div className="flex items-center mb-2">
-                  <label htmlFor="username" className="mr-2 font-bold">
-                    Username
-                  </label>
-                  <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    placeholder={profileData.username}
-                    value={profileData.username}
-                    className="block w-full bg-platinum px-1"
-                    onChange={handleInputChange}
-                  />
-                </div>
-              ) : ( */}
               <div className="flex items-center mb-2">
                 <span className="mr-2 font-bold">Username</span>
                 <span>{profileData.username}</span>
@@ -490,7 +474,7 @@ export default function ProfilePage() {
                 name="dailyReminder"
                 checked={notificationSettings.dailyReminder}
                 onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold"
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold checked:after:text-sm"
               />
               <label htmlFor="dailyReminder" className="ml-2">
                 Receive daily reminder email alerts
@@ -503,7 +487,7 @@ export default function ProfilePage() {
                 name="weeklyReminder"
                 checked={notificationSettings.weeklyReminder}
                 onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold"
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold checked:after:text-sm"
               />
               <label htmlFor="weeklyReminder" className="ml-2">
                 Receive weekly goal reminder email alerts
@@ -516,7 +500,7 @@ export default function ProfilePage() {
                 name="monthlyReport"
                 checked={notificationSettings.monthlyReport}
                 onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold"
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold checked:after:text-sm"
               />
               <label htmlFor="monthlyReport" className="ml-2">
                 Receive monthly progress report email alerts
@@ -529,7 +513,7 @@ export default function ProfilePage() {
                 name="promotion"
                 checked={notificationSettings.promotion}
                 onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold"
+                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold checked:after:text-sm"
               />
               <label htmlFor="promotion" className="ml-2">
                 Receive promotion alerts
@@ -547,7 +531,7 @@ export default function ProfilePage() {
         </div>
       </div>
       {showNotification && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-argentBlue p-4 rounded-md shadow-md text-center">
             <p className="text-lg font-semibold text-jet">
               Updated successfully
