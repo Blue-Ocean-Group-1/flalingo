@@ -150,7 +150,7 @@ export const initDailyProgress = async (req, res) => {
     const exists = await User.exists({
       _id: req.params.id,
       'dailyGoalProgress.date': {
-        $gte: new Date().setHours(0, 0, 0, 0),
+        $gte: new Date().setUTCHours(0, 0, 0, 0),
       },
     });
 

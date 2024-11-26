@@ -143,33 +143,28 @@ export default function ChatRoomPage() {
 
   useEffect(() => {
     async function updateUserProgress() {
-      if (userData?.dailyGoalProgress) {
-        const dailyProgress = getDailyProgress(userData.dailyGoalProgress);
-        console.log('daily progress in user progress', dailyProgress);
-        if (dailyProgress['conversationRoomJoined'] !== true) {
-          dailyProgress['conversationRoomJoined'] = true;
-          // this will need to be updated if more fields are added to in order to be
-          if (dailyProgress['deckCompleted'] === true) {
-            dailyProgress['completed'] = true;
-          }
-          try {
-            const result = await updateDailyProgress(
-              userData._id,
-              dailyProgress,
-            );
+      const dailyProgress = getDailyProgress(userData.dailyGoalProgress);
+      console.log('daily progress in user progress', dailyProgress);
+      if (dailyProgress['conversationRoomJoined'] !== true) {
+        dailyProgress['conversationRoomJoined'] = true;
+        // this will need to be updated if more fields are added to in order to be
+        if (dailyProgress['deckCompleted'] === true) {
+          dailyProgress['completed'] = true;
+        }
+        try {
+          const result = await updateDailyProgress(userData._id, dailyProgress);
 
-            if (result) {
-              updateUser({
-                ...result,
-              });
-            }
-          } catch (error) {
-            console.log(error);
+          if (result) {
+            updateUser({
+              ...result,
+            });
           }
+        } catch (error) {
+          console.log(error);
         }
       }
     }
-    updateUserProgress();
+    if (userData?.dailyGoalProgress) updateUserProgress();
   }, [userData?.dailyGoalProgress, updateUser, userData?._id]);
 
   return (
