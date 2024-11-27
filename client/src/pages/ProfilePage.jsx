@@ -467,54 +467,77 @@ export default function ProfilePage() {
         <div className="mt-8">
           <h1 className="font-bold text-2xl">Notification Settings</h1>
           <form className="mt-4" onSubmit={handleSubmit}>
-            <div className="mb-2">
-              <input
-                type="checkbox"
-                id="dailyReminder"
-                name="dailyReminder"
-                checked={notificationSettings.dailyReminder}
-                onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold checked:after:text-sm"
-              />
+            <div className="inline-flex items-center">
+              <label className="relative flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  id="dailyReminder"
+                  name="dailyReminder"
+                  checked={notificationSettings.dailyReminder}
+                  onChange={handleCheckboxChange}
+                  className="bg-white peer h-[1.125rem] w-[1.125rem] cursor-pointer appearance-none border border-slate-300 transition-all  checked:bg-white hover:shadow-md"
+                />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-argentBlue opacity-0 peer-checked:opacity-100">
+                  ✔
+                </span>
+              </label>
               <label htmlFor="dailyReminder" className="ml-2">
                 Receive daily reminder email alerts
               </label>
-            </div>
-            <div className="mb-2">
-              <input
-                type="checkbox"
-                id="weeklyReminder"
-                name="weeklyReminder"
-                checked={notificationSettings.weeklyReminder}
-                onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold checked:after:text-sm"
-              />
+            </div>{' '}
+            <br />
+            <div className="inline-flex items-center">
+              <label className="relative flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  id="weeklyReminder"
+                  name="weeklyReminder"
+                  checked={notificationSettings.weeklyReminder}
+                  onChange={handleCheckboxChange}
+                  className="bg-white peer h-[1.125rem] w-[1.125rem] cursor-pointer appearance-none border border-slate-300 transition-all  checked:bg-white hover:shadow-md"
+                />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-argentBlue opacity-0 peer-checked:opacity-100">
+                  ✔
+                </span>
+              </label>
               <label htmlFor="weeklyReminder" className="ml-2">
                 Receive weekly goal reminder email alerts
               </label>
-            </div>
-            <div className="mb-2">
-              <input
-                type="checkbox"
-                id="monthlyReport"
-                name="monthlyReport"
-                checked={notificationSettings.monthlyReport}
-                onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold checked:after:text-sm"
-              />
+            </div>{' '}
+            <br />
+            <div className="inline-flex items-center">
+              <label className="relative flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  id="monthlyReport"
+                  name="monthlyReport"
+                  checked={notificationSettings.monthlyReport}
+                  onChange={handleCheckboxChange}
+                  className="bg-white peer h-[1.125rem] w-[1.125rem] cursor-pointer appearance-none border border-slate-300 transition-all  checked:bg-white hover:shadow-md"
+                />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-argentBlue opacity-0 peer-checked:opacity-100">
+                  ✔
+                </span>
+              </label>
               <label htmlFor="monthlyReport" className="ml-2">
                 Receive monthly progress report email alerts
               </label>
-            </div>
-            <div className="mb-2">
-              <input
-                type="checkbox"
-                id="promotion"
-                name="promotion"
-                checked={notificationSettings.promotion}
-                onChange={handleCheckboxChange}
-                className="appearance-none bg-white border border-gray-300 rounded-sm w-4 h-4 checked:after:content-['✔'] checked:after:block checked:after:text-argentBlue checked:after:text-center checked:after:font-bold checked:after:text-sm"
-              />
+            </div>{' '}
+            <br />
+            <div className="inline-flex items-center">
+              <label className="relative flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  id="promotion"
+                  name="promotion"
+                  checked={notificationSettings.promotion}
+                  onChange={handleCheckboxChange}
+                  className="bg-white peer h-[1.125rem] w-[1.125rem] cursor-pointer appearance-none border border-slate-300 transition-all  checked:bg-white hover:shadow-md"
+                />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-argentBlue opacity-0 peer-checked:opacity-100">
+                  ✔
+                </span>
+              </label>
               <label htmlFor="promotion" className="ml-2">
                 Receive promotion alerts
               </label>
