@@ -27,9 +27,9 @@ const MainProgress = ({ user, openAddLang }) => {
         let decks = user.progress.find(
           (prog) => prog.language === user.activeLanguages[0],
         );
-        let badge;
-        if (decks?.decks?.length) {
-          badge = findNearestBadge(decks);
+        let badge = null;
+        if (decks.decks?.length) {
+          badge = findNearestBadge(user);
         }
         if (badge === null) {
           badge = {
@@ -42,19 +42,32 @@ const MainProgress = ({ user, openAddLang }) => {
     }
   }, [user]);
 
+  const makeGreeting = () => {
+    let name = user.name;
+    let greeting = greetings[user.activeLanguages[0]];
+    if (name === undefined && greeting) {
+      return greeting;
+    }
+    if (greeting === undefined && name) {
+      return `Hello, ${name}`;
+    }
+    if (greeting && name) {
+      return `${greeting}, ${name}`;
+    }
+    return 'Hello!';
+  };
+
   return (
-    <div className="w-full p-8 min-w-fit">
+    <div className="w-full min-w-fit p-8">
       {user && (
-        <div className="flex justify-center pb-4">
+        <div className="flex justify-center pb-2">
           <h3 className="text-5xl text-bold italic text-jet">
-            {greetings[user.activeLanguages[0]] === undefined
-              ? `Hello, ${user.name}`
-              : `${greetings[user.activeLanguages[0]]}, ${user.name}`}
+            {makeGreeting()}
           </h3>
         </div>
       )}
-      <div className="main-progress bg-argentBlue rounded-xl p-8">
-        <div className="main-progress-top flex flex justify-around p-6 rounded-xl gap-6">
+      <div className="main-progress bg-argentBlue rounded-xl p-8 shadow-md shadow-jet">
+        <div className="main-progress-top flex justify-around p-6 rounded-xl gap-6">
           <div>
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
               My Current Language

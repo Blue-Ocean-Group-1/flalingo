@@ -26,15 +26,13 @@ const getDeckPercentage = (decks) => {
     };
 
     let percentage = 0;
-    if (decks?.timesCompleted?.length) {
-      percentage = Math.floor(
-        (deck.timesCompleted.slice(-5).reduce((acc, attempt) => {
-          return acc + (attempt?.totalCorrect || 0);
-        }, 0) /
-          (5 * 10)) *
-          100,
+    if (deck?.timesCompleted?.length) {
+      const highestTotalCorrect = Math.max(
+        ...deck.timesCompleted.map((attempt) => attempt?.totalCorrect || 0),
       );
+      percentage = Math.floor((highestTotalCorrect / 10) * 100);
     }
+
     if (percentage > 0) {
       newDeck.percentage = percentage;
     }
@@ -69,19 +67,17 @@ const getDeckPercentageTwo = (decks) => {
 
     let percentage = 0;
     if (deck?.timesCompleted?.length) {
-      percentage = Math.floor(
-        (deck.timesCompleted.slice(-5).reduce((acc, attempt) => {
-          return acc + (attempt?.totalCorrect || 0);
-        }, 0) /
-          (5 * 10)) *
-          100,
+      const highestTotalCorrect = Math.max(
+        ...deck.timesCompleted.map((attempt) => attempt?.totalCorrect || 0),
       );
+      percentage = Math.floor((highestTotalCorrect / 10) * 100);
     }
+
     if (percentage > 0) {
       newDeck.percentage = percentage;
     }
 
-    //then.... this calculates how full the circle is
+    // This calculates how full the circle is
     newDeck.offset = 314.159 - 314.159 * (newDeck.percentage / 100);
 
     return newDeck;
@@ -92,7 +88,6 @@ const findBestDisplayDecks = (user) => {
   const currentDecks = (user.progress || []).filter(
     (lang) => lang.language === user.activeLanguages[0],
   )[0];
-  console.log('decks', currentDecks.decks);
   if (currentDecks.decks?.length) {
     let displayDecks = getDeckPercentageTwo(currentDecks.decks.slice(0, 5));
     displayDecks.map((deck, index) => {
@@ -142,9 +137,22 @@ const findRecommendedDeck = async (user) => {
   }
 };
 
+const passFullDeck = async (deckName, language) => {
+  console.log(deckName, 'deckName');
+  try {
+    const response = await axios.get(`${env.API_URL}/decks/${language}`);
+    let passedDeck = response.data.filter((deck) => deck.name === deckName);
+    return passedDeck;
+  } catch (error) {
+    logger.error('Error fetching decks:', error);
+    return [];
+  }
+};
+
 export {
   findBestDisplayDecks,
   getDeckPercentage,
   findRecommendedDeck,
   getDeckPercentageTwo,
+  passFullDeck,
 };

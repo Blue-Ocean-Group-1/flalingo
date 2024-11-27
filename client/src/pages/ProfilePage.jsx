@@ -282,8 +282,8 @@ export default function ProfilePage() {
       <div className="max-w-4xl mx-auto text-jet min-h-screen">
         <br />
         <br />
-        <h1 className="text-3xl -ml-5 text-3xl font-semibold mb-10">Profile</h1>
-        <div className="flex ml-0 mr-28 border-2 border-white bg-white shadow-2xl rounded-lg h-96">
+        <h1 className="text-3xl -ml-5 font-semibold mb-10">Profile</h1>
+        <div className="flex ml-0 mr-28 border-2 border-white bg-white rounded-md shadow-md shadow-jet h-96">
           <div className="relative mr-50">
             <div className="relative ml-2 mt-4">
               <img
@@ -554,7 +554,7 @@ export default function ProfilePage() {
         </div>
       </div>
       {showNotification && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
           <div className="bg-argentBlue p-4 rounded-md shadow-md text-center">
             <p className="text-lg font-semibold text-jet">
               Updated successfully

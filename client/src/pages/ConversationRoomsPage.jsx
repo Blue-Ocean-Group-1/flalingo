@@ -67,7 +67,7 @@ export default function ConversationRoomsPage() {
         <p className="py-2 text-md">
           Join a room to practice your conversation skills with others!
         </p>
-        <div className="bg-gray-200 p-2 mb-2 rounded-md">
+        <div className="p-2 mb-2 rounded-md">
           <h2 className="text-lg font-medium">Your Language(s)</h2>
           <div className="p-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-3 gap-y-2">
             {userData?.allLanguages.map((language, idx) => (
@@ -81,7 +81,7 @@ export default function ConversationRoomsPage() {
             ))}
           </div>
         </div>
-        <div className="bg-gray-200 p-2 mb-2 rounded-md">
+        <div className="p-2 mb-2 rounded-md">
           <h2 className="text-lg font-medium">Other Languages</h2>
           <div className="p-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-2 gap-y-2">
             {rooms &&
@@ -108,7 +108,7 @@ function RoomLanguageCard({ language, roomsData }) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex p-3 gap-4 w-full bg-white hover:bg-silver hover:shadow-none active:shadow-inner rounded-md shadow-md"
+        className="flex p-3 gap-4 w-full bg-white hover:bg-silver active:shadow-inner rounded-md shadow-md shadow-jet"
       >
         <img
           className="min-h-16 max-w-20 bg-slate-300 rounded-md object-cover"

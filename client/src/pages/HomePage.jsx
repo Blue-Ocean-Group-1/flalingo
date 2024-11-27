@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useUserData } from '../hooks/useUserData.jsx';
 import { useEffect, useState } from 'react';
 import { env } from '../../config/env';
-import { addTimesCompleted } from '../utils/addDeckProgress.js';
 import startNewLanguage from '../utils/startNewLanguage.js';
+import { useNavigate } from 'react-router-dom';
 
 import {
   findBestDisplayDecks,
@@ -21,13 +21,20 @@ import { initializeDailyProgress } from '../services/user.api.js';
 import getDailyProgress from '../utils/getDailyProgress.js';
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const [dailyWords, setDailyWords] = useState([]);
-  const { userData, updateUser } = useUserData();
+
+  const { userData, updateUser, setActiveDeck } = useUserData();
   const [displayDecks, setDisplayDecks] = useState([]);
   const [recommendedDeck, setRecommendedDeck] = useState(null);
   const [maxPercentage, setMaxPercentage] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
   const [addNewLanguageModelOpen, setAddNewLanguageModelOpen] = useState(false);
+
+  // useful for tracking information changes!!!! :)
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
 
   useEffect(() => {
     userData?.progress?.length === 0 ? setModalOpen(true) : setModalOpen(false);
@@ -80,7 +87,7 @@ export default function HomePage() {
         initDailyProgress();
       }
     }
-  }, [userData?.dailyGoalProgress, updateUser, userData?._id]);
+  }, [userData, updateUser]);
 
   // You want data? This will give you data
   useEffect(() => {
@@ -143,17 +150,19 @@ export default function HomePage() {
     setAddNewLanguageModelOpen(false);
   };
 
+  // if (loading) return <div>loading</div>;
+
   return (
     <DefaultPageLayout>
-      <section className="flex content-center items-center rounded-xl w-full pr-32">
-        <div className="flex mt-12 rounded-2xl w-full">
+      <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem]">
+        <div className="flex rounded-2xl w-full" style={{ minWidth: '70rem' }}>
           <AddNewLanguageModel
             user={userData}
             closeModal={closeAddLanguageModal}
             isOpen={addNewLanguageModelOpen}
           />
           <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
-          <div className="p-8 w-3/4 flex flex-col justify-between items-center gap-8 min-w-fit">
+          <div className="w-3/4 flex flex-col justify-start items-center min-w-fit">
             <div className="flex flex-col p-8 rounded-xl gap-4 w-3/4">
               <div className="flex justify-center align-center min-w-max">
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
@@ -197,15 +206,19 @@ export default function HomePage() {
               )}
               <div className="flex justify-center align-center">
                 <button
-                  onClick={addTimesCompleted}
-                  className="p-2 rounded-xl bg-argentBlue text-jet w-1/3 m-2 mt-6 font-bold hover:scale-105"
+                  onClick={() => {
+                    setActiveDeck(recommendedDeck);
+                    navigate('/flashcards');
+                  }}
+                  className="p-2 rounded-xl bg-argentBlue text-jet w-1/3 min-w-fit m-2 mt-6 font-bold hover:scale-105 text-nowrap"
                 >
                   Start A New Deck
                 </button>
               </div>
             </div>
           </div>
-          <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8">
+
+          <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8 mt-2">
             {userData && (
               <MainProgress
                 user={userData}

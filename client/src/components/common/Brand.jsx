@@ -4,13 +4,13 @@ import PolyGlot_Globe from '/public/PolyGlot_Globe.png';
 export default function Brand() {
   return (
     <Link to="/dashboard">
-      <span className="inline-flex gap-2 items-center">
+      <span className="inline-flex gap-2 items-center h-10">
         <img
           className="h-10 w-10 object-cover"
           src={PolyGlot_Globe}
           alt="placeholder"
         />
-        <h1 className="hidden sm:block text-jet text-2xl font-bold">
+        <h1 className="hidden sm:block text-jet text-3xl font-bold">
           PolyGlot
         </h1>
       </span>

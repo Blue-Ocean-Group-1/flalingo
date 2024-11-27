@@ -11,14 +11,14 @@ export default function LandingPage() {
   const [signup, setSignup] = useState(false);
 
   return (
-    <div>
+    <div className="bg-white min-h-screen">
       <span className="inline-flex gap-2 items-center">
         <img
-          className="h-28 w-28 object-cover ml-60 mb-4 mt-10"
+          className="h-20 w-20 object-cover ml-60 mb-4 mt-10"
           src={PolyGlot_Globe}
           alt="placeholder"
         />
-        <h1 className="hidden sm:block text-jet text-7xl font-bold mt-10">
+        <h1 className="hidden sm:block text-jet text-6xl font-bold mt-8">
           PolyGlot
         </h1>
       </span>

@@ -52,7 +52,7 @@ const OnboardingModal = ({ isOpen, onClose }) => {
       try {
         const languages = await fetchLanguageNames();
         logger.debug('OnboardingModal.jsx: Fetched languages:', languages);
-        setLanguageOptions(languages);
+        setLanguageOptions(['Spanish', 'French', 'German']);
       } catch (error) {
         logger.error(error);
       }
@@ -87,8 +87,6 @@ const OnboardingModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     const updatedData = formatFormData(formData);
     await updateUser(updatedData);
-    let updatedUser = await startNewLanguage(formData.language, userData._id);
-    setUserData(updatedUser);
     onClose();
   };
 
@@ -104,7 +102,7 @@ const OnboardingModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-8 px-10 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4 text-center text-jet mb-4">
+        <h2 className="text-2xl font-bold text-center text-jet mb-4">
           Welcome! Let&apos;s get started
         </h2>
         <form onSubmit={handleSubmit}>

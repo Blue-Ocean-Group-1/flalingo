@@ -8,7 +8,7 @@ const ProgressBar = ({ percentage }) => {
         ></div>
       )}
       {percentage < 100 ? (
-        <div className="text-jet">Progress To Next Proficiency Level</div>
+        <div className="text-jet z-10">Progress To Next Proficiency Level</div>
       ) : (
         <button className="progressText" type="button">
           Advance To Next Proficiency Level
