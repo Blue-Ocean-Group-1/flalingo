@@ -338,15 +338,22 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-[900]">Name</span>
-                  <span className="font-light">{profileData.name}</span>
+                  <span className="mr-2 font-[900]">Name:</span>
+                  <span>{profileData.name}</span>
                 </div>
               )}
 
-              <div className="flex items-center mb-2">
-                <span className="mr-2 font-bold">Username</span>
-                <span>{profileData.username}</span>
-              </div>
+              {editMode ? (
+                <div className="flex items-center mb-2">
+                  <span className="mr-2 font-bold">Username</span>
+                  <span>{profileData.username}</span>
+                </div>
+              ) : (
+                <div className="flex items-center mb-2">
+                  <span className="mr-2 font-bold">Username:</span>
+                  <span>{profileData.username}</span>
+                </div>
+              )}
 
               {editMode ? (
                 <div className="flex items-center mb-2 relative">
@@ -369,7 +376,7 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Country</span>
+                  <span className="mr-2 font-bold">Country:</span>
                   <span>{profileData.country}</span>
                 </div>
               )}
@@ -392,7 +399,7 @@ export default function ProfilePage() {
               ) : (
                 <div className="flex items-center mb-2">
                   <span className="mr-2 font-bold whitespace-nowrap">
-                    Phone Number
+                    Phone Number:
                   </span>
                   <span className="whitespace-nowrap">
                     {phoneNumberFormat(profileData.phoneNumber)}
@@ -419,7 +426,7 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Gender</span>
+                  <span className="mr-2 font-bold">Gender:</span>
                   <span>{profileData.gender}</span>
                 </div>
               )}
@@ -441,7 +448,7 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Email</span>
+                  <span className="mr-2 font-bold">Email:</span>
                   <span>{profileData.email}</span>
                 </div>
               )}

@@ -16,10 +16,9 @@ export default function ProgressSidebar() {
   });
 
   useEffect(() => {
-    const language = userData?.allLanguages[0] || 'Spanish';
+    const language = userData?.activeLanguages[0] || 'Spanish';
     const randomQuote = getMotivationalQuote(language);
     const quoteAndAuthor = randomQuote.quote.split(' – ');
-    console.log(quoteAndAuthor);
     const translatedQuoteAndAuthor = randomQuote.translation.split(' – ');
     setRandomQuote({
       quote: quoteAndAuthor[0],
@@ -27,7 +26,7 @@ export default function ProgressSidebar() {
       translation: translatedQuoteAndAuthor[0],
       translatedAuthor: translatedQuoteAndAuthor[1],
     });
-  }, [userData?.allLanguages]);
+  }, [userData?.activeLanguages]);
 
   const dailyProgress = userData?.dailyGoalProgress
     ? getDailyProgress(userData.dailyGoalProgress)
