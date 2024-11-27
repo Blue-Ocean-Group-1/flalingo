@@ -65,7 +65,7 @@ const SupportPage = () => {
         <form
           ref={form}
           onSubmit={sendEmail}
-          className="bg-white shadow-md shadow-jet rounded-lg px-8 pt-6 pb-8 mb-4 w-5/6 sm:w-2/3"
+          className="bg-white shadow-md shadow-gray rounded-lg px-8 pt-6 pb-8 mb-4 w-5/6 sm:w-2/3"
         >
           <input
             type="text"
@@ -92,6 +92,7 @@ const SupportPage = () => {
             required={true}
             className="mb-4 w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
           />
+
           <textarea
             placeholder="Message"
             name="message"

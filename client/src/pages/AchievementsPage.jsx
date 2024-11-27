@@ -106,7 +106,7 @@ export default function AchievementsPage() {
             </div>
 
             {/* Daily Progress Section */}
-            <div className="bg-white rounded-xl shadow-md shadow-jet p-8 mb-8">
+            <div className="bg-white rounded-xl shadow-md shadow-gray p-8 mb-8">
               <h2 className="text-2xl font-semibold text-gray-800 mb-6">
                 Daily Progress
               </h2>
@@ -141,7 +141,7 @@ export default function AchievementsPage() {
             </div>
 
             {/* Badges Section */}
-            <div className="bg-white rounded-xl shadow-md shadow-jet p-8">
+            <div className="bg-white rounded-xl shadow-md shadow-gray p-8">
               <h2 className="text-2xl font-semibold text-gray-800 mb-6">
                 Badges
               </h2>

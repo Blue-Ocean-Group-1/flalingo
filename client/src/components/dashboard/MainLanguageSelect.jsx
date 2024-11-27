@@ -14,7 +14,7 @@ function MainLanguageSelect({ user, openAddLang }) {
     user && (
       <Menu
         as="div"
-        className="relative text-3xl text-jet font-semibold bg-gray-50 p-3 rounded-lg shadow-sm border border-gray-300"
+        className="relative text-3xl text-jet font-semibold bg-gray-50 p-3 rounded-lg shadow-md border border-gray-300"
       >
         <MenuButton className="relative flex text-4xl w-full justify-between items-center pr-2">
           <div className="w-full flex justify-between items-center gap-2">

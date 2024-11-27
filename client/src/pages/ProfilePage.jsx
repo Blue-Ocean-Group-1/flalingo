@@ -4,6 +4,7 @@ import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import { env } from '../../config/env.js';
 import logger from '../../config/logger.js';
 import { useUserData } from '../hooks/useUserData.jsx';
+import flagObject from '../assets/Flags/flagObject.js';
 
 const COUNTRY_DATA = {
   Bangladesh: 'Bengali',
@@ -250,8 +251,7 @@ export default function ProfilePage() {
 
   const importFlag = async (country) => {
     try {
-      const flag = `/Flags/${COUNTRY_DATA[country]}.png`;
-      setCountryFlag(flag);
+      setCountryFlag(COUNTRY_DATA[country]);
     } catch (error) {
       console.error('Error loading flag:', error);
     }
@@ -282,7 +282,7 @@ export default function ProfilePage() {
         <br />
         <br />
         <h1 className="text-3xl -ml-5 font-semibold mb-10">Profile</h1>
-        <div className="flex ml-0 mr-28 border-2 border-white bg-white rounded-md shadow-md shadow-jet h-96">
+        <div className="flex ml-0 mr-28 border-2 border-white bg-white rounded-md shadow-md shadow-gray h-96">
           <div className="relative mr-50">
             <div className="relative ml-2 mt-4">
               <img
@@ -292,7 +292,7 @@ export default function ProfilePage() {
                 style={{ width: '260px', height: '260px' }}
               />
               <img
-                src={countryFlag}
+                src={flagObject[countryFlag]}
                 alt="Flag"
                 className="w-15 h-10 absolute bottom-2 left-64 border border-gray-400 rounded-sm antialiasing"
               />

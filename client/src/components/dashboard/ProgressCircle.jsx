@@ -59,7 +59,7 @@ const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
   return (
     <button
       key={deck._id}
-      className="bg-white flex justify-between items-center px-1 py-4 text-xl min-w-[25rem] rounded-xl m-2 shadow-md shadow-jet relative hover:scale-105"
+      className="bg-white flex justify-between items-center px-1 py-4 text-xl min-w-[25rem] rounded-xl m-2 shadow-md shadow-gray relative hover:scale-105"
       type="button"
       onClick={() => handleClick(deck)}
     >
