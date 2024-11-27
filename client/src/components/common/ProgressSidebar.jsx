@@ -8,18 +8,28 @@ import getDailyProgress from '../../utils/getDailyProgress.js';
 
 export default function ProgressSidebar() {
   const { userData } = useUserData();
-  const [randomQuote, setRandomQuote] = useState('');
+  const [randomQuote, setRandomQuote] = useState({
+    translation: '',
+    translatedAuthor: '',
+    author: '',
+    quote: '',
+  });
 
   useEffect(() => {
-    setRandomQuote(
-      userData?.allLanguages[0]
-        ? getMotivationalQuote(userData?.allLanguages[0])
-        : 'Spanish',
-    );
-  }, [userData?.allLanguages]);
+    const language = userData?.activeLanguages[0] || 'Spanish';
+    const randomQuote = getMotivationalQuote(language);
+    const quoteAndAuthor = randomQuote.quote.split(' – ');
+    const translatedQuoteAndAuthor = randomQuote.translation.split(' – ');
+    setRandomQuote({
+      quote: quoteAndAuthor[0],
+      author: quoteAndAuthor[1],
+      translation: translatedQuoteAndAuthor[0],
+      translatedAuthor: translatedQuoteAndAuthor[1],
+    });
+  }, [userData?.activeLanguages]);
 
   const dailyProgress = userData?.dailyGoalProgress
-    ? getDailyProgress(userData?.dailyGoalProgress)
+    ? getDailyProgress(userData.dailyGoalProgress)
     : {};
 
   return (
@@ -27,9 +37,9 @@ export default function ProgressSidebar() {
       <div className="h-16 pt-4 pb-1">
         <Brand />
       </div>
-      <div className="flex-col space-y-2 mx-auto text-jet pt-[0.25rem]">
-        <div className="p-4 text-black bg-white rounded-md shadow-md shadow-jet">
-          <div className="flex flex-col space-y-3">
+      <div className="flex-col space-y-3 mx-auto text-jet pt-[0.25rem]">
+        <div className="p-4 text-black bg-white rounded-md shadow-md shadow-gray">
+          <div className="flex flex-col space-y-3 pb-2">
             <h2 className="text-lg font-medium">Daily Goals</h2>
 
             <div className="inline-flex gap-1 items-center">
@@ -50,15 +60,13 @@ export default function ProgressSidebar() {
             </div>
           </div>
         </div>
-        <div className="px-4 py-4 text-black bg-white rounded-md shadow-md shadow-jet">
+        <div className="px-4 py-4 text-black bg-white rounded-md shadow-md shadow-gray">
           <h2 className="text-lg font-medium pb-2">Random Quote</h2>
-          <div className="flex flex-col space-y-2">
-            <p className="text-sm italic">
-              {randomQuote.quote}
-              <br />
-            </p>
-            <p className="text-sm italic">{randomQuote.translation}</p>
-            <p className="text-xs"></p>
+          <div className="flex flex-col space-y-1 text-sm pb-1">
+            <p className="">{randomQuote.quote}</p>
+            <p className="text-xs">– {randomQuote.author}</p>
+            <p className="pt-2">{randomQuote.translation}</p>
+            <p className="text-xs">– {randomQuote.translatedAuthor}</p>
           </div>
         </div>
       </div>

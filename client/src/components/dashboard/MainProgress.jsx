@@ -7,8 +7,8 @@ import BadgeFlag from '../common/BadgeFlag';
 
 import { findNearestBadge } from '../../utils/badgeLogic';
 
-import flagObject from '../../../public/Flags/flagObject.js';
-import badgeObject from '../../../public/Badges/badgeObject.js';
+import flagObject from '../../assets/Flags/flagObject.js';
+import badgeObject from '../../assets/Badges/badgeObject.js';
 import greetings from '../../utils/greetings';
 
 const MainProgress = ({ user, openAddLang }) => {
@@ -66,7 +66,7 @@ const MainProgress = ({ user, openAddLang }) => {
           </h3>
         </div>
       )}
-      <div className="main-progress bg-argentBlue rounded-xl p-8 shadow-md shadow-jet">
+      <div className="main-progress bg-argentBlue rounded-xl p-8 shadow-md shadow-gray">
         <div className="main-progress-top flex justify-around p-6 rounded-xl gap-6">
           <div>
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
@@ -78,7 +78,7 @@ const MainProgress = ({ user, openAddLang }) => {
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
               My Current Skill Level
             </h3>
-            <div className="text-4xl text-jet font-semibold bg-gray-50 p-3 rounded-lg shadow-sm border border-gray-300">
+            <div className="text-4xl text-jet font-semibold bg-gray-50 p-3 rounded-lg shadow-md border border-gray-300">
               {currentSkill.charAt(0).toUpperCase() + currentSkill.slice(1)}
             </div>
           </div>

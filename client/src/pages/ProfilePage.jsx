@@ -4,6 +4,7 @@ import DefaultPageLayout from '../components/layout/DefaultPageLayout';
 import { env } from '../../config/env.js';
 import logger from '../../config/logger.js';
 import { useUserData } from '../hooks/useUserData.jsx';
+import flagObject from '../assets/Flags/flagObject.js';
 
 const COUNTRY_DATA = {
   Bangladesh: 'Bengali',
@@ -251,8 +252,7 @@ export default function ProfilePage() {
 
   const importFlag = async (country) => {
     try {
-      const flag = `/Flags/${COUNTRY_DATA[country]}.png`;
-      setCountryFlag(flag);
+      setCountryFlag(COUNTRY_DATA[country]);
     } catch (error) {
       console.error('Error loading flag:', error);
     }
@@ -283,7 +283,7 @@ export default function ProfilePage() {
         <br />
         <br />
         <h1 className="text-3xl -ml-5 font-semibold mb-10">Profile</h1>
-        <div className="flex ml-0 mr-28 border-2 border-white bg-white rounded-md shadow-md shadow-jet h-96">
+        <div className="flex ml-0 mr-28 border-2 border-white bg-white rounded-md shadow-md shadow-gray h-96">
           <div className="relative mr-50">
             <div className="relative ml-2 mt-4">
               <img
@@ -293,7 +293,7 @@ export default function ProfilePage() {
                 style={{ width: '260px', height: '260px' }}
               />
               <img
-                src={countryFlag}
+                src={flagObject[countryFlag]}
                 alt="Flag"
                 className="w-15 h-10 absolute bottom-2 left-64 border border-gray-400 rounded-sm antialiasing"
               />
@@ -338,15 +338,22 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-[900]">Name</span>
-                  <span className="font-light">{profileData.name}</span>
+                  <span className="mr-2 font-[900]">Name:</span>
+                  <span>{profileData.name}</span>
                 </div>
               )}
 
-              <div className="flex items-center mb-2">
-                <span className="mr-2 font-bold">Username</span>
-                <span>{profileData.username}</span>
-              </div>
+              {editMode ? (
+                <div className="flex items-center mb-2">
+                  <span className="mr-2 font-bold">Username</span>
+                  <span>{profileData.username}</span>
+                </div>
+              ) : (
+                <div className="flex items-center mb-2">
+                  <span className="mr-2 font-bold">Username:</span>
+                  <span>{profileData.username}</span>
+                </div>
+              )}
 
               {editMode ? (
                 <div className="flex items-center mb-2 relative">
@@ -369,7 +376,7 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Country</span>
+                  <span className="mr-2 font-bold">Country:</span>
                   <span>{profileData.country}</span>
                 </div>
               )}
@@ -392,7 +399,7 @@ export default function ProfilePage() {
               ) : (
                 <div className="flex items-center mb-2">
                   <span className="mr-2 font-bold whitespace-nowrap">
-                    Phone Number
+                    Phone Number:
                   </span>
                   <span className="whitespace-nowrap">
                     {phoneNumberFormat(profileData.phoneNumber)}
@@ -419,7 +426,7 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Gender</span>
+                  <span className="mr-2 font-bold">Gender:</span>
                   <span>{profileData.gender}</span>
                 </div>
               )}
@@ -441,7 +448,7 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center mb-2">
-                  <span className="mr-2 font-bold">Email</span>
+                  <span className="mr-2 font-bold">Email:</span>
                   <span>{profileData.email}</span>
                 </div>
               )}
@@ -451,7 +458,7 @@ export default function ProfilePage() {
         <div className="mr-28 mt-2 flex justify-end">
           {editMode && (
             <button
-              className="bg-argentBlue bg-argentBlue px-2 h-8 rounded-md mb-2 mr-2"
+              className="bg-argentBlue px-2 h-8 rounded-md mb-2 mr-2"
               onClick={handleSaveInfo}
             >
               Save
@@ -554,7 +561,7 @@ export default function ProfilePage() {
         </div>
       </div>
       {showNotification && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-argentBlue p-4 rounded-md shadow-md text-center">
             <p className="text-lg font-semibold text-jet">
               Updated successfully

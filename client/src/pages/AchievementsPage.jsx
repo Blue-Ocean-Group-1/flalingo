@@ -5,8 +5,8 @@ import {
   splitDecksByLanguageAndThemeTwo,
   getBadges,
 } from '../utils/badgeLogic.js';
-import badgeObject from '../../public/Badges/badgeObject.js';
-import flagObject from '../../public/Flags/flagObject.js';
+import badgeObject from '../assets/Badges/badgeObject.js';
+import flagObject from '../assets/Flags/flagObject.js';
 import DefaultPageLayout from '../components/layout/DefaultPageLayout.jsx';
 import isEqual from 'lodash/isEqual';
 
@@ -92,8 +92,8 @@ export default function AchievementsPage() {
     );
   return (
     <DefaultPageLayout>
-      <div className="mr-8 rounded-md">
-        <div className=" mx-4 mb-4 p-8 xl:pr-[19rem]">
+      <div className="rounded-md">
+        <div className="mx-4 mb-4 p-8 xl:pr-[19rem]">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="mb-10">
@@ -106,11 +106,11 @@ export default function AchievementsPage() {
             </div>
 
             {/* Daily Progress Section */}
-            <div className="bg-white rounded-xl shadow-md shadow-jet p-8 mb-8">
+            <div className="bg-white rounded-xl shadow-md shadow-gray p-8 mb-8">
               <h2 className="text-2xl font-semibold text-gray-800 mb-6">
                 Daily Progress
               </h2>
-              <div className="flex space-x-4 justify-between max-w-3xl mx-auto">
+              <div className="flex flex-col md:flex-row sm:space-x-4 justify-between max-w-3xl mx-auto">
                 {calculateWeeklyProgress().map((day, index) => (
                   <div key={index} className="flex flex-col items-center">
                     <h3 className="text-sm font-medium text-gray-600 mb-2">
@@ -119,10 +119,9 @@ export default function AchievementsPage() {
                     <div
                       className={`
                       rounded-full w-14 h-14 flex items-center justify-center
-                      transition-all duration-200 ease-in-out
                       ${
                         day.isCompleted
-                          ? 'bg-pistachio text-white shadow-md font-extrabold scale-105'
+                          ? 'bg-pistachio text-white shadow-md font-extrabold sm:scale-105'
                           : 'bg-gray-100 text-gray-600'
                       }
                     `}
@@ -142,7 +141,7 @@ export default function AchievementsPage() {
             </div>
 
             {/* Badges Section */}
-            <div className="bg-white rounded-xl shadow-md shadow-jet p-8">
+            <div className="bg-white rounded-xl shadow-md shadow-gray p-8">
               <h2 className="text-2xl font-semibold text-gray-800 mb-6">
                 Badges
               </h2>

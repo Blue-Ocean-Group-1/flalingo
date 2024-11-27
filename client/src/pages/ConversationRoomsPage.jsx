@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import RoomsModal from '../components/RoomsModal.jsx';
 import Logger from '../../config/logger.js';
 import { useUserData } from '../hooks/useUserData.jsx';
+import flagObject from '../assets/Flags/flagObject.js';
 
 export default function ConversationRoomsPage() {
   const [rooms, setRooms] = useState([]);
@@ -62,30 +63,16 @@ export default function ConversationRoomsPage() {
 
   return (
     <DefaultPageLayout>
-      <section className="max-4xl sm:mx-auto pt-6 px-4 text-black">
-        <h1 className="text-3xl font-semibold">Conversation Rooms</h1>
-        <p className="py-2 text-md">
-          Join a room to practice your conversation skills with others!
-        </p>
-        <div className="p-2 mb-2 rounded-md">
-          <h2 className="text-lg font-medium">Your Language(s)</h2>
-          <div className="p-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-3 gap-y-2">
-            {userData?.allLanguages.map((language, idx) => (
-              <RoomLanguageCard
-                key={`${language}-${idx}`}
-                language={language}
-                roomsData={rooms.filter((room) =>
-                  room.language.includes(language),
-                )}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="p-2 mb-2 rounded-md">
-          <h2 className="text-lg font-medium">Other Languages</h2>
-          <div className="p-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-2 gap-y-2">
-            {rooms &&
-              getOtherRoomLanguages(rooms).map((language, idx) => (
+      <section className="max-4xl sm:mx-auto  text-black">
+        <div className="mx-4 mb-4 p-8">
+          <h1 className="text-3xl font-semibold">Conversation Rooms</h1>
+          <p className="py-2 text-md">
+            Join a room to practice your conversation skills with others!
+          </p>
+          <div className="p-2 mb-2 rounded-md">
+            <h2 className="text-lg font-medium">Your Language(s)</h2>
+            <div className="p-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-3 gap-y-2">
+              {userData?.allLanguages.map((language, idx) => (
                 <RoomLanguageCard
                   key={`${language}-${idx}`}
                   language={language}
@@ -94,6 +81,22 @@ export default function ConversationRoomsPage() {
                   )}
                 />
               ))}
+            </div>
+          </div>
+          <div className="p-2 mb-2 rounded-md">
+            <h2 className="text-lg font-medium">Other Languages</h2>
+            <div className="p-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-2 gap-y-2">
+              {rooms &&
+                getOtherRoomLanguages(rooms).map((language, idx) => (
+                  <RoomLanguageCard
+                    key={`${language}-${idx}`}
+                    language={language}
+                    roomsData={rooms.filter((room) =>
+                      room.language.includes(language),
+                    )}
+                  />
+                ))}
+            </div>
           </div>
         </div>
       </section>
@@ -108,11 +111,11 @@ function RoomLanguageCard({ language, roomsData }) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex p-3 gap-4 w-full bg-white hover:bg-silver active:shadow-inner rounded-md shadow-md shadow-jet"
+        className="flex p-3 gap-4 w-full bg-white hover:bg-silver active:shadow-inner rounded-md shadow-md shadow-gray"
       >
         <img
           className="min-h-16 max-w-20 bg-slate-300 rounded-md object-cover"
-          src={`/Flags/${language}.png`}
+          src={flagObject[language]}
           alt="flag-img"
         />
         <div className="text-left">

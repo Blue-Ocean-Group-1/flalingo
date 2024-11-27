@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CircleProgressDisplay from '../common/CircleProgressDisplay';
 import { passFullDeck } from '../../utils/deckProgress';
 
-import flagObject from '../../../public/Flags/flagObject.js';
+import flagObject from '../../assets/Flags/flagObject.js';
 import { useUserData } from '../../hooks/useUserData';
 
 const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
@@ -59,7 +59,7 @@ const ProgressCircle = ({ deck, language, maxPercentage, recommended }) => {
   return (
     <button
       key={deck._id}
-      className="bg-white flex justify-between items-center px-1 py-4 text-xl min-w-[25rem] rounded-xl m-2 shadow-md shadow-jet relative hover:scale-105"
+      className="bg-white flex justify-between items-center px-1 py-4 text-xl min-w-[25rem] rounded-xl m-2 shadow-md shadow-gray relative hover:scale-105"
       type="button"
       onClick={() => handleClick(deck)}
     >

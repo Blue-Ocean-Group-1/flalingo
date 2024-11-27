@@ -143,27 +143,32 @@ const UserReportDisplay = ({ user }) => {
   }, [userStats, reportParams]);
 
   return (
-    <div className="text-jet w-full mb-16 pt-8">
-      <div>
-        <h3 className="text-jet text-center text-5xl m-4">My Statistics</h3>
-        <div className="flex justify-center">
-          <select
-            value={reportParams.frequency}
-            onChange={(e) => {
-              setReportParams((prev) => ({
-                ...prev,
-                individualDeck: null,
-                frequency: e.target.value,
-              }));
-            }}
-            className="p-4 rounded bg-white text-2xl mb-1"
-          >
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-            <option value="daily">Daily</option>
-          </select>
+    <div className="text-jet w-full mb-16">
+      <div className="flex flex-col">
+        <div className="flex justify-between">
+          <p className="text-jet text-center text-4xl m-4 font-bold">
+            My Statistics
+          </p>
+          <div className="flex">
+            <select
+              value={reportParams.frequency}
+              onChange={(e) => {
+                setRenderStats(true);
+                setReportParams((prev) => ({
+                  ...prev,
+                  individualDeck: null,
+                  frequency: e.target.value,
+                }));
+              }}
+              className="px-2 rounded bg-white text-2xl mb-1"
+            >
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+              <option value="daily">Daily</option>
+            </select>
+          </div>
         </div>
-        <div className="flex justify-center items-center min-w-3/4 min-h-full">
+        <div className="flex justify-center items-center min-h-full">
           {/* Here's the magic graph. It's magic!  */}
           <canvas
             id="myStatistics"

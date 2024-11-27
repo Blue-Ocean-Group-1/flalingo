@@ -84,7 +84,7 @@ function ServerTest() {
 
                 <button
                   onClick={checkServerStatus}
-                  className="mt-4 w-full inline-flex items-center justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm"
+                  className="mt-4 w-full inline-flex items-center justify-center rounded-md border border-transparent shadow-md px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm"
                 >
                   <FontAwesomeIcon icon="fa-rotate" className="mr-2" />
                   Check Server Status

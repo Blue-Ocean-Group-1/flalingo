@@ -32,9 +32,9 @@ export default function HomePage() {
   const [addNewLanguageModelOpen, setAddNewLanguageModelOpen] = useState(false);
 
   // useful for tracking information changes!!!! :)
-  // useEffect(() => {
-  //   console.log(userData);
-  // }, [userData]);
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
   useEffect(() => {
     userData?.progress?.length === 0 ? setModalOpen(true) : setModalOpen(false);
@@ -48,25 +48,6 @@ export default function HomePage() {
       newLanguage();
     }
   }, [userData]);
-
-  // "dailyGoalProgress": [
-  //   {
-  //     "date": "2024-11-21T02:24:00.704Z",
-  //     "completed": true,
-  //     "loggedIn": true,
-  //     "deckCompleted": true,
-  //     "conversationRoomJoined": true,
-  //     "_id": "673e99e299c3f75836fa7923"
-  //   },
-  //   {
-  //     "date": "2024-11-15T02:24:27.860Z",
-  //     "completed": false,
-  //     "loggedIn": true,
-  //     "deckCompleted": false,
-  //     "conversationRoomJoined": false,
-  //     "_id": "673e99db99c3f75836fa791e"
-  //   }
-  // ],
 
   useEffect(() => {
     async function initDailyProgress() {
@@ -154,7 +135,7 @@ export default function HomePage() {
 
   return (
     <DefaultPageLayout>
-      <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem]">
+      <section className="flex justify-center items-center rounded-xl w-full xl:pr-[19rem] pb-8">
         <div className="flex rounded-2xl w-full" style={{ minWidth: '70rem' }}>
           <AddNewLanguageModel
             user={userData}
@@ -162,7 +143,7 @@ export default function HomePage() {
             isOpen={addNewLanguageModelOpen}
           />
           <OnboardingModal isOpen={isModalOpen} onClose={handleCloseModal} />
-          <div className="w-3/4 flex flex-col justify-start items-center min-w-fit">
+          <div className="w-3/4 flex flex-col items-center min-w-fit gap-8">
             <div className="flex flex-col p-8 rounded-xl gap-4 w-3/4">
               <div className="flex justify-center align-center min-w-max">
                 <h3 className="text-5xl text-jet">My Daily Words</h3>
@@ -178,9 +159,9 @@ export default function HomePage() {
                   />
                 ))}
             </div>
-            <div className="rounded-xl flex w-3/4 flex-col max-w-3/4 p-8">
+            <div className="rounded-xl flex w-3/4 flex-col max-w-3/4 px-8 py-0">
               <div className="flex justify-center align-center">
-                <h3 className="text-5xl text-jet">My Decks</h3>
+                <h3 className="text-5xl pb-1 text-jet">My Decks</h3>
               </div>
               {!!displayDecks?.length &&
                 displayDecks.map((deck) => (
@@ -217,8 +198,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-
-          <div className="p-8 w-1/2 flex flex-col justify-between items-center gap-8 mt-2">
+          <div className="w-1/2 flex flex-col items-center gap-16 mt-2">
             {userData && (
               <MainProgress
                 user={userData}
